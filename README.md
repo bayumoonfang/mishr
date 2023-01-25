@@ -1,6 +1,6 @@
 # abzeno
 
-New Project File Of Abzeno
+Aplikasi HR Terbaik karya anak bangsa
 
 ## Getting Started
 
