@@ -15,6 +15,7 @@ import 'package:hexcolor/hexcolor.dart';
 
 import 'page_reqattend_addhome.dart';
 import 'page_reqattend_addhome2.dart';
+import 'page_reqattendancehome.dart';
 
 
 class PageAttendanceHome extends StatefulWidget{
@@ -156,7 +157,7 @@ class _PageAttendanceHome extends State<PageAttendanceHome> {
               onPressed: () {
                 FocusScope.of(context).requestFocus(new FocusNode());
                 setState(() {
-                  Navigator.push(context, ExitPage(page: PageReqAttend(widget.getKaryawanNo, widget.getKaryawanNama, widget.getKaryawanEmail)));
+                  Navigator.push(context, ExitPage(page: PageReqAttendanceHome(widget.getKaryawanNo, widget.getKaryawanNama, widget.getKaryawanEmail)));
                 });
 
               },

@@ -27,9 +27,9 @@ import 'page_reqattendactivitydetail.dart';
 class ReqAttendApproveDetail extends StatefulWidget{
   final String getReqAttendCode;
   final String getKaryawanNo;
-  final String getKaryawanNama;
+  //final String getKaryawanNama;
   final String getModulTab;
-  const ReqAttendApproveDetail(this.getReqAttendCode,this.getKaryawanNo, this.getKaryawanNama, this.getModulTab);
+  const ReqAttendApproveDetail(this.getReqAttendCode,this.getKaryawanNo, this.getModulTab);
   @override
   _ReqAttendApproveDetail createState() => _ReqAttendApproveDetail();
 }
@@ -251,36 +251,26 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
 
   showDialog1(BuildContext context) {
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#1a76d2"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text(getBahasa.toString() == "1"?  "Setujui":"Approve",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text(getBahasa.toString() == "1"?  "SETUJUI":"Approve",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           _reqattend_approve("1");
         },
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Setujui Permintaan" :"Approve Request", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold),textAlign:
-      TextAlign.center,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui permintaan ini sebagai persetujuan 1 ?": "Would you like to continue approve this request as Approval 1 ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      title: Text(getBahasa.toString() == "1"? "Setujui Permintaan" :"Approve Request", style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+      TextAlign.left,),
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui permintaan ini sebagai persetujuan 1 ?":
+      "Would you like to continue approve this request as Approval 1 ?", style: GoogleFonts.nunitoSans(),textAlign: TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -297,37 +287,25 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
 
   showDialog2(BuildContext context) {
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#1a76d2"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text(getBahasa.toString() == "1"?  "Setujui": "Approve",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text(getBahasa.toString() == "1"?  "Setujui": "Approve",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           _reqattend_approve("2");
         },
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"?  "Setujui Permintaan":"Approve Request", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold),textAlign:
-      TextAlign.center,),
+      title: Text(getBahasa.toString() == "1"?  "Setujui Permintaan":"Approve Request",style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
       content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui permintaan ini sebagai persetujuan 2 ? ":
-      "Would you like to continue approve this request as Approval 2 ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      "Would you like to continue approve this request as Approval 2 ?", style: GoogleFonts.nunitoSans(),textAlign: TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -344,36 +322,26 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
 
   showDialogReject1(BuildContext context) {
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#e21b4c"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text(getBahasa.toString() == "1"?  "Tolak":"Reject",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text(getBahasa.toString() == "1"?  "TOLAK":"Reject",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           _reqattend_reject("1");
         },
       ),
     );
     AlertDialog alert = AlertDialog(
-        actionsAlignment: MainAxisAlignment.spaceEvenly,
+        actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Center(child: Text(getBahasa.toString() == "1"? "Tolak Permintaan": "Reject Request", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold)),),
+      title: Text(getBahasa.toString() == "1"? "Tolak Permintaan": "Reject Request",
+        style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
       content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak permintaan ini sebagai persetujuan 1 ?":
-      "Would you like to continue reject this request as Approval 1 ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      "Would you like to continue reject this request as Approval 1 ?", style: GoogleFonts.nunitoSans(),textAlign: TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -391,36 +359,27 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
 
   showDialogReject2(BuildContext context) {
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#e21b4c"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text(getBahasa.toString() == "1"? "Tolak" :"Reject",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text(getBahasa.toString() == "1"? "TOLAK" :"Reject"
+          ,style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           _reqattend_reject("2");
         },
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Center(child: Text(getBahasa.toString() == "1"?  "Tolak Permintaan":"Reject Request", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold)),),
+      title: Text(getBahasa.toString() == "1"?  "Tolak Permintaan":"Reject Request",
+        style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
       content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak permintaan ini sebagai persetjuan 2 ? " :
-      "Would you like to continue reject this request as Approval 2 ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      "Would you like to continue reject this request as Approval 2 ?", style: GoogleFonts.nunitoSans(),textAlign: TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -442,7 +401,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Detail Request", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text("Detail Pengajuan", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) =>
@@ -1073,7 +1032,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
 
                               TableRow(children :[
                                 Padding(padding: EdgeInsets.only(bottom: 5),
-                                  child: Text(getBahasa.toString() == "1"? 'Jadwal Permintaan': 'Schedule Request', style: GoogleFonts.nunito(fontSize: 14) ),),
+                                  child: Text(getBahasa.toString() == "1"? 'Pengajuan Jadwal': 'Schedule Request', style: GoogleFonts.nunito(fontSize: 14) ),),
 
                                 Padding(padding: EdgeInsets.only(bottom: 5),
                                     child: InkWell(
@@ -1100,7 +1059,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
                                                           Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
-                                                              Text(getBahasa.toString() == "1"? "Permintaan Jadwal": "Schedule Request",
+                                                              Text(getBahasa.toString() == "1"? "Pengajuan Jadwal": "Schedule Request",
                                                                 style: GoogleFonts.montserrat(fontWeight: FontWeight.bold,fontSize: 17),),
                                                               InkWell(
                                                                 onTap: (){
@@ -1119,7 +1078,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
                                                             dense : true,
                                                             title: Text(reqattend_schedulecode.toString(),style: GoogleFonts.montserrat(
                                                                 fontWeight: FontWeight.bold,fontSize: 17),),
-                                                            subtitle: Text(getBahasa.toString() == "1"? "Jadwal Permintaan": "Schedule Request",
+                                                            subtitle: Text(getBahasa.toString() == "1"? "Kode Jadwal": "Schedule Request",
                                                                 style: GoogleFonts.workSans(
                                                                     fontSize: 12)),
                                                           ),
@@ -1131,7 +1090,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
                                                             dense : true,
                                                             title: Text(reqattend_scheduleclockin.toString(),style: GoogleFonts.montserrat(
                                                                 fontWeight: FontWeight.bold,fontSize: 17),),
-                                                            subtitle: Text(getBahasa.toString() == "1"? "Permintaan Jam Masuk": "Clock In request",
+                                                            subtitle: Text(getBahasa.toString() == "1"? "Clock In": "Clock In request",
                                                                 style: GoogleFonts.workSans(
                                                                     fontSize: 12)),
                                                           ),
@@ -1143,7 +1102,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
                                                             dense : true,
                                                             title: Text(reqattend_scheduleclockout.toString(),style: GoogleFonts.montserrat(
                                                                 fontWeight: FontWeight.bold,fontSize: 17),),
-                                                            subtitle: Text(getBahasa.toString() == "1"? "Permintaan Jam Keluar": "Clock Out request",
+                                                            subtitle: Text(getBahasa.toString() == "1"? "Clock Out": "Clock Out request",
                                                                 style: GoogleFonts.workSans(
                                                                     fontSize: 12)),
                                                           ),

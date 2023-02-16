@@ -45,7 +45,7 @@ class g_reqattend{
           await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
             errorCode = 2; return false;}});
           http.Response response = await http.get(  Uri.parse(applink+"mobile/api_mobile.php?act=getData_AttendRequest&"
-              "karyawan_no="+getKaryawanNo+"&filter="+filter+"&filter2="+filter2+"&filter3="+filter3+"&getModul="+getModul)).
+              "karyawan_no="+getKaryawanNo+"&filter="+filter+"&filter3="+filter3+"&getModul="+getModul)).
           timeout(Duration(seconds: 10), onTimeout: () {http.Client().close(); errorCode = 1;
           return http.Response('Error', 500);});
           if(errorCode == 1 || errorCode == 2) {

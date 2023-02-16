@@ -295,7 +295,7 @@ class _PageApprovalList extends State<PageApprovalList> {
                                 leading: FaIcon(FontAwesomeIcons.circleInfo,color:HexColor("#28b9e0"),
 
                                 ),
-                                title:Text(getBahasa.toString() =="1" ? "Lakukan approval melalui menu sesuai dengan tipe permintaan" :
+                                title:Text(getBahasa.toString() =="1" ? "Lakukan dengan mudah dengan menu ini, pastikan data sudah benar sebelum melakukan approved" :
                                     "Do the approval through the menu according to the type of request",
                                     style: GoogleFonts.nunitoSans(fontSize: 13,color: Colors.black)),
                               )
@@ -324,7 +324,7 @@ class _PageApprovalList extends State<PageApprovalList> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: <Widget>[
-                                        Image.asset('assets/empty2.png',width: 170,),
+                                        Image.asset('assets/empty2.png',width: 150,),
                                         Padding(
                                           padding: EdgeInsets.only(left: 13),
                                           child:  new Text(
@@ -363,12 +363,12 @@ class _PageApprovalList extends State<PageApprovalList> {
                                                         AppHelper().getNamaBulanCustomFullEnglish(snapshot.data![i]["c"].toString()) + " "+
                                                         AppHelper().getTahunCustom(snapshot.data![i]["c"].toString()),
                                                     overflow: TextOverflow.ellipsis,  style: GoogleFonts.montserrat(
-                                                        fontWeight: FontWeight.bold,fontSize: 15),),)
+                                                      fontWeight: FontWeight.bold,fontSize: 14.5),),)
                                               ),
                                               subtitle: Column(
                                                 children: [
                                                   Padding(
-                                                    padding: EdgeInsets.only(top: 2),
+                                                    padding: EdgeInsets.only(top: 5),
                                                     child:   Align(alignment: Alignment.centerLeft,child:
                                                     Text(snapshot.data![i]["a"].toString(),
                                                         overflow: TextOverflow.ellipsis,
@@ -376,12 +376,12 @@ class _PageApprovalList extends State<PageApprovalList> {
                                                   ),
 
                                                   Padding(
-                                                      padding: EdgeInsets.only(top: 2),
+                                                      padding: EdgeInsets.only(top: 3),
                                                       child: Align(alignment: Alignment.centerLeft,
                                                           child:Text("#"+snapshot.data![i]["b"].toString(),
                                                               style: GoogleFonts.workSans(fontSize: 13)))),
                                                   Padding(
-                                                      padding: EdgeInsets.only(top: 2,bottom: 1),
+                                                      padding: EdgeInsets.only(top: 3,bottom: 1),
                                                       child: Align(alignment: Alignment.centerLeft,
                                                           child:Text("as "+snapshot.data![i]["d"].toString(),
                                                               style: GoogleFonts.workSans(fontSize: 13)))),

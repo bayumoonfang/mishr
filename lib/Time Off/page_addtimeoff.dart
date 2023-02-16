@@ -194,8 +194,8 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                 } else if (value[0] == '3') {
                   getBahasa.toString() == "1"?
                   AppHelper().showFlushBarsuccess(context,
-                      "Maaf anda masih ada pengajuan Time Off yang belum di tindaklanjuti  di hari yang sama,"
-                          "silahkan batalkan pengajuan Time Off atau tunggu pengajuan di approved") :
+                      "Maaf anda masih ada pengajuan lain yang belum di tindaklanjuti  di hari yang sama,"
+                          "silahkan batalkan pengajuan dan coba lagi") :
                   AppHelper().showFlushBarsuccess(context,
                       "Sorry, you still have a Time Off application that has not been followed up on the same day,"
                           "Please cancel the Time Off application or wait for the application to be approved");
@@ -209,6 +209,9 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                   getBahasa.toString() == "1"?
                   AppHelper().showFlushBarsuccess(context,"Maaf untuk ijin tidak boleh lebih dari 1 hari")
                   :AppHelper().showFlushBarsuccess(context,"Sorry for permission can not be more than 1 day");
+                  return;
+                } else if (value[0] == '6a') {
+                  AppHelper().showFlushBarsuccess(context,"Maaf cuti anda belum bisa dipakai, atau cuti anda sudah habis masa berlaku");
                   return;
                 } else if (value[0] == '5') {
                   //Navigator.pop(context);
@@ -285,23 +288,13 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
     if(Base64 == null) {Baseme = '0';} else {Baseme = Base64;}
 
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#1a76d2"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text( getBahasa.toString() == "1"? "Iya":"Yes",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text( getBahasa.toString() == "1"? "AJUKAN":"SUBMIT",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           Navigator.pop(context);
           _timeoff_create();
@@ -309,13 +302,14 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Tambah Permintaan Time Off": "Add Request Time Off", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold),textAlign:
-      TextAlign.center,),
-      content: Text( getBahasa.toString() == "1"? "Apakah anda yakin membuat permintaan time off ?": "Would you like to continue add request time off ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      title: Text(getBahasa.toString() == "1"? "Tambah Pengajuan Time Off": "Add Request Time Off", style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+      TextAlign.left,),
+      content: Text( getBahasa.toString() == "1"? "Apakah anda yakin data sudah benar dan melanjutkan untuk mengirim pengajuan ?":
+      "Are you sure the data is correct and continues to send a submission ?", style: GoogleFonts.nunitoSans(),textAlign:
+      TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -485,7 +479,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(getBahasa.toString() == "1"? "Buat Pengajuan Cuti" : "Add Time Off", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text(getBahasa.toString() == "1"? "Buat Pengajuan Time Off" : "Add Time Off", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) =>
@@ -575,7 +569,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                                       Row(
                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
-                                                          Text(getBahasa.toString() == "1"? "Daftar Tipe Time Off":"Time Off Type List",
+                                                          Text(getBahasa.toString() == "1"? "Pilih Jenis Time Off":"Choose Time Off Type",
                                                             style: GoogleFonts.montserrat(fontWeight: FontWeight.bold,fontSize: 17),),
                                                           InkWell(
                                                             onTap: (){
@@ -586,12 +580,12 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                                         ],
                                                       ),
                                                       Padding(
-                                                        padding: EdgeInsets.only(top:15),
+                                                        padding: EdgeInsets.only(top:25),
                                                       ),
                                                       Container(
                                                         padding: EdgeInsets.only(top:15),
                                                         color: Colors.white,
-                                                        height: MediaQuery.of(context).size.height * 0.25,
+                                                        height: MediaQuery.of(context).size.height * 0.45,
                                                         child: FutureBuilder(
                                                             future: g_timeoff().getDataTimeOffType(widget.getKaryawanNo),
                                                             builder: (context, snapshot){
@@ -636,9 +630,9 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                                                               title: Text(snapshot.data![i]["b"].toString(),style: GoogleFonts.montserrat(
                                                                                   fontWeight: FontWeight.bold,fontSize: 15),),
                                                                               subtitle: Text(
-                                                                                  getBahasa.toString() == "1"?
-                                                                                  "Sisa Kuota : "+snapshot.data![i]["e"].toString() :
-                                                                                  "Balance : "+snapshot.data![i]["e"].toString(),
+
+                                                                      snapshot.data![i]["e"].toString() == '99' ?  "(Tidak ada batas kuota)" :
+                                                                      "Sisa Kuota : "+snapshot.data![i]["e"].toString()  ,
                                                                                   style: GoogleFonts.workSans(
                                                                                       fontSize: 12)),
                                                                             ),
@@ -1062,7 +1056,9 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
 
 
 
-                    Padding(padding: const EdgeInsets.only(top: 25),
+                    Visibility(
+                      visible: false,
+                      child: Padding(padding: const EdgeInsets.only(top: 25),
                         child: Column(
                           children: [
 
@@ -1133,7 +1129,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                               ),),
                           ],
                         )
-                    ),
+                    ),),
 
 
                     Padding(padding: const EdgeInsets.only(top: 25),
@@ -1221,7 +1217,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
       bottomSheet: Visibility(
         visible: _isPressedBtn,
         child: Container(
-            padding: EdgeInsets.only(left: 45, right: 45, bottom: 10),
+            padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
             width: double.infinity,
             height: 58,
             child :
@@ -1238,7 +1234,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                     ),
                       borderRadius: BorderRadius.circular(5.0),
                     )),
-                child: Text(getBahasa.toString() == "1"? "Simpan Pengajuan":"Save Request",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
+                child: Text(getBahasa.toString() == "1"? "Ajukan Sekarang":"Submit Now",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
                     fontSize: 14),),
                 onPressed: () {
                   FocusScope.of(context).requestFocus(new FocusNode());

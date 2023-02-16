@@ -2,45 +2,39 @@
 
 
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:abzeno/ApprovalList/page_apprdetaillembur.dart';
 import 'package:abzeno/Helper/app_helper.dart';
-import 'package:abzeno/Helper/app_link.dart';
 import 'package:abzeno/Helper/page_route.dart';
-import 'package:abzeno/Lembur/page_lembur_add.dart';
-import 'package:abzeno/Lembur/page_lemburdetail.dart';
-import 'package:abzeno/Request%20Attendance/page_reqattendapprovedetail.dart';
-import 'package:abzeno/Request%20Attendance/page_reqattenddetail.dart';
-import 'package:abzeno/Time%20Off/page_addtimeoff.dart';
+import 'package:abzeno/Time%20Off/page_timeoffdetail.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
 
-import 'S_HELPER/g_lembur.dart';
-import 'S_HELPER/m_lembur.dart';
+import 'S_HELPER/g_timeoff.dart';
+import 'S_HELPER/m_timeoff.dart';
+import 'page_addtimeoff.dart';
+import 'page_timeoffapprovedetail.dart';
 
-
-
-class PageLembur extends StatefulWidget{
+class PageTimeOffList extends StatefulWidget{
   final String getKaryawanNo;
-  final String getModul;
   final String getKaryawanNama;
-  final String getEmail;
-  const PageLembur(this.getKaryawanNo, this.getModul, this.getKaryawanNama, this.getEmail);
+  final String getType;
+  const PageTimeOffList(this.getKaryawanNo, this.getKaryawanNama, this.getType);
   @override
-  _PageLembur createState() => _PageLembur();
+  _PageTimeOffList createState() => _PageTimeOffList();
 }
 
 
-class _PageLembur extends State<PageLembur> {
 
-  TextEditingController _pinValue = TextEditingController();
+class _PageTimeOffList extends State<PageTimeOffList> {
+
+  String filter = "";
+  String filter2 = "";
+  String filter3 = "";
 
   String getBahasa = "1";
   getSettings() async {
@@ -49,33 +43,47 @@ class _PageLembur extends State<PageLembur> {
         getBahasa = value[20];
       });});
   }
+
   @override
   void initState() {
     super.initState();
-    getSettings();
+    //FocusScope.of(context).requestFocus(FocusNode());
+    loadData();
+  }
+  @override
+  void dispose(){
+    super.dispose();
   }
 
-  String filter = "";
-  String filter2 = "";
-  String filter3 = "";
-  String sortby = '0';
+
+  String approval_count = "0";
+  loadData() async {
+    await getSettings();
+    EasyLoading.dismiss();
+    //await _startingVariable();
+  }
+
+
 
   FutureOr onGoBack(dynamic value) {
     setState(() {
-      g_lembur().getData_Lembur(widget.getKaryawanNo, filter, widget.getModul,filter2);
+      g_timeoff().getData_AllTimeOffRequest(widget.getKaryawanNo, filter, filter2, widget.getType);
+      loadData();
     });
   }
 
   Future getData() async {
     setState(() {
-      g_lembur().getData_Lembur(widget.getKaryawanNo, filter, widget.getModul,filter2);
+      g_timeoff().getData_AllTimeOffRequest(widget.getKaryawanNo, filter, filter2, widget.getType);
     });
   }
 
 
-  _lembur_delete(String getIdRequest) async {
+
+
+  _timeoff_delete(String getIdRequest) async {
     Navigator.pop(context);
-    await m_lembur().lembur_delete(getIdRequest).then((value){
+    await m_timeoff().timeoff_delete(getIdRequest).then((value){
       if(value[0] == 'ConnInterupted'){
         getBahasa.toString() == "1"?
         AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
@@ -86,10 +94,10 @@ class _PageLembur extends State<PageLembur> {
           if(value[0] != '') {
             if(value[0] == '1') {
               setState(() {
-                g_lembur().getData_Lembur(widget.getKaryawanNo, filter, widget.getModul,filter2);
-                //loadData();
+                g_timeoff().getData_AllTimeOffRequest(widget.getKaryawanNo, filter, filter2, widget.getType);
+                loadData();
                 getBahasa.toString() == "1" ?
-                AppHelper().showFlushBarconfirmed(context, "Data berhasil dihapus"):
+                AppHelper().showFlushBarconfirmed(context, "Request berhasil dihapus"):
                 AppHelper().showFlushBarconfirmed(context, "Request has been Deleted");
               });
             } else {
@@ -102,8 +110,6 @@ class _PageLembur extends State<PageLembur> {
     });
   }
 
-
-
   showDeleteDialog(BuildContext context, getIDRequest) {
     Widget cancelButton = TextButton(
       child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
@@ -114,7 +120,7 @@ class _PageLembur extends State<PageLembur> {
       child: TextButton(
         child: Text("HAPUS",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
-          _lembur_delete(getIDRequest);
+          _timeoff_delete(getIDRequest);
         },
       ),
     );
@@ -123,11 +129,11 @@ class _PageLembur extends State<PageLembur> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
       title: Text(
         getBahasa.toString() == "1" ?
-        "Hapus Data":
+        "Hapus Request":
         "Delete Request", style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
       TextAlign.left,),
       content: Text(
-        getBahasa.toString() == "1" ? "Apakah anda yakin menghapus data pengajuan ini ?":
+        getBahasa.toString() == "1" ? "Apakah anda yakin menghapus data ini ?":
         "Would you like to delete this request ?", style: GoogleFonts.nunitoSans(),textAlign:
       TextAlign.left,),
       actions: [
@@ -144,57 +150,18 @@ class _PageLembur extends State<PageLembur> {
     );
   }
 
-
   void showNothing() {}
-
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: Container(
           color: Colors.white,
           height: double.infinity,
           width: double.infinity,
-          child: Column(
+          child : Column(
             children: [
-              widget.getModul != 'createdbyme' ?
-              Container(
-                  height: 70,
-                  width: double.infinity,
-                  child: Container(
-                    padding: EdgeInsets.only(left: 25,right: 25,top: 15),
-                    height: 60,
-                    width: MediaQuery.of(context).size.width,
-                    child: TextFormField(
-                      enableInteractiveSelection: false,
-                      onChanged: (text) {
-                        setState(() {
-                          filter = text;
-                        });
-                      },
-                      style: GoogleFonts.nunito(fontSize: 15),
-                      decoration: new InputDecoration(
-                        contentPadding: const EdgeInsets.all(10),
-                        fillColor: HexColor("#f4f4f4"),
-                        filled: true,
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.only(bottom: 4),
-                          child: Icon(Icons.search,size: 18,color: HexColor("#6c767f"),),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white, width: 1.0,),
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: HexColor("#f4f4f4"), width: 1.0),
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        hintText: getBahasa.toString() == "1" ? 'Cari Pengajuan...' : 'Search Time Off...',
-                      ),
-                    ),
-                  )
-              )
-                  :
+
               Container(
                   height: 70,
                   width: double.infinity,
@@ -229,7 +196,7 @@ class _PageLembur extends State<PageLembur> {
                               borderSide: BorderSide(color: HexColor("#f4f4f4"), width: 1.0),
                               borderRadius: BorderRadius.circular(5.0),
                             ),
-                            hintText: getBahasa.toString() == "1" ? 'Cari Pengajuan...' : 'Search Time Off...',
+                            hintText: getBahasa.toString() == "1" ? 'Cari Time Off...' : 'Search Time Off...',
                           ),
                         ),
                       ),
@@ -281,7 +248,7 @@ class _PageLembur extends State<PageLembur> {
                                                       dense : true,
                                                       title: Text(getBahasa.toString() == "1" ? "Semua Status":"All Status",style: GoogleFonts.montserrat(
                                                           fontWeight: FontWeight.bold,fontSize: 15),),
-                                                      subtitle: Text(getBahasa.toString() == "1" ? "Semua status pengajuan": "Time Off with all status",
+                                                      subtitle: Text(getBahasa.toString() == "1" ? "Semua status Time Off": "Time Off with all status",
                                                           style: GoogleFonts.workSans(
                                                               fontSize: 12)),
                                                     ),
@@ -302,7 +269,7 @@ class _PageLembur extends State<PageLembur> {
                                                       dense : true,
                                                       title: Text(getBahasa.toString() == "1" ? "Terbuka":"Pending",style: GoogleFonts.montserrat(
                                                           fontWeight: FontWeight.bold,fontSize: 15),),
-                                                      subtitle: Text(getBahasa.toString() == "1" ? "Pengajuan dengan status terbuka": "Time Off with pending status",
+                                                      subtitle: Text(getBahasa.toString() == "1" ? "Time Off dengan status terbuka": "Time Off with pending status",
                                                           style: GoogleFonts.workSans(
                                                               fontSize: 12)),
                                                     ),
@@ -322,7 +289,7 @@ class _PageLembur extends State<PageLembur> {
                                                       dense : true,
                                                       title: Text(getBahasa.toString() == "1" ? "Disetujui 1":"Approved 1",style: GoogleFonts.montserrat(
                                                           fontWeight: FontWeight.bold,fontSize: 15),),
-                                                      subtitle: Text(getBahasa.toString() == "1" ? "Pengajuan dengan status disetujui sebagian":"Time Off with Approved 1 status",
+                                                      subtitle: Text(getBahasa.toString() == "1" ? "Time Off dengan status disetujui sebagian":"Time Off with Approved 1 status",
                                                           style: GoogleFonts.workSans(
                                                               fontSize: 12)),
                                                     ),
@@ -344,7 +311,7 @@ class _PageLembur extends State<PageLembur> {
                                                   dense : true,
                                                   title: Text(getBahasa.toString() == "1" ? "Dibatalkan": "Cancel",style: GoogleFonts.montserrat(
                                                       fontWeight: FontWeight.bold,fontSize: 15),),
-                                                  subtitle: Text(getBahasa.toString() == "1" ? "Pengajuan dengan status dibatalkan": "Time Off with Cancel status",
+                                                  subtitle: Text(getBahasa.toString() == "1" ? "Time Off dengan status dibatalkan": "Time Off with Cancel status",
                                                       style: GoogleFonts.workSans(
                                                           fontSize: 12)),
                                                 ),
@@ -364,7 +331,7 @@ class _PageLembur extends State<PageLembur> {
                                                   dense : true,
                                                   title: Text(getBahasa.toString() == "1" ? "Ditolak": "Reject",style: GoogleFonts.montserrat(
                                                       fontWeight: FontWeight.bold,fontSize: 15),),
-                                                  subtitle: Text(getBahasa.toString() == "1" ? "Pengajuan dengan status ditolak": "Time Off with Reject status",
+                                                  subtitle: Text(getBahasa.toString() == "1" ? "Time Off dengan status ditolak": "Time Off with Reject status",
                                                       style: GoogleFonts.workSans(
                                                           fontSize: 12)),
                                                 ),
@@ -384,7 +351,7 @@ class _PageLembur extends State<PageLembur> {
                                                   dense : true,
                                                   title: Text(getBahasa.toString() == "1" ? "Sepenuhnya disetujui": "Fully Approved",style: GoogleFonts.montserrat(
                                                       fontWeight: FontWeight.bold,fontSize: 15),),
-                                                  subtitle: Text(getBahasa.toString() == "1" ? "Pengajuan dengan status sepenuhnya disetujui": "Time Off with Fully Approved status",
+                                                  subtitle: Text(getBahasa.toString() == "1" ? "Time Off dengan status sepenuhnya disetujui": "Time Off with Fully Approved status",
                                                       style: GoogleFonts.workSans(
                                                           fontSize: 12)),
                                                 ),
@@ -409,13 +376,14 @@ class _PageLembur extends State<PageLembur> {
                         ),)
                   )
               ),
+
               Expanded(
                   child: RefreshIndicator(
                     onRefresh: getData,
                     child: Padding(
                         padding: EdgeInsets.only(left: 15,right: 15,top: 15),
                         child:FutureBuilder(
-                          future:  g_lembur().getData_Lembur(widget.getKaryawanNo, filter, widget.getModul,filter2),
+                          future: g_timeoff().getData_AllTimeOffRequest(widget.getKaryawanNo, filter, filter2, widget.getType),
                           builder: (context, snapshot){
                             if (snapshot.data == null) {
                               return Center(
@@ -459,7 +427,7 @@ class _PageLembur extends State<PageLembur> {
                                           children: [
                                             InkWell(
                                               child :
-                                              snapshot.data![i]["j"].toString() == 'Canceled'?
+                                              snapshot.data![i]["l"].toString() == 'Cancel'?
                                               Opacity(
                                                 opacity: 0.5,
                                                 child: ListTile(
@@ -469,7 +437,7 @@ class _PageLembur extends State<PageLembur> {
                                                         opacity: 0.9,
                                                         child:
                                                         Padding(padding: EdgeInsets.only(top: 2),child:
-                                                        Text(snapshot.data![i]["i"].toString(),
+                                                        Text(snapshot.data![i]["m"].toString(),
                                                           overflow: TextOverflow.ellipsis,  style: GoogleFonts.montserrat(
                                                               fontWeight: FontWeight.bold,fontSize: 14.5),),)
                                                     ),
@@ -479,12 +447,14 @@ class _PageLembur extends State<PageLembur> {
                                                           padding: EdgeInsets.only(top: 5),
                                                           child:   Align(alignment: Alignment.centerLeft,child:
                                                           Text(
-                                                                  AppHelper().getTanggalCustom(snapshot.data![i]["f"].toString()) + " "+
-                                                                  AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["f"].toString()) + " "+
-                                                                  AppHelper().getTahunCustom(snapshot.data![i]["f"].toString())+ " - "+
-                                                                  AppHelper().getTanggalCustom(snapshot.data![i]["g"].toString()) + " "+
-                                                                  AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["g"].toString()) + " "+
-                                                                  AppHelper().getTahunCustom(snapshot.data![i]["g"].toString()),
+                                                              AppHelper().getTanggalCustom(snapshot.data![i]["c"].toString()) + " "+
+                                                                  AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["c"].toString()) + " "+
+                                                                  AppHelper().getTahunCustom(snapshot.data![i]["c"].toString())+
+                                                                  " - "+
+                                                                  AppHelper().getTanggalCustom(snapshot.data![i]["d"].toString()) + " "+
+                                                                  AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["d"].toString()) + " "+
+                                                                  AppHelper().getTahunCustom(snapshot.data![i]["d"].toString())+
+                                                                  " ("+snapshot.data![i]["k"].toString()+" Hari"+")",
                                                               overflow: TextOverflow.ellipsis,
                                                               style: GoogleFonts.workSans(fontSize: 13,color: Colors.black)),),
                                                         ),
@@ -492,26 +462,26 @@ class _PageLembur extends State<PageLembur> {
                                                         Padding(
                                                             padding: EdgeInsets.only(top: 2),
                                                             child: Align(alignment: Alignment.centerLeft,
-                                                                child:Text("#"+snapshot.data![i]["a"].toString(),
+                                                                child:Text("#"+snapshot.data![i]["j"].toString(),
                                                                     overflow: TextOverflow.ellipsis,
-                                                                    style: GoogleFonts.workSans(fontSize: 13)))),
+                                                                    style: GoogleFonts.varelaRound(fontSize: 13)))),
                                                       ],
                                                     ),
                                                     trailing:
-                                                    snapshot.data![i]["j"].toString() != 'Fully Approved' ?
+                                                    snapshot.data![i]["l"].toString() != 'Fully Approved' ?
                                                     Opacity(
                                                       opacity: 0.9,
                                                       child: Container(
                                                         child: ElevatedButton(
                                                           style: ElevatedButton.styleFrom(
                                                             elevation: 0,
-                                                            backgroundColor: snapshot.data![i]["j"].toString() == 'Pending'? Colors.black54 :
-                                                            snapshot.data![i]["j"].toString() == 'Approved 1' ? HexColor("#0074D9")  :
+                                                            backgroundColor: snapshot.data![i]["l"].toString() == 'Pending'? Colors.black54 :
+                                                            snapshot.data![i]["l"].toString() == 'Approved 1' ? HexColor("#0074D9")  :
                                                             HexColor("#FF4136"),
                                                           ),
-                                                          child: Text(snapshot.data![i]["j"].toString(),style: GoogleFonts.nunito(fontSize: 12,
-                                                              color: snapshot.data![i]["j"].toString() == 'Pending'? Colors.white :
-                                                              snapshot.data![i]["j"].toString() == 'Approved 1' ? Colors.white :
+                                                          child: Text(snapshot.data![i]["l"].toString(),style: GoogleFonts.nunito(fontSize: 12,
+                                                              color: snapshot.data![i]["l"].toString() == 'Pending'? Colors.white :
+                                                              snapshot.data![i]["l"].toString() == 'Approved 1' ? Colors.white :
                                                               Colors.white,fontWeight: FontWeight.bold),),
                                                           onPressed: (){},
                                                         ),
@@ -528,7 +498,7 @@ class _PageLembur extends State<PageLembur> {
                                                       opacity: 0.9,
                                                       child:
                                                       Padding(padding: EdgeInsets.only(top: 2),child:
-                                                      Text(snapshot.data![i]["i"].toString(),
+                                                      Text(snapshot.data![i]["m"].toString(),
                                                         overflow: TextOverflow.ellipsis,  style: GoogleFonts.montserrat(
                                                             fontWeight: FontWeight.bold,fontSize: 14.5),),)
                                                   ),
@@ -538,12 +508,13 @@ class _PageLembur extends State<PageLembur> {
                                                         padding: EdgeInsets.only(top: 5),
                                                         child:   Align(alignment: Alignment.centerLeft,child:
                                                         Text(
-                                                            AppHelper().getTanggalCustom(snapshot.data![i]["f"].toString()) + " "+
-                                                                AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["f"].toString()) + " "+
-                                                                AppHelper().getTahunCustom(snapshot.data![i]["f"].toString())+ " - "+
-                                                                AppHelper().getTanggalCustom(snapshot.data![i]["g"].toString()) + " "+
-                                                                AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["g"].toString()) + " "+
-                                                                AppHelper().getTahunCustom(snapshot.data![i]["g"].toString()),
+                                                            AppHelper().getTanggalCustom(snapshot.data![i]["c"].toString()) + " "+
+                                                                AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["c"].toString()) + " "+
+                                                                AppHelper().getTahunCustom(snapshot.data![i]["c"].toString())+
+                                                                " - "+
+                                                                AppHelper().getTanggalCustom(snapshot.data![i]["d"].toString()) + " "+
+                                                                AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["d"].toString()) + " "+
+                                                                AppHelper().getTahunCustom(snapshot.data![i]["d"].toString()),
                                                             overflow: TextOverflow.ellipsis,
                                                             style: GoogleFonts.workSans(fontSize: 13,color: Colors.black)),),
                                                       ),
@@ -551,26 +522,26 @@ class _PageLembur extends State<PageLembur> {
                                                       Padding(
                                                           padding: EdgeInsets.only(top: 2),
                                                           child: Align(alignment: Alignment.centerLeft,
-                                                              child:Text("#"+snapshot.data![i]["a"].toString(),
+                                                              child:Text("#"+snapshot.data![i]["j"].toString(),
                                                                   overflow: TextOverflow.ellipsis,
-                                                                  style: GoogleFonts.workSans(fontSize: 13)))),
+                                                                  style: GoogleFonts.varelaRound(fontSize: 13)))),
                                                     ],
                                                   ),
                                                   trailing:
-                                                  snapshot.data![i]["j"].toString() != 'Fully Approved' ?
+                                                  snapshot.data![i]["l"].toString() != 'Fully Approved' ?
                                                   Opacity(
                                                     opacity: 0.9,
                                                     child: Container(
                                                       child: ElevatedButton(
                                                         style: ElevatedButton.styleFrom(
                                                           elevation: 0,
-                                                          backgroundColor: snapshot.data![i]["j"].toString() == 'Pending'? Colors.black54 :
-                                                          snapshot.data![i]["j"].toString() == 'Approved 1' ? HexColor("#0074D9")  :
+                                                          backgroundColor: snapshot.data![i]["l"].toString() == 'Pending'? Colors.black54 :
+                                                          snapshot.data![i]["l"].toString() == 'Approved 1' ? HexColor("#0074D9")  :
                                                           HexColor("#FF4136"),
                                                         ),
-                                                        child: Text(snapshot.data![i]["j"].toString(),style: GoogleFonts.nunito(fontSize: 12,
-                                                            color: snapshot.data![i]["j"].toString() == 'Pending'? Colors.white :
-                                                            snapshot.data![i]["j"].toString() == 'Approved 1' ? Colors.white :
+                                                        child: Text(snapshot.data![i]["l"].toString(),style: GoogleFonts.nunito(fontSize: 12,
+                                                            color: snapshot.data![i]["l"].toString() == 'Pending'? Colors.white :
+                                                            snapshot.data![i]["l"].toString() == 'Approved 1' ? Colors.white :
                                                             Colors.white,fontWeight: FontWeight.bold),),
                                                         onPressed: (){},
                                                       ),
@@ -582,15 +553,16 @@ class _PageLembur extends State<PageLembur> {
                                               onTap: (){
                                                 EasyLoading.show(status: AppHelper().loading_text);
                                                 FocusScope.of(context).requestFocus(FocusNode());
-                                                widget.getModul == 'createdbyme' ?
-                                                Navigator.push(context, ExitPage(page: LemburDetail(snapshot.data![i]["a"].toString(), widget.getKaryawanNo,widget.getKaryawanNama))).then(onGoBack)
-                                                    :
-                                                Navigator.push(context, ExitPage(page: ApprLemburDetail(snapshot.data![i]["a"].toString(), widget.getKaryawanNo,widget.getKaryawanNama))).then(onGoBack);
-
+                                                widget.getType == 'Request' ?
+                                                Navigator.push(context, ExitPage(page: TimeOffDetail(snapshot.data![i]["a"].toString(), widget.getKaryawanNo, widget.getKaryawanNama))).then(onGoBack)
+                                                :
+                                                Navigator.push(context, ExitPage(page: TimeOffApproveDetail(snapshot.data![i]["a"].toString(), widget.getKaryawanNo, widget.getKaryawanNama,"1"))).then(onGoBack); //_changeLocation(snapshot.data![i]["a"].toString());
+                                                //_changeLocation(snapshot.data![i]["a"].toString());
                                               },
                                               onLongPress: () {
-                                                snapshot.data![i]["j"].toString() == 'Canceled' ?
-                                                showDeleteDialog(context, snapshot.data![i]["a"].toString()): showNothing();
+                                                snapshot.data![i]["l"].toString() == 'Cancel' ?
+                                                showDeleteDialog(context, snapshot.data![i]["n"].toString()): showNothing();
+
                                               },
                                             ),
                                             Padding(padding: const EdgeInsets.only(left: 10,right: 10),
@@ -610,37 +582,30 @@ class _PageLembur extends State<PageLembur> {
                     ),
                   )
               )
-
             ],
-          ),
+          )
+
+      ),
+
+      floatingActionButton:
+
+      Visibility(
+        visible: widget.getType == "Request" ? true : false,
+    child :
+      Container(
+        width: 62,
+        height: 62,
+        child: FloatingActionButton(
+          backgroundColor: HexColor("#00a884"),
+          child: FaIcon(FontAwesomeIcons.plus),
+          onPressed: () {
+            FocusScope.of(context).requestFocus(FocusNode());
+            Navigator.push(context, ExitPage(page: PageAddTimeOff(widget.getKaryawanNo, widget.getKaryawanNama))).then(onGoBack);
+          },
         ),
-        floatingActionButton:
-        widget.getModul == 'createdbyme' ?
-        Container(
-          width: 62,
-          height: 62,
-          child: FloatingActionButton(
-            backgroundColor: HexColor("#00a884"),
-            child: FaIcon(FontAwesomeIcons.plus),
-            onPressed: () {
-              FocusScope.of(context).requestFocus(FocusNode());
-              Navigator.push(context, ExitPage(page: LemburAdd(widget.getKaryawanNo, widget.getKaryawanNama, widget.getEmail, "Lembur in Same Day"))).then(onGoBack);
-            },
-          ),
-        ) : Container()
-    ), onWillPop: onWillPop);
+      ),
+    ));
   }
-
-
-  Future<bool> onWillPop() async {
-    try {
-      Navigator.pop(context);
-      return false;
-    } catch (e) {
-      print(e);
-      rethrow;
-    }
-  }
-
 
 }
+

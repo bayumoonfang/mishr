@@ -43,7 +43,7 @@ class _Introduction extends State<Introduction> {
           backgroundColor: Colors.white,
           elevation: 0,
           actions: [
-            Padding(padding: EdgeInsets.all(20),
+           /* Padding(padding: EdgeInsets.all(20),
             child: InkWell(
               child: FaIcon(FontAwesomeIcons.language,color: Colors.black,size: 28,),
               onTap: (){
@@ -127,7 +127,7 @@ class _Introduction extends State<Introduction> {
                       );
                     });
               },
-            ),)
+            ),)*/
           ],
         ),
         backgroundColor: Colors.white,

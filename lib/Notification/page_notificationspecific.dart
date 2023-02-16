@@ -75,23 +75,14 @@ class _PageSpecificNotification extends State<PageSpecificNotification> {
   showDialogAllRead(BuildContext context) {
     //FocusScope.of(context).requestFocus(FocusNode());
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("CANCEL",style: GoogleFonts.lexendDeca(color: Colors.blue),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#1a76d2"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text(getBahasa.toString() == "1"? "Iya": "Yes",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text(getBahasa.toString() == "1"? "IYA": "YES"
+          ,style: GoogleFonts.lexendDeca(color: Colors.blue),),
         onPressed:  () {
           Navigator.pop(context);
           _read_allnotif();
@@ -99,13 +90,15 @@ class _PageSpecificNotification extends State<PageSpecificNotification> {
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Tandai Semua Dibaca": "Mark All As Read", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold),textAlign:
-      TextAlign.center,),
-      content: Text(getBahasa.toString() == "1"? "Apakah anda yakin menandai semua dibaca ?": "Would you like to continue mark all as read ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      title: Text(getBahasa.toString() == "1"? "Tandai Semua Dibaca": "Mark All As Read"
+        , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+      TextAlign.left,),
+      content: Text(getBahasa.toString() == "1"? "Apakah anda yakin menandai semua dibaca ?":
+      "Would you like to continue mark all as read ?", style: GoogleFonts.nunitoSans(),textAlign:
+      TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -209,7 +202,7 @@ class _PageSpecificNotification extends State<PageSpecificNotification> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: <Widget>[
-                                        Image.asset('assets/empty2.png',width: 170,),
+                                        Image.asset('assets/empty2.png',width: 150,),
                                         Padding(
                                           padding: EdgeInsets.only(left: 13),
                                           child:  new Text(
@@ -272,9 +265,8 @@ class _PageSpecificNotification extends State<PageSpecificNotification> {
                                                     padding: EdgeInsets.only(top: 5),
                                                     child:  Align(alignment: Alignment.centerLeft,
                                                         child:  Text(snapshot.data![i]["b"].toString(),
-                                                            overflow: TextOverflow.ellipsis,
-                                                            style: GoogleFonts.montserrat(
-                                                                fontWeight: FontWeight.bold,fontSize: 15,color: Colors.black))),
+                                                            overflow: TextOverflow.ellipsis,  style: GoogleFonts.montserrat(
+                                                                fontWeight: FontWeight.bold,fontSize: 14.5,color: Colors.black))),
                                                   ),
                                                   Padding(
                                                     padding: EdgeInsets.only(top: 5),

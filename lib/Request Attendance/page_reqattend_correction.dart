@@ -193,23 +193,13 @@ class _CorrectionAttendance extends State<CorrectionAttendance> {
     }
 
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#1a76d2"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text(getBahasa.toString() == "1"? "Iya": "Yes",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text(getBahasa.toString() == "1"? "AJUKAN": "Yes",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           Navigator.pop(context);
           _reqattend_correction_create();
@@ -217,13 +207,14 @@ class _CorrectionAttendance extends State<CorrectionAttendance> {
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Menambah Permintaan Koreksi": "Add Attendance Correction", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold),textAlign:
-      TextAlign.center,),
-      content: Text(getBahasa.toString() == "1"? "Apakah anda yakin menambah permintaan koreksi ? ": "Would you like to continue add attendance correction ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      title: Text(getBahasa.toString() == "1"? "Tambah Pengajuan Koreksi": "Add Attendance Correction", style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+      TextAlign.left,),
+      content: Text( getBahasa.toString() == "1"? "Apakah anda yakin data sudah benar dan melanjutkan untuk mengirim pengajuan ?":
+      "Are you sure the data is correct and continues to send a submission ?", style: GoogleFonts.nunitoSans(),textAlign:
+      TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -244,7 +235,7 @@ class _CorrectionAttendance extends State<CorrectionAttendance> {
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(getBahasa.toString() == "1"? "Permintaan": "Attendance "+widget.getType, style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text(getBahasa.toString() == "1"? "Detail Pengajuan": "Attendance "+widget.getType, style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) =>
@@ -271,13 +262,13 @@ class _CorrectionAttendance extends State<CorrectionAttendance> {
                   children: [
                     Image.asset('assets/empty2.png',width: 140,),
                     getBahasa.toString() == "1"?
-                    Text("Oh Sorry", style: GoogleFonts.nunito(fontSize: 45,fontWeight: FontWeight.bold)):
+                    Text("Oh Sorry", style: GoogleFonts.nunito(fontSize: 45,fontWeight: FontWeight.bold),textAlign: TextAlign.center):
                     Text("Mohon Maaf", style: GoogleFonts.nunito(fontSize: 45,fontWeight: FontWeight.bold)),
                     getBahasa.toString() == "1"?
-                    Text("Kami menemukan permintaan Anda yang lain", style: GoogleFonts.nunito(fontSize: 15)):
+                    Text("Kami menemukan permintaan Anda yang lain", style: GoogleFonts.nunito(fontSize: 15),textAlign: TextAlign.center,):
                     Text("We find your another attendance request", style: GoogleFonts.nunito(fontSize: 15)),
                     getBahasa.toString() == "1"?
-                    Text("Harap tunggu persetujuan atau batalkan permintaan terbaru Anda", style: GoogleFonts.nunito(fontSize: 15)):
+                    Text("Harap tunggu persetujuan atau batalkan permintaan terbaru Anda", style: GoogleFonts.nunito(fontSize: 15),textAlign: TextAlign.center):
                     Text("Please wait for approval or cancel your latest request", style: GoogleFonts.nunito(fontSize: 15))
                   ]),
             ) : getAttenceMessage == "3" ?
@@ -289,7 +280,7 @@ class _CorrectionAttendance extends State<CorrectionAttendance> {
                     Image.asset('assets/empty2.png',width: 140,),
                     getBahasa.toString() == "1"?
                     Text("Oh Sorry", style: GoogleFonts.nunito(fontSize: 35,fontWeight: FontWeight.bold)):
-                    Text("Mohon Maaf", style: GoogleFonts.nunito(fontSize: 35,fontWeight: FontWeight.bold)),
+                    Text("Mohon Maaf", style: GoogleFonts.nunito(fontSize: 35,fontWeight: FontWeight.bold),textAlign: TextAlign.center),
                     getBahasa.toString() == "1"?
                     Text("Kami Tidak Menemukan Kehadiran dalam permintaan tanggal Anda", style: GoogleFonts.nunito(fontSize: 15),
                       textAlign: TextAlign.center,) :
@@ -425,8 +416,8 @@ class _CorrectionAttendance extends State<CorrectionAttendance> {
                       ),
                       contentPadding: const EdgeInsets.only(
                           top: 2),
-                      hintText: getBahasa.toString() == "1"? 'Pilih Jam Masuk': 'Pick Correction Clock In',
-                      labelText: getBahasa.toString() == "1"? 'Jam Masuk': 'Clock In',
+                      hintText: getBahasa.toString() == "1"? 'Tentukan Jam Masuk': 'Pick Correction Clock In',
+                      labelText: getBahasa.toString() == "1"? 'Clock In': 'Clock In',
                       labelStyle: TextStyle(
                           fontFamily: "VarelaRound",
                           fontSize: 16.5, color: Colors.black87
@@ -486,8 +477,8 @@ class _CorrectionAttendance extends State<CorrectionAttendance> {
                       ),
                       contentPadding: const EdgeInsets.only(
                           top: 2),
-                      hintText: getBahasa.toString() == "1"? 'Pilih Jam Keluar': 'Pick Correction Clock Out',
-                      labelText: getBahasa.toString() == "1"? 'Jam Keluar': 'Clock Out',
+                      hintText: getBahasa.toString() == "1"? 'Tentukan Jam Keluar': 'Pick Correction Clock Out',
+                      labelText: getBahasa.toString() == "1"? 'Clock Out': 'Clock Out',
                       labelStyle: TextStyle(
                           fontFamily: "VarelaRound",
                           fontSize: 16.5, color: Colors.black87
@@ -542,7 +533,7 @@ class _CorrectionAttendance extends State<CorrectionAttendance> {
         visible: _isPressedBtn,
         child: Container(
             color: Colors.white,
-            padding: EdgeInsets.only(left: 45, right: 45, bottom: 10),
+            padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
             width: double.infinity,
             height: 58,
             child:
@@ -557,7 +548,7 @@ class _CorrectionAttendance extends State<CorrectionAttendance> {
                   ),
                     borderRadius: BorderRadius.circular(5.0),
                   )),
-              child: Text(getBahasa.toString() == "1"? "Buat Permintaan": "Create Request",style: GoogleFonts.lexendDeca(color: HexColor("#ffffff"),fontWeight: FontWeight.bold,
+              child: Text(getBahasa.toString() == "1"? "Ajukan Koreksi Kehadiran": "Create Request",style: GoogleFonts.lexendDeca(color: HexColor("#ffffff"),fontWeight: FontWeight.bold,
                   fontSize: 14),),
               onPressed: () {
                 //FocusScope.of(context).requestFocus(new FocusNode());

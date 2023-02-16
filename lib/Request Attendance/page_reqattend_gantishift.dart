@@ -210,23 +210,13 @@ class _RequestGantiShift extends State<RequestGantiShift> {
     }
 
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#1a76d2"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text(getBahasa.toString() == "1"? "Iya": "Yes",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text(getBahasa.toString() == "1"? "AJUKAN": "Yes",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           Navigator.pop(context);
           _reqattend_gantishift_create();
@@ -234,13 +224,14 @@ class _RequestGantiShift extends State<RequestGantiShift> {
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Tambah Permintaan Ganti Shift": "Add Attendance Ganti Shift", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold),textAlign:
-      TextAlign.center,),
-      content: Text(getBahasa.toString() == "1"? "Apakah anda yakin membuat permintaan ganti shift ?": "Would you like to continue add attendance ganti shift ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      title: Text(getBahasa.toString() == "1"? "Tambah Pengajuan Ganti Shift": "Add Attendance Correction", style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+      TextAlign.left,),
+      content: Text( getBahasa.toString() == "1"? "Apakah anda yakin data sudah benar dan melanjutkan untuk mengirim pengajuan ?":
+      "Are you sure the data is correct and continues to send a submission ?", style: GoogleFonts.nunitoSans(),textAlign:
+      TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -261,7 +252,7 @@ class _RequestGantiShift extends State<RequestGantiShift> {
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(getBahasa.toString() == "1"? "Permintaan "+widget.getType: "Attendance "+widget.getType, style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text("Detail Pengajuan", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) =>
@@ -448,7 +439,7 @@ class _RequestGantiShift extends State<RequestGantiShift> {
         visible: _isPressedBtn,
         child: Container(
             color: Colors.white,
-            padding: EdgeInsets.only(left: 45, right: 45, bottom: 10),
+            padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
             width: double.infinity,
             height: 58,
             child:
@@ -463,7 +454,7 @@ class _RequestGantiShift extends State<RequestGantiShift> {
                   ),
                     borderRadius: BorderRadius.circular(5.0),
                   )),
-              child: Text(getBahasa.toString() == "1"? "Buat Permintaan": "Create Request",style: GoogleFonts.lexendDeca(color: HexColor("#ffffff"),fontWeight: FontWeight.bold,
+              child: Text(getBahasa.toString() == "1"? "Ajukan Ganti Shift": "Create Request",style: GoogleFonts.lexendDeca(color: HexColor("#ffffff"),fontWeight: FontWeight.bold,
                   fontSize: 14),),
               onPressed: () {
                 //FocusScope.of(context).requestFocus(new FocusNode());

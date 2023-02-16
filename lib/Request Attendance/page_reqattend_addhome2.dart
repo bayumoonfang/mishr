@@ -55,7 +55,7 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
       return WillPopScope(child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text(getBahasa.toString() == "1"?  "Tambah Permintaan":"Add Request", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+          title: Text(getBahasa.toString() == "1"?  "Tambah Pengajuan":"Add Request", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
           elevation: 0,
           leading: Builder(
             builder: (context) =>

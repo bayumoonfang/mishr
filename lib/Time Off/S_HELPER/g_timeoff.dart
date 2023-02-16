@@ -155,12 +155,33 @@ class g_timeoff{
   }
 
 
-  Future<List> getData_AllTimeOffRequest(getKaryawanNo, filter, filter2, filter3 ) async {
+  Future<List> getData_AllTimeOffRequest(getKaryawanNo, filter, filter2, getType) async {
     int errorCode = 0;
     await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
       errorCode = 2; return false;}});
     http.Response response = await http.get(  Uri.parse(applink+"mobile/api_mobile.php?act=getData_AllTimeOffRequest&"
-        "karyawan_no="+getKaryawanNo+"&filter="+filter+"&filter2="+filter2+"&filter3="+filter3)).
+        "karyawan_no="+getKaryawanNo+"&filter="+filter+"&filter2="+filter2+"&getType="+getType)).
+    timeout(Duration(seconds: 10), onTimeout: () {http.Client().close(); errorCode = 1;
+    return http.Response('Error', 500);});
+
+    if(errorCode == 1 || errorCode == 2) {
+      EasyLoading.dismiss();
+      return ["ConnInterupted",http.Response('Error', 500)];
+    }  else {
+      EasyLoading.dismiss();
+      return json.decode(response.body);
+    }
+  }
+
+
+
+
+  Future<List> getData_AllTimeOffSaldo(getKaryawanNo) async {
+    int errorCode = 0;
+    await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
+      errorCode = 2; return false;}});
+    http.Response response = await http.get(  Uri.parse(applink+"mobile/api_mobile.php?act=getData_AllTimeOffSaldo&"
+        "karyawan_no="+getKaryawanNo)).
     timeout(Duration(seconds: 10), onTimeout: () {http.Client().close(); errorCode = 1;
     return http.Response('Error', 500);});
 

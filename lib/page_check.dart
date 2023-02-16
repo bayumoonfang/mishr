@@ -83,9 +83,9 @@ class _PageCheck extends State<PageCheck> {
   Widget build(BuildContext context) {
     return WillPopScope(child: Scaffold(
       body: Container(
+          color: Colors.white,
           height: double.infinity,
           width: double.infinity,
-          color: Colors.white,
           child : Visibility(
             child :
             getConnection == '1' ?
@@ -117,15 +117,28 @@ class _PageCheck extends State<PageCheck> {
       ),
       bottomSheet: Container(
         color: Colors.white,
-        height: 40,
+        height: 45,
         width: double.infinity,
-        child: Center(
-          child:
-          getConnection == '1' ?
-          Text(
-              getBahasa.toString() == "1"?
-              "Menyiapkan data anda" : "Preparing your data",  style: GoogleFonts.nunitoSans(
-              fontSize: 13)) : Container()
+        child: Column(
+ children: [
+           Center(
+               child:
+               getConnection == '1' ?
+               Text(
+                   getBahasa.toString() == "1"?
+                   "Menyiapkan data anda..." : "Preparing your data",  style: GoogleFonts.nunitoSans(
+                   fontSize: 13)) : Container()
+           ),
+          Padding(
+            padding: EdgeInsets.only(top:5),
+            child:  Center(
+                child:
+                Text(
+                    "MIS HR : Aplikasi HR Terbaik Karya Anak Bangsa",  style: GoogleFonts.nunitoSans(
+                    fontSize: 13,fontWeight: FontWeight.bold))
+            ),
+          )
+ ],
         ),
       ),
     ), onWillPop: onWillPop);

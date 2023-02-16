@@ -138,7 +138,7 @@ class _TimeOffDetail extends State<TimeOffDetail> {
     setState(() {
       _isPressedBtn = false;
       _isPressedHUD = true;
-      fcm_message =  getBahasa.toString() == "1" ? "Pihak yang membuat CUTI telah membatalkan cutinya hari ini" :
+      fcm_message =  getBahasa.toString() == "1" ? "Pihak yang membuat CUTI telah membatalkan pengajuannya hari ini" :
       "The party that made LEAVE has canceled his leave today.";
     });
     await m_timeoff().timeoff_cancel(widget.getKaryawanNo, timeoff_number, widget.getKaryawanNama, fcm_message).then((value){
@@ -172,35 +172,25 @@ class _TimeOffDetail extends State<TimeOffDetail> {
 
   dialog_timeoffCancel(BuildContext context) {
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#e21b4c"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text("Yes",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text("BATALKAN",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           _timeoff_cancel();
         },
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text("Cancel Request", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold),textAlign:
-      TextAlign.center,),
-      content: Text("Would you like to continue cancel this request ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      title: Text("Batalkan Pengajuan", style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+      TextAlign.left,),
+      content: Text("Apakah anda yakin untuk membatalkan pengajuan ini ?", style: GoogleFonts.nunitoSans(),textAlign:
+      TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -675,12 +665,7 @@ class _TimeOffDetail extends State<TimeOffDetail> {
                                   child: Text(timeoff_reqBy.toString(), style: GoogleFonts.nunito(fontSize: 14) ),),
                               ]),
 
-                              TableRow(children :[
-                                Padding(padding: EdgeInsets.only(bottom: 5),
-                                  child: Text(getBahasa.toString() == "1"? 'Delegasi':'Delegate', style: GoogleFonts.nunito(fontSize: 14) ),),
-                                Padding(padding: EdgeInsets.only(bottom: 5),
-                                  child: Text(timeoff_delegate == 'null' ? '-' : timeoff_delegate_name, style: GoogleFonts.nunito(fontSize: 14) ),),
-                              ]),
+
 
                               TableRow(children :[
                                 Padding(padding: EdgeInsets.only(bottom: 5),
@@ -760,7 +745,7 @@ class _TimeOffDetail extends State<TimeOffDetail> {
         visible: _isPressedBtn,
         child: Container(
             color: Colors.white,
-            padding: EdgeInsets.only(left: 45, right: 45, bottom: 10),
+            padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
             width: double.infinity,
             height: 58,
             child:
@@ -776,7 +761,7 @@ class _TimeOffDetail extends State<TimeOffDetail> {
                   ),
                     borderRadius: BorderRadius.circular(5.0),
                   )),
-              child: Text(getBahasa.toString() == "1"? "Batalkan Request" : "Cancel Request",style: GoogleFonts.lexendDeca(color: HexColor("#ffeaef"),fontWeight: FontWeight.bold,
+              child: Text(getBahasa.toString() == "1"? "Batalkan Pengajuan" : "Cancel Submission",style: GoogleFonts.lexendDeca(color: HexColor("#ffeaef"),fontWeight: FontWeight.bold,
                   fontSize: 14),),
               onPressed: () {
                 dialog_timeoffCancel(context);

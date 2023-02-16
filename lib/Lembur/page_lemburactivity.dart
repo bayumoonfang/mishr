@@ -7,7 +7,6 @@ import 'dart:convert';
 import 'package:abzeno/Helper/app_link.dart';
 import 'package:abzeno/Helper/page_route.dart';
 import 'package:abzeno/Notification/page_detailnotification.dart';
-import 'package:abzeno/Request%20Attendance/S_HELPER/g_reqattend.dart';
 import 'package:abzeno/Time%20Off/S_HELPER/g_timeoff.dart';
 import 'package:abzeno/helper/app_helper.dart';
 import 'package:badges/badges.dart';
@@ -19,15 +18,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
-class PageReqAttendActivityDetail extends StatefulWidget{
-  final String getReqAttendCode;
-  const PageReqAttendActivityDetail(this.getReqAttendCode);
+
+import 'S_HELPER/g_lembur.dart';
+class PageActivityLembur extends StatefulWidget{
+  final String getTimeOffNumber;
+  const PageActivityLembur(this.getTimeOffNumber);
   @override
-  _PageReqAttendActivityDetail createState() => _PageReqAttendActivityDetail();
+  _PageActivityLembur createState() => _PageActivityLembur();
 }
 
 
-class _PageReqAttendActivityDetail extends State<PageReqAttendActivityDetail> {
+class _PageActivityLembur extends State<PageActivityLembur> {
+
 
   String getBahasa = "1";
   getSettings() async {
@@ -38,13 +40,6 @@ class _PageReqAttendActivityDetail extends State<PageReqAttendActivityDetail> {
   }
 
 
-
-  Future getData() async {
-    setState(() {
-      g_reqattend().getData_reqattendDetailActivity(widget.getReqAttendCode);
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -53,12 +48,20 @@ class _PageReqAttendActivityDetail extends State<PageReqAttendActivityDetail> {
 
 
 
+
+  Future getData() async {
+    setState(() {
+      g_lembur().getData_lemburActivity(widget.getTimeOffNumber);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(getBahasa.toString() =="1" ? "History Pengajuan": "Activity Request Attendance",overflow: TextOverflow.ellipsis,
+        title: Text(getBahasa.toString() =="1" ? "Aktifitas Lembur" : "Activity Time Off",overflow: TextOverflow.ellipsis,
           style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
@@ -82,14 +85,14 @@ class _PageReqAttendActivityDetail extends State<PageReqAttendActivityDetail> {
                 children: [
                   Expanded(
                       child: FutureBuilder(
-                        future: g_reqattend().getData_reqattendDetailActivity(widget.getReqAttendCode),
+                        future: g_lembur().getData_lemburActivity(widget.getTimeOffNumber),
                         builder: (context, snapshot){
                           if (snapshot.data == null) {
                             return Center(
-                                child: const SpinKitThreeBounce(
-                                  size: 30,
-                                  color: Colors.indigo,
-                                ),
+                              child: const SpinKitThreeBounce(
+                                size: 30,
+                                color: Colors.indigo,
+                              ),
                             );
                           } else {
                             return snapshot.data == 0 || snapshot.data?.length == 0 ?
@@ -102,12 +105,15 @@ class _PageReqAttendActivityDetail extends State<PageReqAttendActivityDetail> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: <Widget>[
-                                        Image.asset('assets/nodata.png',width: 150,),
-                                        new Text(
-                                          "Data Not Found",
-                                          style: new TextStyle(
-                                              fontFamily: 'VarelaRound', fontSize: 15),
-                                        ),
+                                        Image.asset('assets/empty2.png',width: 150,),
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 13),
+                                          child:  new Text(
+                                            getBahasa.toString() == "1" ? "Tidak ada data": "No Data",
+                                            style: new TextStyle(
+                                                fontFamily: 'VarelaRound', fontSize: 13),
+                                          ),
+                                        )
                                       ],
                                     )))
                                 :
@@ -129,9 +135,17 @@ class _PageReqAttendActivityDetail extends State<PageReqAttendActivityDetail> {
                                               Container(
                                                 width: double.infinity,
                                                 padding : EdgeInsets.all(6),
-                                                child: Text(AppHelper().getTanggalCustom(snapshot.data![i]["d"].toString()) + " "+
-                                                    AppHelper().getNamaBulanCustomFull(snapshot.data![i]["d"].toString()) + " "+
-                                                    AppHelper().getTahunCustom(snapshot.data![i]["d"].toString())+ " - "+snapshot.data![i]["e"].toString(),
+                                                child: Text(
+                                                    getBahasa.toString() =="1" ?
+                                                    AppHelper().getTanggalCustom(snapshot.data![i]["d"].toString()) + " "+
+                                                        AppHelper().getNamaBulanCustomFull(snapshot.data![i]["d"].toString()) + " "+
+                                                        AppHelper().getTahunCustom(snapshot.data![i]["d"].toString())+ " - "+snapshot.data![i]["e"].toString()
+                                                        :
+                                                    AppHelper().getTanggalCustom(snapshot.data![i]["d"].toString()) + " "+
+                                                        AppHelper().getNamaBulanCustomFullEnglish(snapshot.data![i]["d"].toString()) + " "+
+                                                        AppHelper().getTahunCustom(snapshot.data![i]["d"].toString())+ " - "+snapshot.data![i]["e"].toString()
+
+                                                    ,
                                                     style: GoogleFonts.workSans(fontSize: 13,color: Colors.black)),
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(5),

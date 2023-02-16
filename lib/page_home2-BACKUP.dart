@@ -38,7 +38,6 @@ import 'Announecement/page_announcement.dart';
 import 'Attendance/page_attendancelembur.dart';
 import 'Helper/m_helper.dart';
 import 'Lembur/page_lemburhome.dart';
-import 'My Team/page_myteam.dart';
 import 'MySchedule/page_myschedule2.dart';
 import 'NotificationBadge.dart';
 import 'Report/page_report.dart';
@@ -49,7 +48,6 @@ import 'Request Attendance/page_reqattendance.dart';
 import 'Setting/page_setting.dart';
 import 'Time Off/ARCHIVED/page_timeoffhome.dart';
 import 'Time Off/page_timeoffhome2.dart';
-import 'Time Off/page_timeoffhome2a.dart';
 import 'helper/app_helper.dart';
 import 'helper/app_link.dart';
 import 'helper/page_route.dart';
@@ -61,7 +59,7 @@ import 'package:draggable_fab/draggable_fab.dart';
 
 
 
-class Home2 extends StatefulWidget{
+class Home22 extends StatefulWidget{
   final String getKaryawanNama;
   final String getKaryawanJabatan;
   final String getKaryawanNo;
@@ -75,7 +73,7 @@ class Home2 extends StatefulWidget{
   final String getScheduleBtn;
   final String getKaryawanEmail;
   final Function runLoopMe;
-  const Home2(this.getKaryawanNama, this.getKaryawanJabatan, this.getKaryawanNo,
+  const Home22(this.getKaryawanNama, this.getKaryawanJabatan, this.getKaryawanNo,
       this.getScheduleName,
       this.getStartTime,
       this.getEndTime,
@@ -85,11 +83,11 @@ class Home2 extends StatefulWidget{
 
 
   @override
-  _Home2 createState() => _Home2();
+  _Home22 createState() => _Home22();
 }
 
 
-class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
+class _Home22 extends State<Home22> with AutomaticKeepAliveClientMixin<Home22> {
   @override
   bool get wantKeepAlive => true;
   bool _isVisibleBtn = false;
@@ -120,13 +118,23 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
 
   showVersionDialog(BuildContext context) {
     Widget cancelButton = TextButton(
-      child: Text(getBahasa.toString() == "1"? "TUTUP" : "CLOSE",style: GoogleFonts.lexendDeca(color: Colors.blue),),
+      child: Text(getBahasa.toString() == "1"? "Tutup" : "Close",style: GoogleFonts.lexendDeca(color: Colors.black),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
-      width: 120,
+      width: 100,
       child: TextButton(
-        child: Text(getBahasa.toString() == "1"?  "UPDATE NOW":"UPDATE NOW",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
+        style: ElevatedButton.styleFrom(
+            primary: HexColor("#1a76d2"),
+            elevation: 0,
+            shape: RoundedRectangleBorder(side: BorderSide(
+                color: Colors.white,
+                width: 0.1,
+                style: BorderStyle.solid
+            ),
+              borderRadius: BorderRadius.circular(5.0),
+            )),
+        child: Text(getBahasa.toString() == "1"?  "Perbaharui":"Update",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
         onPressed:  () {
           //Navigator.pop(context);
           if (Platform.isAndroid || Platform.isIOS) {
@@ -142,24 +150,14 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.end,
+      actionsAlignment: MainAxisAlignment.spaceEvenly,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Perbarui Versi ?" :"New Version Available"
-        , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
-      TextAlign.left,),
-      content: Container(
-        height: 120,
-        child : Column(
-          children: [
-            Text("Versi terbaru untuk aplikasi MISHR sudah tersedia ! Untuk versi terbaru adalah "+getVersionNew+", sedangkan versi anda saat ini adalah "+getVersionExisting, style: GoogleFonts.nunitoSans(),textAlign:
-            TextAlign.left,),
-            SizedBox(height: 10,),
-            Text("Apakah anda ingin memperbarui versi ?", style: GoogleFonts.nunitoSans(),textAlign:
-            TextAlign.left,),
-          ],
-        )
-      ),
+      title: Text(getBahasa.toString() == "1"? "Versi Terbaru Tersedia" :"New Version Available", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold),textAlign:
+      TextAlign.center,),
+      content: Text(getBahasa.toString() == "1"?  "Versi "+getNewVersion+" sudah tersedia, ayo perbarui aplikasi kamu untuk modul baru dan performa lebih baik"
+          : "Version "+getNewVersion+" already available, let's update your app for better performance", style: GoogleFonts.nunitoSans(),textAlign:
+      TextAlign.center,),
       actions: [
         cancelButton,
         continueButton,
@@ -175,12 +173,9 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
 
 
 
-
-
-
-  String getFullVersionNew = "";
-  String getVersionNew = "";
-  String getFullVersionExisting = "";
+  String versionVal = '...';
+  String codeVal = '...';
+  String getNewVersion = "";
   String getVersionExisting = "";
     CekVersion() async {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -188,16 +183,10 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
       String code = packageInfo.buildNumber;
       await AppHelper().getNewVersion2().then((value){
         setState(() {
-          getFullVersionNew = value[0]+ " build "+value[1];
-          getVersionNew = value[0];
-          getFullVersionExisting = version+ " build "+code;
-          getVersionExisting = version;
-          //String getVersion = version+ " build "+code;
-
-          if(getFullVersionExisting != getFullVersionNew) {
-           // getNewVersion = value[0];
-            //getNewVersion = version;
-            //getVersionExisting = version+ " build "+code;
+          String getVersion = version+ " build "+code;
+          if(getVersion != value[0]) {
+            getNewVersion = value[0];
+            getVersionExisting = version+ " build "+code;
             showVersionDialog(context);
           }
         });});
@@ -364,7 +353,6 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
     });
     super.initState();
     loadData();
-    EasyLoading.dismiss();
   }
 
 
@@ -524,7 +512,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                 widget.getKaryawanNo,
                 getJam, getWorkLocationId,AppHelper().getNamaHari().toString(),
                 getWorkLat.toString(),
-                getWorkLong.toString(),"CLOCK IN",
+                getWorkLong.toString(),"Clock In",
                 widget.getKaryawanNama.toString(),
                 widget.getKaryawanJabatan.toString(),
                 widget.getStartTime.toString(),
@@ -538,7 +526,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
             widget.getKaryawanNo,
             getJam, getWorkLocationId,AppHelper().getNamaHari().toString(),
             getWorkLat.toString(),
-            getWorkLong.toString(),"CLOCK OUT",
+            getWorkLong.toString(),"Clock Out",
             widget.getKaryawanNama.toString(),
             widget.getKaryawanJabatan.toString(),
             widget.getStartTime.toString(),
@@ -579,17 +567,17 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                           ],
                         ),
                         color:  HexColor("#3aa13d"),
-                        image: DecorationImage(
-                          image: AssetImage("assets/ddf29.png"),
+                        /*  image: DecorationImage(
+                          image: AssetImage("assets/ddf26.png"),
                           //image: AssetImage("assets/doodleme30.png"),
                           fit: BoxFit.cover,
                         ),
-                      /*  borderRadius: BorderRadius.vertical(
+                       borderRadius: BorderRadius.vertical(
                             bottom: Radius.elliptical(
                                 MediaQuery.of(context).size.width, 10.0)),*/
                       ),
                       width: double.infinity,
-                      height: 160,
+                      height: 225,
                       child : Stack(
                         clipBehavior: Clip.none, alignment: Alignment.topCenter,
                         children: [
@@ -616,7 +604,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
 
 
                           Positioned(
-                              top: 50, right: 0, left:0, child:
+                              top: 90, right: 0, left:0, child:
                           Align(
                             alignment: Alignment.bottomLeft,
                             child:  Text(
@@ -626,12 +614,12 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                 fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
                           )),
                           Positioned(
-                              top: 70, right: 0, left:0, child: Text(
+                              top: 110, right: 0, left:0, child: Text(
                             widget.getKaryawanNama.toString(),
                             style: TextStyle(color: Colors.white, fontFamily: 'VarelaRound', fontWeight: FontWeight.bold, fontSize: 22),)
                           ),
                           Positioned(
-                            top: 100, right: 0, left:0, child: Text(widget.getKaryawanJabatan.toString(), style: TextStyle(color: Colors.white,
+                            top: 137, right: 0, left:0, child: Text(widget.getKaryawanJabatan.toString(), style: TextStyle(color: Colors.white,
                               fontFamily: 'VarelaRound', fontSize: 11,
                               fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
                           ),
@@ -640,19 +628,17 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                   ),
 
 
-
-
-
-                  Padding(padding: const EdgeInsets.only(top: 130,left: 20,right: 20),
+                  Padding(padding: const EdgeInsets.only(top: 170,left: 25,right: 25),
                       child : Container(
-                          height: 208,
+
+                          height: 212,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                           /*image: DecorationImage(
-                              image: AssetImage("assets/ddf29a.png"),
+                            image: DecorationImage(
+                              image: AssetImage("assets/ddf26.png"),
                               //image: AssetImage("assets/doodleme30.png"),
                               fit: BoxFit.cover,
-                            ),*/
+                            ),
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
                             boxShadow: [
@@ -733,16 +719,12 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                         children: [
                                           FaIcon(FontAwesomeIcons.mapMarker,size: 12,color: Colors.blue,),
                                           Padding(padding: const EdgeInsets.only(left: 10),
-                                            child:
-                                            Text(
+                                            child: Text(
                                                 getWorkLocation.toString()
                                                 /*getWorkLocation.toString() != 'null' || getWorkLocation.toString() != '' ? getWorkLocation.toString() :
                                               "Belum Disetting"*/,
                                                 style: GoogleFonts.nunito(fontSize: 17,color: Colors.blue)
-                                            ),
-
-
-                                          )
+                                            ),)
                                         ],
                                       ),
                                       onTap: (){
@@ -866,8 +848,8 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
 
                   Padding(
                       padding:
-                      getPINq == AppHelper().default_pass || getCountLembur == "1" ? const EdgeInsets.only(top: 375,left: 25,right: 25) :
-                      const EdgeInsets.only(top: 385,left: 25,right: 25),
+                      getPINq == AppHelper().default_pass || getCountLembur == "1" ? const EdgeInsets.only(top: 415,left: 25,right: 25) :
+                      const EdgeInsets.only(top: 435,left: 25,right: 25),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -880,7 +862,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                 //border: Border.all(color: HexColor("#0a5d5f")),
                                 color: HexColor("#e8fcfb"),
                                 image: DecorationImage(
-                                  image: AssetImage("assets/ddf29c.png"),
+                                  image: AssetImage("assets/doodleme30.png"),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -898,7 +880,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                       child: Text(
                                         getBahasa.toString() == '1' ?
                                         "Lembur Hari ini" : "Today Overtime",
-                                        style: GoogleFonts.montserrat(color: Colors.black,fontWeight: FontWeight.bold,
+                                        style: GoogleFonts.nunitoSans(color: Colors.black,fontWeight: FontWeight.bold,
                                             fontSize: 14),textAlign: TextAlign.center,),
                                     )
                                   ),
@@ -931,6 +913,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                       ElevatedButton(child : Text("Clock In",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
                                                           fontSize: 11.5),),
                                                         style: ElevatedButton.styleFrom(
+
                                                             elevation: 0,
                                                             shape: RoundedRectangleBorder(side: BorderSide(
                                                                 color: Colors.white,
@@ -1028,6 +1011,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                 child:  ListTile(
                                   leading: FaIcon(FontAwesomeIcons.lock),
                                   title: Text(
+
                                     getBahasa.toString() == '1' ?
                                     "Ayo ganti PIN kamu untuk keamanan lebih sempurna" :
                                     "Lets change your PIN to more security",
@@ -1166,7 +1150,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                 width: 62,
                                 child: InkWell(
                                   onTap: (){
-                                    Navigator.push(context, ExitPage(page: PageTimeOffHome2a(widget.getKaryawanNo,widget.getKaryawanNama.toString(), widget.getKaryawanEmail))).then(onGoBack2);
+                                    Navigator.push(context, ExitPage(page: PageTimeOffHome2(widget.getKaryawanNo,widget.getKaryawanNama.toString(), widget.getKaryawanEmail))).then(onGoBack2);
                                   },
                                   child:Column(
                                     children: [
@@ -1344,7 +1328,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                     ),
                                   )) : Container(),
 
-                            /*  pressBtnSemua == "1" || pressBtnInformasi == "1" ?
+                              pressBtnSemua == "1" || pressBtnInformasi == "1" ?
                               Container(
                                 width: 62,
                                 child:
@@ -1372,40 +1356,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                       child: Text(getBahasa.toString() == '1' ? "Informasi":"Information", style: GoogleFonts.nunito(fontSize: 13),textAlign: TextAlign.center,),)
                                   ],
                                 ),
-                              )) : Container(),*/
-
-
-                              pressBtnSemua == "1" || pressBtnInformasi == "1" ?
-                              Container(
-                                  width: 62,
-                                  child:
-                                  InkWell(
-                                    onTap: (){
-                                      Navigator.push(context, ExitPage(page: PageMyTeam(widget.getKaryawanNo)));
-                                    },
-                                    child:Column(
-                                      children: [
-                                        Container(
-                                            height: 45, width: 45,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: HexColor("#fff3db"),
-                                              border: Border.all(
-                                                color : HexColor("#DDDDDD"),
-                                                width: 0.5,
-                                              ),
-                                            ),
-                                            child: Center(
-                                              child: FaIcon(FontAwesomeIcons.users, color: HexColor("#feb81a"), size: 24,),
-                                            )
-                                        ),
-                                        Padding(padding: const EdgeInsets.only(top:8),
-                                          child: Text(getBahasa.toString() == '1' ? "My Team":"Information", style: GoogleFonts.nunito(fontSize: 13),textAlign: TextAlign.center,),)
-                                      ],
-                                    ),
-                                  )) : Container()
-
-
+                              )) : Container()
 
                             ],
                           ),

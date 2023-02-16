@@ -257,36 +257,29 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
 
   dialog_appr1(BuildContext context) {
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#1a76d2"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text(getBahasa.toString() == "1"?  "Setujui":"Approve",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text(getBahasa.toString() == "1"?  "SETUJUI":"APPROVE"
+          ,style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           _timeoff_appr("1");
         },
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Setujui Permintaan" :"Approve Request", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold),textAlign:
-      TextAlign.center,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui permintaan ini sebagai persetujuan 1 ?": "Would you like to continue approve this request as Approval 1 ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      title: Text(getBahasa.toString() == "1"? "Setujui Permintaan" :"Approve Request"
+        , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+      TextAlign.left,),
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui permintaan ini sebagai persetujuan 1 ?": "Would you like to continue approve this request as Approval 1 ?"
+        , style: GoogleFonts.nunitoSans(),textAlign:
+        TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -302,37 +295,29 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
 
   dialog_appr2(BuildContext context) {
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#1a76d2"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text(getBahasa.toString() == "1"?  "Setujui": "Approve",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text(getBahasa.toString() == "1"?  "SETUJUI": "APPROVE"
+          ,style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           _timeoff_appr("2");
         },
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"?  "Setujui Permintaan":"Approve Request", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold),textAlign:
-      TextAlign.center,),
+      title: Text(getBahasa.toString() == "1"?  "Setujui Permintaan":"Approve Request"
+        , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+        TextAlign.left,),
       content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui permintaan ini sebagai persetujuan 2 ? ":
-      "Would you like to continue approve this request as Approval 2 ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      "Would you like to continue approve this request as Approval 2 ?", style: GoogleFonts.nunitoSans(),textAlign:
+      TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -350,36 +335,29 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
 
   dialog_reject1(BuildContext context) {
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#e21b4c"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text(getBahasa.toString() == "1"?  "Tolak":"Reject",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text(getBahasa.toString() == "1"?  "TOLAK":"REJECT"
+          ,style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           _timeoff_reject("1");
         },
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Center(child: Text(getBahasa.toString() == "1"? "Tolak Permintaan": "Reject Request", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold)),),
+      title: Text(getBahasa.toString() == "1"? "Tolak Permintaan": "Reject Request"
+        , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+        TextAlign.left,),
       content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak permintaan ini sebagai persetujuan 1 ?":
-      "Would you like to continue reject this request as Approval 1 ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      "Would you like to continue reject this request as Approval 1 ?", style: GoogleFonts.nunitoSans(),textAlign:
+      TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -397,36 +375,29 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
 
   dialog_reject2(BuildContext context) {
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#e21b4c"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text(getBahasa.toString() == "1"? "Tolak" :"Reject",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text(getBahasa.toString() == "1"? "TOLAK" :"REJECT"
+          ,style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           _timeoff_reject("2");
         },
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Center(child: Text(getBahasa.toString() == "1"?  "Tolak Permintaan":"Reject Request", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold)),),
+      title: Text(getBahasa.toString() == "1"?  "Tolak Permintaan":"Reject Request"
+        , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+        TextAlign.left,),
       content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak permintaan ini sebagai persetjuan 2 ? " :
-      "Would you like to continue reject this request as Approval 2 ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      "Would you like to continue reject this request as Approval 2 ?", style: GoogleFonts.nunitoSans(),textAlign:
+      TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -1069,7 +1040,7 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
                                       ),
                                       Container(
                                         width: double.infinity,
-                                        height: 60,
+                                        height: 65,
                                         padding: EdgeInsets.only(top: 10,bottom: 10),
                                         child:
                                         ElevatedButton(
@@ -1182,7 +1153,7 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
                                       ),
                                       Container(
                                         width: double.infinity,
-                                        height: 60,
+                                        height: 65,
                                         padding: EdgeInsets.only(top: 10,bottom: 10),
                                         child:
                                         ElevatedButton(
@@ -1298,7 +1269,7 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
                                       ),
                                       Container(
                                         width: double.infinity,
-                                        height: 60,
+                                        height: 65,
                                         padding: EdgeInsets.only(top: 10,bottom: 10),
                                         child:
                                         ElevatedButton(
@@ -1414,7 +1385,7 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
                                       ),
                                       Container(
                                         width: double.infinity,
-                                        height: 60,
+                                        height: 65,
                                         padding: EdgeInsets.only(top: 10,bottom: 10),
                                         child:
                                         ElevatedButton(

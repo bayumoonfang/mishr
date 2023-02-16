@@ -94,14 +94,14 @@ class _PageTimeOffHome2 extends State<PageTimeOffHome2> {
 
   FutureOr onGoBack(dynamic value) {
     setState(() {
-      g_timeoff().getData_AllTimeOffRequest(widget.getKaryawanNo, filter, filter2, filter3);
+     // g_timeoff().getData_AllTimeOffRequest(widget.getKaryawanNo, filter, filter2, filter3);
       loadData();
     });
   }
 
   Future getData() async {
     setState(() {
-      g_timeoff().getData_AllTimeOffRequest(widget.getKaryawanNo, filter, filter2, filter3);
+     // g_timeoff().getData_AllTimeOffRequest(widget.getKaryawanNo, filter, filter2, filter3);
     });
   }
 
@@ -121,7 +121,7 @@ class _PageTimeOffHome2 extends State<PageTimeOffHome2> {
           if(value[0] != '') {
             if(value[0] == '1') {
               setState(() {
-                g_timeoff().getData_AllTimeOffRequest(widget.getKaryawanNo, filter, filter2, filter3);
+                //g_timeoff().getData_AllTimeOffRequest(widget.getKaryawanNo, filter, filter2, filter3);
                 loadData();
                 getBahasa.toString() == "1" ?
                 AppHelper().showFlushBarconfirmed(context, "Request berhasil dihapus"):
@@ -548,7 +548,7 @@ class _PageTimeOffHome2 extends State<PageTimeOffHome2> {
                     child: Padding(
                         padding: EdgeInsets.only(left: 15,right: 15,top: 15),
                         child:FutureBuilder(
-                          future: g_timeoff().getData_AllTimeOffRequest(widget.getKaryawanNo, filter, filter2, filter3),
+                          future: g_timeoff().getData_AllTimeOffRequest(widget.getKaryawanNo, filter, filter2,"Asas"),
                           builder: (context, snapshot){
                             if (snapshot.data == null) {
                               return Center(

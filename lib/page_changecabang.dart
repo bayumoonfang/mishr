@@ -194,13 +194,16 @@ class _ChangeCabang extends State<ChangeCabang> {
                                 children: [
                                   InkWell(
                                     child : ListTile(
+                                       // visualDensity: VisualDensity(vertical: -2),
+                                        dense : true,
                                       leading: FaIcon(FontAwesomeIcons.building,size: 23,),
-                                      title: Row(
+                                      title: Text(snapshot.data![i]["b"].toString(), style: GoogleFonts.nunito(fontSize: 15),),
+                                      subtitle: Row(
                                         children: [
                                           Padding(padding: const EdgeInsets.only(right: 5),child:
-                                          Text(snapshot.data![i]["b"].toString(), style: GoogleFonts.nunito(fontSize: 15),),),
+                                          Text(snapshot.data![i]["c"].toString() + " - "+snapshot.data![i]["d"].toString(), style: GoogleFonts.nunito(fontSize: 15),),),
                                         ],
-                                      ),
+                                      )
                                     ),
                                     onTap: (){
                                       EasyLoading.show(status: AppHelper().loading_text);
@@ -221,6 +224,18 @@ class _ChangeCabang extends State<ChangeCabang> {
               ],
             ),
           )),
+      bottomNavigationBar: Container(
+        color: HexColor("#8e8d92"),
+        height: 60,
+        width: double.infinity,
+        child: Center(
+          child : Padding(
+            padding: EdgeInsets.only(left: 20,right: 20,top: 5),
+            child : Text("Jika lokasi absen tidak terdaftar, hubungi HRD anda untuk menambahkan lokasi absen ", style :
+            GoogleFonts.nunitoSans(fontSize: 12,color: Colors.white))
+          )
+        ),
+      ),
     ), onWillPop: onWillPop);
 
   }

@@ -894,7 +894,7 @@ class _ApprReqAttenDetail extends State<ApprReqAttenDetail> {
                   fontSize: 14),),
               onPressed: () {
                 EasyLoading.show(status: AppHelper().loading_text);
-                Navigator.push(context, ExitPage(page: ReqAttendApproveDetail(widget.getReqAttendCode, widget.getKaryawanNo, widget.getKaryawanNama,"2")));
+                Navigator.push(context, ExitPage(page: ReqAttendApproveDetail(widget.getReqAttendCode, widget.getKaryawanNo, "2")));
               },
             )
         ),

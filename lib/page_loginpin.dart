@@ -175,7 +175,7 @@ class _PageLoginPIN extends State<PageLoginPIN> {
                        "Masuk Dengan PIN Anda" :
                    "Login With Your PIN",style:
                    GoogleFonts.montserrat(fontWeight: FontWeight.bold,
-                       fontSize: 28, color: Colors.black),),)),
+                       fontSize: 26, color: Colors.black),),)),
                Align(alignment: Alignment.center,
                    child : Padding(padding: const EdgeInsets.only(top: 3),child: Text(widget.getBahasa =='1' ?
                    "Masukan 6 digit PIN untuk masuk ke akun anda" : "Enter your 6 digit PIN to enter your account"

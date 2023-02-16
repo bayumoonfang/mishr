@@ -158,11 +158,11 @@ class _PageReprimand extends State<PageReprimand> {
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: <Widget>[
-                                            Image.asset('assets/empty2.png',width: 170,),
+                                            Image.asset('assets/empty2.png',width: 150,),
                                             Padding(
                                               padding: EdgeInsets.only(left: 13),
                                               child:  new Text(
-                                                getBahasa.toString() == "1" ? "Data Tidak Ditemukan": "Data Not Found",
+                                                getBahasa.toString() == "1" ? "Tidak ada data": "Data Not Found",
                                                 style: new TextStyle(
                                                     fontFamily: 'VarelaRound', fontSize: 13),
                                               ),

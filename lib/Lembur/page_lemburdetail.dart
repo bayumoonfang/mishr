@@ -29,17 +29,17 @@ import '../Request Attendance/page_reqattendapprovedetail.dart';
 import '../Time Off/page_detailactivitytimeoff.dart';
 
 
-class ApprLemburDetail extends StatefulWidget{
+class LemburDetail extends StatefulWidget{
   final String getLemburCode;
   final String getKaryawanNo;
   final String getKaryawanNama;
 
-  const ApprLemburDetail(this.getLemburCode,this.getKaryawanNo, this.getKaryawanNama);
+  const LemburDetail(this.getLemburCode,this.getKaryawanNo, this.getKaryawanNama);
   @override
-  _ApprLemburDetail createState() => _ApprLemburDetail();
+  _LemburDetail createState() => _LemburDetail();
 }
 
-class _ApprLemburDetail extends State<ApprLemburDetail> {
+class _LemburDetail extends State<LemburDetail> {
 
   bool _isPressedBtn = true;
   bool _isPressedHUD = false;
@@ -112,6 +112,7 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
 
 
 
+
   @override
   void initState() {
     super.initState();
@@ -123,78 +124,16 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
 
 
 
-
   String fcm_message = "";
-  String fcm_message2 = "";
-  _lembur_reject(getAppr) async {
+  _lembur_cancel() async {
+    Navigator.pop(context);
     setState(() {
       _isPressedBtn = false;
       _isPressedHUD = true;
-      if(getAppr== "1") {
-        fcm_message =  getBahasa.toString() == "1" ? "Pengajuan lembur anda telah ditolak oleh atasan anda sebagai approval 1" :
-        "LEAVE has been rejected by your supervisor as approval 1.";
-        fcm_message2 =  "";
-      } else {
-        fcm_message =  getBahasa.toString() == "1" ? "Pengajuan lembur anda telah ditolak oleh atasan anda sebagai approval 2" :
-        "LEAVE has been rejected by your supervisor as approval 2.";
-        fcm_message2 = "";
-      }
-
-      Navigator.pop(context);
+      fcm_message =  getBahasa.toString() == "1" ? "Pihak yang mengajukan lembur telah membatalkan pengajuannya hari ini" :
+      "The party that made LEAVE has canceled his leave today.";
     });
-    await m_lembur().lembur_reject(lembur_no, widget.getKaryawanNo, getAppr, fcm_message, fcm_message2).then((value){
-      if(value[0] == 'ConnInterupted'){
-        getBahasa.toString() == "1"?
-        AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
-        AppHelper().showFlushBarsuccess(context, "Connection Interupted...");
-        return false;
-      } else {
-        setState(() {
-          if(value[0] == '1') {
-            setState(() {
-              _isPressedBtn = true;
-              _isPressedHUD = false;
-            });
-            Navigator.pop(context);
-            SchedulerBinding.instance?.addPostFrameCallback((_) {
-              getBahasa.toString() == "1"?
-              AppHelper().showFlushBarconfirmed(context, "Pengajuan lembur berhasil ditolak")
-                  :
-              AppHelper().showFlushBarconfirmed(context, "Time Off Request has been Rejected");
-            });
-          } else {
-            setState(() {
-              _isPressedBtn = true;
-              _isPressedHUD = false;
-            });
-            AppHelper().showFlushBarsuccess(context, value[0]);
-            return;
-          }
-        });
-      }
-    });
-  }
-
-
-  _lembur_apprv(getAppr) async {
-    setState(() {
-      _isPressedBtn = false;
-      _isPressedHUD = true;
-      if(getAppr== "1") {
-        fcm_message =  getBahasa.toString() == "1" ? "Pengajuan lembur telah disetujui oleh atasan anda sebagai approval 1" :
-        "LEAVE has been approved by your supervisor as approval 1.";
-        fcm_message2 =  getBahasa.toString() == "1" ? "Terdapat pengajuan lembur yang membutuhkan approval anda, "
-            "silahkan buka aplikasi MISHR untuk melihat pengajuan ini." :
-        "There is a LEAVE request that requires your approval, please open the MISHR application to view this submission.";
-      } else {
-        fcm_message =  getBahasa.toString() == "1" ? "Pengajuan lembur anda telah sepenuhnya disetujui" :
-        "Your LEAVE has been fully approved.";
-        fcm_message2 = "";
-      }
-
-      Navigator.pop(context);
-    });
-    await m_lembur().lembur_approved(lembur_no, widget.getKaryawanNo, getAppr, fcm_message, fcm_message2).then((value){
+    await m_lembur().lembur_cancel(widget.getKaryawanNo, lembur_no, widget.getKaryawanNama, fcm_message).then((value){
       if(value[0] == 'ConnInterupted'){
         getBahasa.toString() == "1"?
         AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
@@ -208,13 +147,10 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
               _isPressedHUD = false;
             });
             if(value[0] == '1') {
-                Navigator.pop(context);
-                SchedulerBinding.instance?.addPostFrameCallback((_) {
-                  getBahasa.toString() == "1"?
-                  AppHelper().showFlushBarconfirmed(context, "Pengajuan lembur berhasil disetujui")
-                      :
-                  AppHelper().showFlushBarconfirmed(context, "Time Off Request has been Approved");
-                });
+              Navigator.pop(context);
+              SchedulerBinding.instance?.addPostFrameCallback((_) {
+                AppHelper().showFlushBarconfirmed(context, "Lembur has been Cancel");
+              });
             } else {
               AppHelper().showFlushBarsuccess(context, value[0]);
               return;
@@ -226,46 +162,7 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
   }
 
 
-  showDialogReject(BuildContext context, getModulDial) {
-    Widget cancelButton = TextButton(
-      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
-      onPressed:  () {Navigator.pop(context);},
-    );
-    Widget continueButton = Container(
-      width: 100,
-      child: TextButton(
-        child: Text(getBahasa.toString() == "1"?  "TOLAK":"REJECT"
-          ,style: GoogleFonts.lexendDeca(color: Colors.blue,),),
-        onPressed:  () {
-          _lembur_reject(getModulDial);
-        },
-      ),
-    );
-    AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.end,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Tolak Permintaan": "Reject Request"
-        , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
-        TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak pengajuan ini sebagai persetujuan "+getModulDial+" ?":
-      "Would you like to continue reject this request as Approval 1 ?", style: GoogleFonts.nunitoSans(),textAlign:
-      TextAlign.left,),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-
-  showDialogApprove(BuildContext context, getModulDial) {
+  dialog_lemburCancel(BuildContext context) {
     Widget cancelButton = TextButton(
       child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue),),
       onPressed:  () {Navigator.pop(context);},
@@ -273,29 +170,25 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        child: Text(getBahasa.toString() == "1"?  "SETUJUI":"APPROVE"
-          ,style: GoogleFonts.lexendDeca(color: Colors.blue,),),
+        child: Text("BATALKAN",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
-          _lembur_apprv(getModulDial);
+          _lembur_cancel();
         },
       ),
     );
     AlertDialog alert = AlertDialog(
       actionsAlignment: MainAxisAlignment.end,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Setujui Pengajuan" :"Approve Request"
-        , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
-        TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui pengajuan ini sebagai persetujuan "+getModulDial+" ?"
-          : "Would you like to continue approve this request as Approval 1 ?"
-        , style: GoogleFonts.nunitoSans(),textAlign:
-        TextAlign.left,),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      title: Text("Batalkan Pengajuan", style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+      TextAlign.left,),
+      content: Text("Apakah anda yakin untuk membatalkan pengajuan ini ?", style: GoogleFonts.nunitoSans(),textAlign:
+      TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
       ],
     );
+    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -303,8 +196,6 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
       },
     );
   }
-
-
 
 
   @override
@@ -355,11 +246,11 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
                               ),
                             ),
                             child: Text(lembur_status.toString(),style: GoogleFonts.nunito(fontSize: 12,
-                                color:
-                                lembur_status.toString() == 'Approved 1' ? HexColor("#0074D9") :
-                                lembur_status.toString() == 'Fully Approved' ? HexColor("#3D9970") :
-                                lembur_status.toString() == 'Fully Approved' ? HexColor("#FF4136") :
-                                Colors.black54,),),
+                              color:
+                              lembur_status.toString() == 'Approved 1' ? HexColor("#0074D9") :
+                              lembur_status.toString() == 'Fully Approved' ? HexColor("#3D9970") :
+                              lembur_status.toString() == 'Fully Approved' ? HexColor("#FF4136") :
+                              Colors.black54,),),
                             onPressed: (){},
                           ),
                           height: 25,
@@ -688,7 +579,6 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
                 ) : Container(),
 
 
-
                 Padding(
                     padding: EdgeInsets.only(top:20),
                     child: Align(alignment: Alignment.centerLeft,
@@ -732,7 +622,7 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
 
                             TableRow(children :[
                               Padding(padding: EdgeInsets.only(bottom: 5),
-                                child: Text(getBahasa.toString() == "1"? 'Jam Masuk' : 'Clock In', style: GoogleFonts.nunito(fontSize: 14) ),),
+                                child: Text(getBahasa.toString() == "1"? 'Clock In' : 'Clock In', style: GoogleFonts.nunito(fontSize: 14) ),),
                               Padding(padding: EdgeInsets.only(bottom: 5),
                                 child: Text(lembur_scheduleclockin.toString().substring(0,5), style: GoogleFonts.nunito(fontSize: 14) ),),
                             ]),
@@ -740,7 +630,7 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
 
                             TableRow(children :[
                               Padding(padding: EdgeInsets.only(bottom: 5),
-                                child: Text(getBahasa.toString() == "1"? 'Jam Keluar' : 'Clock Out', style: GoogleFonts.nunito(fontSize: 14) ),),
+                                child: Text(getBahasa.toString() == "1"? 'Clock Out' : 'Clock Out', style: GoogleFonts.nunito(fontSize: 14) ),),
                               Padding(padding: EdgeInsets.only(bottom: 5),
                                 child: Text(lembur_scheduleclockout.toString().substring(0,5), style: GoogleFonts.nunito(fontSize: 14) ),),
                             ]),
@@ -755,126 +645,35 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
         ),
       ),
       bottomSheet:
-
       Visibility(
-          visible: _isPressedBtn,
-          child: Container(color: Colors.white,
-              padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
-              width: double.infinity,
-              height: 50,
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                alignment: WrapAlignment.spaceEvenly,
-                children: [
-                  lembur_approval1.toString() == widget.getKaryawanNo && lembur_approval1status.toString() == 'Waiting Approval' ?
-                  Container(
-                      width: 150,
-                      child:
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: HexColor("#1a76d2"),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(side: BorderSide(
-                                color: Colors.white,
-                                width: 0.1,
-                                style: BorderStyle.solid
-                            ),
-                              borderRadius: BorderRadius.circular(5.0),
-                            )),
-                        child: Text(getBahasa.toString() == "1"? "Setujui":"Approve",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
-                            fontSize: 14),),
-                        onPressed: () {
-                          showDialogApprove(context, "1");
-                        },
-                      )
-                  ) : Container(),
-
-
-
-                  lembur_approval1.toString() == widget.getKaryawanNo && lembur_approval1status.toString() == 'Waiting Approval' ?
-                  Container(
-                      width: 150,
-                      child:
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: HexColor("#e21b4c"),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(side: BorderSide(
-                                color: Colors.white,
-                                width: 0.1,
-                                style: BorderStyle.solid
-                            ),
-                              borderRadius: BorderRadius.circular(5.0),
-                            )),
-                        child: Text(getBahasa.toString() == "1"? "Tolak":"Reject",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
-                            fontSize: 14),),
-                        onPressed: () {
-                          showDialogReject(context, "1");
-                        },
-                      )
-                  ) : Container(),
-
-
-                  //APPROVAL 2 ====================================
-                  lembur_approval2.toString() == widget.getKaryawanNo && lembur_approval2status.toString() == 'Waiting Approval' &&
-                      lembur_approval1status.toString() == 'Approved' ?
-                  Container(
-                      width: 150,
-                      child:
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: HexColor("#1a76d2"),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(side: BorderSide(
-                                color: Colors.white,
-                                width: 0.1,
-                                style: BorderStyle.solid
-                            ),
-                              borderRadius: BorderRadius.circular(5.0),
-                            )),
-                        child: Text(getBahasa.toString() == "1"? "Setujui":"Approve",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
-                            fontSize: 14),),
-                        onPressed: () {
-                          showDialogApprove(context, "2");
-                        },
-                      )
-                  ) : Container(),
-
-
-
-                  lembur_approval2.toString() == widget.getKaryawanNo && lembur_approval2status.toString() == 'Waiting Approval'  &&
-                      lembur_approval1status.toString() == 'Approved'  ?
-                  Container(
-                      width: 150,
-                      child:
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: HexColor("#e21b4c"),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(side: BorderSide(
-                                color: Colors.white,
-                                width: 0.1,
-                                style: BorderStyle.solid
-                            ),
-                              borderRadius: BorderRadius.circular(5.0),
-                            )),
-                        child: Text(getBahasa.toString() == "1"? "Tolak":"Reject",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
-                            fontSize: 14),),
-                        onPressed: () {
-                          showDialogReject(context, "2");
-                        },
-                      )
-                  ) : Container(),
-
-
-
-
-
-
-
-                ],
-              ))
+      visible: _isPressedBtn,
+      child: Container(
+          color: Colors.white,
+          padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
+          width: double.infinity,
+          height: 58,
+          child:
+          lembur_status == 'Pending'?
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                primary: HexColor("#e21b4c"),
+                elevation: 0,
+                shape: RoundedRectangleBorder(side: BorderSide(
+                    color: Colors.white,
+                    width: 0.1,
+                    style: BorderStyle.solid
+                ),
+                  borderRadius: BorderRadius.circular(5.0),
+                )),
+            child: Text(getBahasa.toString() == "1"? "Batalkan Pengajuan" : "Cancel Submission",style: GoogleFonts.lexendDeca(color: HexColor("#ffeaef"),fontWeight: FontWeight.bold,
+                fontSize: 14),),
+            onPressed: () {
+              dialog_lemburCancel(context);
+            },
+          ) :
+          Container()
       ),
+    )
     ), onWillPop: onWillPop);
 
   }

@@ -33,7 +33,7 @@ class AppHelper{
   var main_color = "#075E54";
   var second_color = "#128C7E";
   var third_color = "#34B7F1";
-  int range_max = 60;
+  int range_max = 9999;
   var default_pass = "e10adc3949ba59abbe56e057f20f883e";
   var app_name = "MIS HR";
   var app_tag = "mishr";
@@ -1148,11 +1148,36 @@ class AppHelper{
     }  else {
       EasyLoading.dismiss();
       return [
-        data["get_newversion"].toString()
+        data["get_newversion"].toString(),
+        data["get_newversionbuild"].toString()
       ];
     }
 
   }
+
+
+
+
+  Future<dynamic> getRangeMax() async {
+
+    http.Response response = await http.Client().get(
+        Uri.parse(applink+"mobile/api_mobile.php?act=getRangeMax"),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"}).timeout(
+        Duration(seconds: 20),onTimeout: (){
+      http.Client().close();
+      return http.Response('Error',500);
+    }
+    );
+    var data = jsonDecode(response.body);
+    return [
+      data["get_rangemax"].toString()
+    ];
+
+  }
+
+
 
 
   Future<dynamic> getNationalDay(getMonth) async {
@@ -1172,6 +1197,22 @@ class AppHelper{
     ];
   }
 
-
+  Future<dynamic> getNewWorkLocation(getLokasi) async {
+    http.Response response = await http.Client().get(
+        Uri.parse(applink+"mobile/api_mobile.php?act=getNewWorkLocation&getLokasi="+getLokasi),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"}).timeout(
+        Duration(seconds: 20),onTimeout: (){
+      http.Client().close();
+      return http.Response('Error',500);
+    }
+    );
+    var data = jsonDecode(response.body);
+    return [
+      data["cabang_lat"].toString(),
+      data["cabang_long"].toString()
+    ];
+  }
 
 }

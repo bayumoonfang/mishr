@@ -135,7 +135,7 @@ class _LemburAdd extends State<LemburAdd> {
               Navigator.pop(context);
               SchedulerBinding.instance?.addPostFrameCallback((_) {
                 getBahasa.toString() == "1"?
-                AppHelper().showFlushBarconfirmed(context, "Surat Perintah Lembur berhasil di posting")
+                AppHelper().showFlushBarconfirmed(context, "Pengajuan lembur berhasil di posting")
                     :AppHelper().showFlushBarconfirmed(context, "Overtime has been posted");
               });
             }  else {
@@ -162,11 +162,6 @@ class _LemburAdd extends State<LemburAdd> {
       getBahasa.toString() == "1"?
       AppHelper().showFlushBarsuccess(context, "Description tidak boleh kosong"):
       AppHelper().showFlushBarsuccess(context, "Please filled description");
-      return false;
-    } else if(_delegate.text == '') {
-      getBahasa.toString() == "1"?
-      AppHelper().showFlushBarsuccess(context, "Delegasi tidak boleh kosong"):
-      AppHelper().showFlushBarsuccess(context, "Please filled delegate");
       return false;
     } else if(_TimeStart.text == '' || _TimeEnd.text == '') {
       getBahasa.toString() == "1"?
@@ -195,23 +190,13 @@ class _LemburAdd extends State<LemburAdd> {
     }
 
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#1a76d2"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text( getBahasa.toString() == "1"? "Iya":"Yes",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text( getBahasa.toString() == "1"? "AJUKAN":"SUBMIT",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           Navigator.pop(context);
           _lembur_create();
@@ -219,13 +204,14 @@ class _LemburAdd extends State<LemburAdd> {
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Tambah Perintah Lembur": "Add Overtime", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold),textAlign:
-      TextAlign.center,),
-      content: Text( getBahasa.toString() == "1"? "Apakah anda yakin membuat perintah lembur ?": "Would you like to continue add overtime ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      title: Text(getBahasa.toString() == "1"? "Tambah Pengajuan Lembur": "Add Overtime", style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+      TextAlign.left,),
+      content: Text( getBahasa.toString() == "1"? "Apakah anda yakin data sudah benar dan melanjutkan untuk mengirim pengajuan ?":
+      "Are you sure the data is correct and continues to send a submission ?", style: GoogleFonts.nunitoSans(),textAlign:
+      TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -395,7 +381,7 @@ class _LemburAdd extends State<LemburAdd> {
     return WillPopScope(child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text(getBahasa.toString() == "1"? "Tambah Perintah Lembur":"Add Overtime", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+          title: Text(getBahasa.toString() == "1"? "Tambah Pengajuan":"Add Overtime", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
           elevation: 1,
           leading: Builder(
             builder: (context) =>
@@ -440,7 +426,7 @@ class _LemburAdd extends State<LemburAdd> {
                                       ),
                                       contentPadding: const EdgeInsets.only(
                                           top: 2),
-                                      labelText: getBahasa.toString() == "1"? 'Dibuat Oleh': 'Created By',
+                                      labelText: getBahasa.toString() == "1"? 'Diajukan Oleh': 'Created By',
                                       labelStyle: TextStyle(
                                           fontFamily: "VarelaRound",
                                           fontSize: 16.5, color: Colors.black87
@@ -472,78 +458,80 @@ class _LemburAdd extends State<LemburAdd> {
                       ),
 
 
-                      Padding(padding: const EdgeInsets.only(top: 25),
-                          child: Column(
-                            children: [
+                     Visibility(
+                       visible: false,
+                       child:  Padding(padding: const EdgeInsets.only(top: 25),
+                         child: Column(
+                           children: [
 
-                              Align(alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 0),
-                                  child: TextFormField(
-                                    style: GoogleFonts.nunitoSans(fontSize: 16),
-                                    textCapitalization: TextCapitalization
-                                        .sentences,
-                                    controller: _delegate,
-                                    decoration: InputDecoration(
-                                      prefixIcon: Padding(
-                                        padding: const EdgeInsets.only(right: 10),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.userCircle,
-                                          //color: clockColor,
-                                        ),
-                                      ),
-                                      suffixIcon:
-                                      _delegate.text != '' ?
-                                      Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 5),
-                                          child:
-                                          IconButton(
-                                            icon: FaIcon(
-                                              FontAwesomeIcons.times, size: 18,),
-                                            onPressed: () {
-                                              setState(() {
-                                                _delegate.clear();
-                                              });
-                                            },
-                                          )) : null,
-                                      contentPadding: const EdgeInsets.only(
-                                          top: 2),
-                                      hintText: getBahasa.toString() == "1"? 'Delegasi ke': 'Delegated to',
-                                      labelText: getBahasa.toString() == "1"? 'Delegasi': 'Delegate',
-                                      labelStyle: TextStyle(
-                                          fontFamily: "VarelaRound",
-                                          fontSize: 16.5, color: Colors.black87
-                                      ),
-                                      floatingLabelBehavior: FloatingLabelBehavior
-                                          .always,
-                                      hintStyle: GoogleFonts.nunito(
-                                          color: HexColor("#c4c4c4"),
-                                          fontSize: 15),
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: HexColor("#DDDDDD")),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: HexColor("#8c8989")),
-                                      ),
-                                      border: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: HexColor("#DDDDDD")),
-                                      ),
-                                    ),
-                                    enableInteractiveSelection: false,
-                                    onTap: () async {
-                                      show_requestto();
-                                      FocusScope.of(context).requestFocus(
-                                          new FocusNode());
-                                    },
-                                  ),
-                                ),),
-                            ],
-                          )
-                      ),
+                             Align(alignment: Alignment.centerLeft,
+                               child: Padding(
+                                 padding: const EdgeInsets.only(left: 0),
+                                 child: TextFormField(
+                                   style: GoogleFonts.nunitoSans(fontSize: 16),
+                                   textCapitalization: TextCapitalization
+                                       .sentences,
+                                   controller: _delegate,
+                                   decoration: InputDecoration(
+                                     prefixIcon: Padding(
+                                       padding: const EdgeInsets.only(right: 10),
+                                       child: FaIcon(
+                                         FontAwesomeIcons.userCircle,
+                                         //color: clockColor,
+                                       ),
+                                     ),
+                                     suffixIcon:
+                                     _delegate.text != '' ?
+                                     Padding(
+                                         padding: const EdgeInsets.only(
+                                             right: 5),
+                                         child:
+                                         IconButton(
+                                           icon: FaIcon(
+                                             FontAwesomeIcons.times, size: 18,),
+                                           onPressed: () {
+                                             setState(() {
+                                               _delegate.clear();
+                                             });
+                                           },
+                                         )) : null,
+                                     contentPadding: const EdgeInsets.only(
+                                         top: 2),
+                                     hintText: getBahasa.toString() == "1"? 'Delegasi ke': 'Delegated to',
+                                     labelText: getBahasa.toString() == "1"? 'Delegasi': 'Delegate',
+                                     labelStyle: TextStyle(
+                                         fontFamily: "VarelaRound",
+                                         fontSize: 16.5, color: Colors.black87
+                                     ),
+                                     floatingLabelBehavior: FloatingLabelBehavior
+                                         .always,
+                                     hintStyle: GoogleFonts.nunito(
+                                         color: HexColor("#c4c4c4"),
+                                         fontSize: 15),
+                                     enabledBorder: UnderlineInputBorder(
+                                       borderSide: BorderSide(
+                                           color: HexColor("#DDDDDD")),
+                                     ),
+                                     focusedBorder: UnderlineInputBorder(
+                                       borderSide: BorderSide(
+                                           color: HexColor("#8c8989")),
+                                     ),
+                                     border: UnderlineInputBorder(
+                                       borderSide: BorderSide(
+                                           color: HexColor("#DDDDDD")),
+                                     ),
+                                   ),
+                                   enableInteractiveSelection: false,
+                                   onTap: () async {
+                                     show_requestto();
+                                     FocusScope.of(context).requestFocus(
+                                         new FocusNode());
+                                   },
+                                 ),
+                               ),),
+                           ],
+                         )
+                     ),),
 
                       Padding(padding: const EdgeInsets.only(top: 25, right: 25),
                         child: Row(
@@ -900,7 +888,7 @@ class _LemburAdd extends State<LemburAdd> {
         bottomSheet: Visibility(
           visible: _isPressedBtn,
           child: Container(
-              padding: EdgeInsets.only(left: 45, right: 45, bottom: 10),
+              padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
               width: double.infinity,
               height: 58,
               child:
@@ -915,7 +903,7 @@ class _LemburAdd extends State<LemburAdd> {
                       ),
                         borderRadius: BorderRadius.circular(5.0),
                       )),
-                  child: Text(getBahasa.toString() == "1"? "Buat Perintah Lembur":"Create Overtime",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
+                  child: Text(getBahasa.toString() == "1"? "Ajukan Lembur":"Create Overtime",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
                       fontSize: 14),),
                   onPressed: () {
                     FocusScope.of(context).requestFocus(new FocusNode());

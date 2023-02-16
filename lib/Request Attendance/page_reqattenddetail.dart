@@ -176,35 +176,25 @@ class _ReqAttendDetail extends State<ReqAttendDetail> {
 
   showBatalDialog(BuildContext context) {
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#e21b4c"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text(getBahasa.toString() == "1"? "Iya": "Yes",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text(getBahasa.toString() == "1"? "BATALKAN": "Yes",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           _reqattend_cancel();
         },
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Batalkan Permintaan": "Cancel Request", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold),textAlign:
-      TextAlign.center,),
-      content: Text(getBahasa.toString() == "1"? "Apakah anda yakin membatalkan permintaan ini ?": "Would you like to continue cancel this request ?", style: GoogleFonts.varelaRound(),textAlign:
-    TextAlign.center,),
+      title: Text(getBahasa.toString() == "1"? "Batalkan Permintaan": "Cancel Request",
+        style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
+      content: Text(getBahasa.toString() == "1"? "Apakah anda yakin membatalkan permintaan ini ?":
+      "Would you like to continue cancel this request ?", style: GoogleFonts.nunitoSans(),textAlign: TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -225,7 +215,7 @@ class _ReqAttendDetail extends State<ReqAttendDetail> {
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(getBahasa.toString() == "1"? "Detail Permintaan": "Detail Request", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text(getBahasa.toString() == "1"? "Detail Pengajuan": "Detail Request", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) =>
@@ -856,7 +846,7 @@ class _ReqAttendDetail extends State<ReqAttendDetail> {
 
                             TableRow(children :[
                               Padding(padding: EdgeInsets.only(bottom: 5),
-                                child: Text(getBahasa.toString() == "1"? 'Jadwal Permintaan': 'Schedule Request', style: GoogleFonts.nunito(fontSize: 14) ),),
+                                child: Text(getBahasa.toString() == "1"? 'Pengajuan Jadwal': 'Schedule Request', style: GoogleFonts.nunito(fontSize: 14) ),),
 
                               Padding(padding: EdgeInsets.only(bottom: 5),
                                   child: InkWell(
@@ -883,7 +873,7 @@ class _ReqAttendDetail extends State<ReqAttendDetail> {
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
-                                                            Text(getBahasa.toString() == "1"? "Permintaan Jadwal": "Schedule Request",
+                                                            Text(getBahasa.toString() == "1"? "Pengajuan Jadwal": "Schedule Request",
                                                               style: GoogleFonts.montserrat(fontWeight: FontWeight.bold,fontSize: 17),),
                                                             InkWell(
                                                               onTap: (){
@@ -902,7 +892,7 @@ class _ReqAttendDetail extends State<ReqAttendDetail> {
                                                           dense : true,
                                                           title: Text(reqattend_schedulecode.toString(),style: GoogleFonts.montserrat(
                                                               fontWeight: FontWeight.bold,fontSize: 17),),
-                                                          subtitle: Text(getBahasa.toString() == "1"? "Jadwal Permintaan": "Schedule Request",
+                                                          subtitle: Text(getBahasa.toString() == "1"? "Kode Jadwal": "Schedule Request",
                                                               style: GoogleFonts.workSans(
                                                                   fontSize: 12)),
                                                         ),
@@ -914,7 +904,7 @@ class _ReqAttendDetail extends State<ReqAttendDetail> {
                                                           dense : true,
                                                           title: Text(reqattend_scheduleclockin.toString(),style: GoogleFonts.montserrat(
                                                               fontWeight: FontWeight.bold,fontSize: 17),),
-                                                          subtitle: Text(getBahasa.toString() == "1"? "Permintaan Jam Masuk": "Clock In request",
+                                                          subtitle: Text(getBahasa.toString() == "1"? "Clock In": "Clock In request",
                                                               style: GoogleFonts.workSans(
                                                                   fontSize: 12)),
                                                         ),
@@ -926,7 +916,7 @@ class _ReqAttendDetail extends State<ReqAttendDetail> {
                                                           dense : true,
                                                           title: Text(reqattend_scheduleclockout.toString(),style: GoogleFonts.montserrat(
                                                               fontWeight: FontWeight.bold,fontSize: 17),),
-                                                          subtitle: Text(getBahasa.toString() == "1"? "Permintaan Jam Keluar": "Clock Out request",
+                                                          subtitle: Text(getBahasa.toString() == "1"? "Clock Out": "Clock Out request",
                                                               style: GoogleFonts.workSans(
                                                                   fontSize: 12)),
                                                         ),
@@ -961,9 +951,12 @@ class _ReqAttendDetail extends State<ReqAttendDetail> {
     ),
       bottomSheet: Visibility(
         visible: _isPressedBtn,
-        child: Container(
+        child:
+
+        reqattend_status == 'Pending' ?
+        Container(
             color: Colors.white,
-            padding: EdgeInsets.only(left: 45, right: 45, bottom: 10),
+            padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
             width: double.infinity,
             height: 58,
             child:
@@ -979,13 +972,14 @@ class _ReqAttendDetail extends State<ReqAttendDetail> {
                   ),
                     borderRadius: BorderRadius.circular(5.0),
                   )),
-              child: Text(getBahasa.toString() == "1"? "Batalkan Request" : "Cancel Request",style: GoogleFonts.lexendDeca(color: HexColor("#ffeaef"),fontWeight: FontWeight.bold,
+              child: Text(getBahasa.toString() == "1"? "Batalkan Pengajuan" : "Cancel Request",style: GoogleFonts.lexendDeca(color: HexColor("#ffeaef"),fontWeight: FontWeight.bold,
                   fontSize: 14),),
               onPressed: () {
                 showBatalDialog(context);
               },
             )
-        ),
+        ) : Container(width: double.infinity,color: Colors.white,
+          height: 58,),
       ),
 
     ), onWillPop: onWillPop);

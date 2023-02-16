@@ -318,7 +318,7 @@ class _PageReqAttendApprovalList extends State<PageReqAttendApprovalList> {
                                             onTap: (){
                                               FocusScope.of(context).requestFocus(FocusNode());
                                               EasyLoading.show(status: AppHelper().loading_text);
-                                              Navigator.push(context, ExitPage(page: ReqAttendApproveDetail(snapshot.data![i]["g"].toString(), widget.getKaryawanNo, widget.getKaryawanNama,"1"))).then(onGoBack);
+                                             // Navigator.push(context, ExitPage(page: ReqAttendApproveDetail(snapshot.data![i]["g"].toString(), widget.getKaryawanNo, widget.getKaryawanNama,"1"))).then(onGoBack);
                                             },
                                           ),
                                           Padding(padding: const EdgeInsets.only(left: 10,right: 10),
