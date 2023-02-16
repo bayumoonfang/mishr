@@ -109,7 +109,7 @@ class _PageTimeOffSaldo extends State<PageTimeOffSaldo> {
                                 children: [
                                   Expanded(
                                     child: ListView.builder(
-                                      itemExtent: 80,
+                                      itemExtent: 85,
                                       itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                       padding: const EdgeInsets.only(bottom: 85,top: 5),
                                       itemBuilder: (context, i) {
@@ -202,7 +202,7 @@ class _PageTimeOffSaldo extends State<PageTimeOffSaldo> {
                 getBahasa.toString() == "1" ?
                 "Jika ada ketidaksesuaian saldo time off, anda bisa menghubungi HRD anda untuk dilakukan kroscek terkait saldo time off anda"
                     : "If there is a discrepancy in your time off balance, you can contact your HRD to cross-check your time off balance"
-                ,style: GoogleFonts.nunitoSans(fontSize: 12),),
+                ,style: GoogleFonts.nunitoSans(fontSize: 11.5),),
             )
         ),
       ),

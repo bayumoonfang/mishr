@@ -293,16 +293,18 @@ class _PageClockInLembur extends State<PageClockInLembur> {
       ));
 
       for (int i = 0; i < lengthme; i++) {
-        _locationCabang2 = LatLng(double.parse(data[i]['cabang_lat']), double.parse(data[i]['cabang_long']));
-        markers.add(Marker( //add second marker
-          markerId: MarkerId(i.toString()),
-          position: _locationCabang2, //position of marker
-          infoWindow: InfoWindow( //popup info
-            title: data[i]['cabang_nama'],
-            snippet: data[i]['cabang_kota'],
-          ),
-          icon: BitmapDescriptor.defaultMarker, //Icon for Marker
-        ));
+        if(data[i]['cabang_lat'] != '' && data[i]['cabang_long'] != '') {
+          _locationCabang2 = LatLng(double.parse(data[i]['cabang_lat']), double.parse(data[i]['cabang_long']));
+          markers.add(Marker(
+            markerId: MarkerId(i.toString()),
+            position: _locationCabang2,
+            infoWindow: InfoWindow(
+              title: data[i]['cabang_nama'],
+              snippet: data[i]['cabang_kota'],
+            ),
+            icon: BitmapDescriptor.defaultMarker,
+          ));
+        }
       }
     });
     return markers;

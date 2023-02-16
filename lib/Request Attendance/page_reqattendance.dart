@@ -404,7 +404,7 @@ class _RequestAttendance extends State<RequestAttendance> {
                             children: [
                               Expanded(
                                 child: ListView.builder(
-                                  itemExtent: 85,
+                                  itemExtent: 90,
                                   itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                   padding: const EdgeInsets.only(bottom: 85),
                                   itemBuilder: (context, i) {

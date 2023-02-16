@@ -117,7 +117,7 @@ class _PageCheck extends State<PageCheck> {
       ),
       bottomSheet: Container(
         color: Colors.white,
-        height: 45,
+        height: 60,
         width: double.infinity,
         child: Column(
  children: [
@@ -130,12 +130,12 @@ class _PageCheck extends State<PageCheck> {
                    fontSize: 13)) : Container()
            ),
           Padding(
-            padding: EdgeInsets.only(top:5),
+            padding: EdgeInsets.only(top:5,bottom: 10),
             child:  Center(
                 child:
                 Text(
                     "MIS HR : Aplikasi HR Terbaik Karya Anak Bangsa",  style: GoogleFonts.nunitoSans(
-                    fontSize: 13,fontWeight: FontWeight.bold))
+                    fontSize: 12,fontWeight: FontWeight.bold))
             ),
           )
  ],

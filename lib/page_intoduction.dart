@@ -24,6 +24,7 @@ class _Introduction extends State<Introduction> {
 
   //String aa = await DeviceInformation.deviceIMEINumber;
   String getBahasa = "1";
+
   @override
   Widget build(BuildContext context) {
     const bodyStyle = TextStyle(fontFamily: "VarelaRound",fontSize: 16);

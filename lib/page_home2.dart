@@ -155,8 +155,11 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
             Text("Versi terbaru untuk aplikasi MISHR sudah tersedia ! Untuk versi terbaru adalah "+getVersionNew+", sedangkan versi anda saat ini adalah "+getVersionExisting, style: GoogleFonts.nunitoSans(),textAlign:
             TextAlign.left,),
             SizedBox(height: 10,),
-            Text("Apakah anda ingin memperbarui versi ?", style: GoogleFonts.nunitoSans(),textAlign:
-            TextAlign.left,),
+           Align(
+             alignment: Alignment.centerLeft,
+             child:  Text("Apakah anda ingin memperbarui versi ?", style: GoogleFonts.nunitoSans(),textAlign:
+             TextAlign.left,),
+           )
           ],
         )
       ),
@@ -1046,11 +1049,11 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                     padding: EdgeInsets.only(bottom:27),
                     child:
                     SingleChildScrollView(
-                       // scrollDirection: Axis.horizontal,
+                        scrollDirection: Axis.horizontal,
                         child : Row(
 
                       children: [
-                        Container(width : 70, height: 27, padding: EdgeInsets.only(right: 2),
+                        Container(width : 75, height: 27, padding: EdgeInsets.only(right: 2),
                             child : ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   primary: pressBtnSemua == "1" ? HexColor("#f4f4f4") : HexColor("#ffffff"),
@@ -1100,7 +1103,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                             )
                         ),
 
-                        Container(width : 90, height: 27, padding: EdgeInsets.only(right: 2),
+                        Container(width : 95, height: 27, padding: EdgeInsets.only(right: 2),
                             child : ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   primary: pressBtnKehadiran == "1" ? HexColor("#f4f4f4") : HexColor("#ffffff"),
@@ -1125,7 +1128,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                             )
                         ),
 
-                        Container(width : 90, height: 27, padding: EdgeInsets.only(right: 2),
+                        Container(width : 95, height: 27, padding: EdgeInsets.only(right: 2),
                             child : ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   primary: pressBtnInformasi == "1" ? HexColor("#f4f4f4") : HexColor("#ffffff"),
@@ -1156,7 +1159,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                   ),
 
                           Wrap(
-                            spacing: 27,
+                            spacing: 20,
                             runSpacing: pressBtnSemua == "1"  ? 30 :  pressBtnInformasi   == "1"  ? 1 : 5,
                             alignment: WrapAlignment.center,
                             children: [

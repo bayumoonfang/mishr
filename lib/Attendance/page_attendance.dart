@@ -141,7 +141,6 @@ class _PageClockIn extends State<PageClockIn> {
   checkGps2() async {
     servicestatus = await Geolocator.isLocationServiceEnabled();
     if(servicestatus){
-
     }else{
       setState(() {
         gpsOff = "1";
@@ -165,37 +164,6 @@ class _PageClockIn extends State<PageClockIn> {
       getme(long,lat);
       _isvisibleBtn = true;
     });
-   /*position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      locationSettings = AndroidSettings(
-        accuracy: LocationAccuracy.high,
-        distanceFilter: 100,
-        forceLocationManager: true,
-        intervalDuration: const Duration(seconds: 10),
-      );
-    } else if (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.macOS) {
-      locationSettings = AppleSettings(
-        accuracy: LocationAccuracy.high,
-        activityType: ActivityType.fitness,
-        distanceFilter: 100,
-        pauseLocationUpdatesAutomatically: true,
-      );
-    } else {
-      locationSettings = LocationSettings(
-        accuracy: LocationAccuracy.high,
-        distanceFilter: 100,
-      );
-    }
-
-    StreamSubscription<Position> positionStream = Geolocator.getPositionStream(
-        locationSettings: locationSettings).listen((Position position) {
-        long = position.longitude.toString();
-        lat = position.latitude.toString();
-        getme(long,lat);
-        setState(() {});
-    });
-   positionStream;*/
-
   }
 
 
@@ -205,7 +173,6 @@ class _PageClockIn extends State<PageClockIn> {
     _location.onLocationChanged.listen((l) {
       _controller.animateCamera(
         CameraUpdate.newCameraPosition(
-          //CameraPosition(target: LatLng(l.latitude, l.longitude),zoom: 15),
           CameraPosition(target: currentPostion,zoom: 17),
         ),
       );
@@ -236,19 +203,19 @@ class _PageClockIn extends State<PageClockIn> {
   getRangeMax() async {
     await AppHelper().getRangeMax().then((value){
       setState(() {
-           rangemaxstr = value[0];
+        rangemaxstr = value[0];
       });});
   }
-  
-  
+
+
   getNewWorkLocation2(getLokasi) async {
     await AppHelper().getNewWorkLocation(getLokasi).then((value){
       setState(() {
         locationLat = value[0];
         locationLong = value[1];
         _locationCabang = LatLng(double.parse(value[0]), double.parse(value[1]));
-       // print(value[0]+" ------ "+value[1]);
-       _loaddata();
+        // print(value[0]+" ------ "+value[1]);
+        _loaddata();
       });});
   }
 
@@ -260,19 +227,19 @@ class _PageClockIn extends State<PageClockIn> {
     await getSettings();
     await getRangeMax();
     await AppHelper().getConnect().then((value){
-        if(value == 'ConnInterupted'){
-              getBahasa.toString() == "1"?
-              AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
-              AppHelper().showFlushBarsuccess(context, "Connection Interupted...");
-              setState(() {
-                isPressed = false;
-              });
-              return false;
-        } else {
-          setState(() {
-            isPressed = true;
-          });
-        }
+      if(value == 'ConnInterupted'){
+        getBahasa.toString() == "1"?
+        AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
+        AppHelper().showFlushBarsuccess(context, "Connection Interupted...");
+        setState(() {
+          isPressed = false;
+        });
+        return false;
+      } else {
+        setState(() {
+          isPressed = true;
+        });
+      }
     });
     await AppHelper().getSession().then((value){
       setState(() {
@@ -321,16 +288,18 @@ class _PageClockIn extends State<PageClockIn> {
       ));
 
       for (int i = 0; i < lengthme; i++) {
-        _locationCabang2 = LatLng(double.parse(data[i]['cabang_lat']), double.parse(data[i]['cabang_long']));
-        markers.add(Marker( //add second marker
-          markerId: MarkerId(i.toString()),
-          position: _locationCabang2, //position of marker
-          infoWindow: InfoWindow( //popup info
-            title: data[i]['cabang_nama'],
-            snippet: data[i]['cabang_kota'],
-          ),
-          icon: BitmapDescriptor.defaultMarker, //Icon for Marker
-        ));
+        if(data[i]['cabang_lat'] != '' && data[i]['cabang_long'] != '') {
+          _locationCabang2 = LatLng(double.parse(data[i]['cabang_lat']), double.parse(data[i]['cabang_long']));
+          markers.add(Marker(
+            markerId: MarkerId(i.toString()),
+            position: _locationCabang2,
+            infoWindow: InfoWindow(
+              title: data[i]['cabang_nama'],
+              snippet: data[i]['cabang_kota'],
+            ),
+            icon: BitmapDescriptor.defaultMarker,
+          ));
+        }
       }
     });
     return markers;
@@ -469,7 +438,7 @@ class _PageClockIn extends State<PageClockIn> {
               }),
         ),
         actions: [
-            Padding(padding: EdgeInsets.only(top:19,bottom: 19,right: 10),
+          Padding(padding: EdgeInsets.only(top:19,bottom: 19,right: 10),
             child: InkWell(
               onTap: (){
                 _loaddata();
@@ -561,252 +530,216 @@ class _PageClockIn extends State<PageClockIn> {
         width: double.infinity,
         height: double.infinity,
         child: SingleChildScrollView(
-          child : Column(
-            children: <Widget>[
+            child : Column(
+              children: <Widget>[
                 currentPostion == null ?
                 Container(
                     height: 180,
-                  child : Center(
-                    child: CircularProgressIndicator(),
-                  )
+                    child : Center(
+                      child: CircularProgressIndicator(),
+                    )
                 )
-              :
-              Container(
-                height: 185,
-                child : GoogleMap(
-                  initialCameraPosition: CameraPosition(target: currentPostion),
-                  mapType: MapType.normal,
-                  onMapCreated: _onMapCreated,
-                  myLocationEnabled: false,
-                  markers: getmarkers(),
-                  zoomGesturesEnabled : false,
-                  scrollGesturesEnabled : false,
-                  rotateGesturesEnabled : false,
-                  circles: Set.from([Circle( circleId: CircleId('currentCircle'),
-                    center: _locationCabang,
-                    radius: 60,
-                    fillColor: Colors.blue.shade100.withOpacity(0.5),
-                    strokeColor:  Colors.blue.shade100.withOpacity(0.1),
-                  ),],),
+                    :
+                Container(
+                  height: 185,
+                  child : GoogleMap(
+                    initialCameraPosition: CameraPosition(target: currentPostion),
+                    mapType: MapType.normal,
+                    onMapCreated: _onMapCreated,
+                    myLocationEnabled: false,
+                    markers: getmarkers(),
+                    zoomGesturesEnabled : false,
+                    scrollGesturesEnabled : false,
+                    rotateGesturesEnabled : false,
+                    circles: Set.from([Circle( circleId: CircleId('currentCircle'),
+                      center: _locationCabang,
+                      radius: 60,
+                      fillColor: Colors.blue.shade100.withOpacity(0.5),
+                      strokeColor:  Colors.blue.shade100.withOpacity(0.1),
+                    ),],),
+                  ),
                 ),
-              ),
-              Divider(height: 1,),
+                Divider(height: 1,),
 
-              Padding(padding: const EdgeInsets.only(left: 25,top: 5,right: 25),
-                  child: Column(
-                    children: [
-                  Padding(
-                  padding: const EdgeInsets.only(left: 0,top: 25)),
-                      widget.getAttendanceType == 'Clock In' ?
-                      Align(alignment: Alignment.centerLeft,child: Padding(
-                        padding: const EdgeInsets.only(left: 0),
-                        child: TextFormField(
-                          style: GoogleFonts.workSans(fontSize: 16),
-                          textCapitalization: TextCapitalization.sentences,
-                          controller: _noteclockin,
-                          decoration: InputDecoration(
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: FaIcon(
-                                FontAwesomeIcons.audioDescription,
-                                //color: clockColor,
+                Padding(padding: const EdgeInsets.only(left: 25,top: 5,right: 25),
+                    child: Column(
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.only(left: 0,top: 25)),
+                        widget.getAttendanceType == 'Clock In' ?
+                        Align(alignment: Alignment.centerLeft,child: Padding(
+                          padding: const EdgeInsets.only(left: 0),
+                          child: TextFormField(
+                            style: GoogleFonts.workSans(fontSize: 16),
+                            textCapitalization: TextCapitalization.sentences,
+                            controller: _noteclockin,
+                            decoration: InputDecoration(
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: FaIcon(
+                                  FontAwesomeIcons.audioDescription,
+                                  //color: clockColor,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.only(
+                                  top: 2),
+                              hintText: getBahasa.toString() == "1" ? 'Tuliskan Catatan Kehadiran':'Input Attendance Note',
+                              labelText: getBahasa.toString() == "1" ? 'Catatan Kehadiran':'Attendance Note',
+                              floatingLabelBehavior: FloatingLabelBehavior.always,
+                              hintStyle: TextStyle(fontFamily: "VarelaRound", color: HexColor("#c4c4c4"), fontSize: 13),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: HexColor("#DDDDDD")),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: HexColor("#8c8989")),
+                              ),
+                              border: UnderlineInputBorder(
+                                borderSide: BorderSide(color: HexColor("#DDDDDD")),
                               ),
                             ),
-                            contentPadding: const EdgeInsets.only(
-                                top: 2),
-                            hintText: getBahasa.toString() == "1" ? 'Tuliskan Catatan Kehadiran':'Input Attendance Note',
-                            labelText: getBahasa.toString() == "1" ? 'Catatan Kehadiran':'Attendance Note',
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            hintStyle: TextStyle(fontFamily: "VarelaRound", color: HexColor("#c4c4c4"), fontSize: 13),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: HexColor("#DDDDDD")),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: HexColor("#8c8989")),
-                            ),
-                            border: UnderlineInputBorder(
-                              borderSide: BorderSide(color: HexColor("#DDDDDD")),
-                            ),
                           ),
+                        ),): Container()
+                      ],
+                    )
+                ),
+
+
+                Padding(padding: const EdgeInsets.only(top: 40,left: 25,right: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment
+                        .spaceBetween,
+                    children: [
+                      Container(
+                        width: 150,
+                        child:     Text("Lokasi absen :",
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.varelaRound(fontSize: 12),
                         ),
-                      ),): Container()
+                      ),
                     ],
-                  )
-              ),
+                  ),),
 
-
-              Padding(padding: const EdgeInsets.only(top: 40,left: 25,right: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment
-                      .spaceBetween,
-                  children: [
-                    Container(
-                      width: 150,
-                      child:     Text("Lokasi absen :",
-                        textAlign: TextAlign.left,
-                        style: GoogleFonts.varelaRound(fontSize: 12),
-                      ),
+                Padding(padding: const EdgeInsets.only(left: 25,right: 25),
+                  child: Align(alignment: Alignment.centerLeft, child :  Container(
+                    child: DropdownButton(
+                      isExpanded: false,
+                      hint: Text(getBahasa.toString() == "1"? "Pilih Lokasi Absen": "Choose new schedule",
+                        style: GoogleFonts.workSans(
+                            fontSize: 15, color: Colors.black),),
+                      value: selectedscheduleList,
+                      items:
+                      scheduleList.map((item) {
+                        return DropdownMenuItem(
+                          value: item['cabang_nama'].toString(),
+                          child: Text(item['cabang_nama'].toString(),
+                              style: GoogleFonts.workSans(
+                                  fontSize: 15, color: Colors.black)),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          selectedscheduleList = value.toString();
+                          //print(selectedscheduleList);
+                          getNewWorkLocation2(selectedscheduleList);
+                        });
+                      },
                     ),
-                  ],
-                ),),
+                  )),
+                ),
 
-              Padding(padding: const EdgeInsets.only(left: 25,right: 25),
-                child: Align(alignment: Alignment.centerLeft, child :  Container(
-                  child: DropdownButton(
-                    isExpanded: false,
-                    hint: Text(getBahasa.toString() == "1"? "Pilih Lokasi Absen": "Choose new schedule",
-                      style: GoogleFonts.workSans(
-                          fontSize: 15, color: Colors.black),),
-                    value: selectedscheduleList,
-                    items:
-                    scheduleList.map((item) {
-                      return DropdownMenuItem(
-                        value: item['cabang_nama'].toString(),
-                        child: Text(item['cabang_nama'].toString(),
-                            style: GoogleFonts.workSans(
-                                fontSize: 15, color: Colors.black)),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        selectedscheduleList = value.toString();
-                        //print(selectedscheduleList);
-                        getNewWorkLocation2(selectedscheduleList);
-                      });
-                    },
-                  ),
-                )),
-              ),
-
-              Padding(padding: const EdgeInsets.only(top: 20,left: 25,right: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment
-                      .spaceBetween,
-                  children: [
-                    Container(
-                      width: 150,
-                      child:     Text(
-                        getBahasa.toString() == "1" ? "Jarak anda dari lokasi absen":"Your distance from current location",
-                        textAlign: TextAlign.left,
-                        style: GoogleFonts.varelaRound(fontSize: 12),
+                Padding(padding: const EdgeInsets.only(top: 20,left: 25,right: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment
+                        .spaceBetween,
+                    children: [
+                      Container(
+                        width: 150,
+                        child:     Text(
+                          getBahasa.toString() == "1" ? "Jarak anda dari lokasi absen":"Your distance from current location",
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.varelaRound(fontSize: 12),
+                        ),
                       ),
-                    ),
-                    Text(jarak.toString()+" meters",
-                        style: GoogleFonts.varelaRound(fontSize: 13,fontWeight: FontWeight.bold)),
-                  ],
-                ),),
-              Padding(padding: const EdgeInsets.only(top: 5,left: 25,right: 25),
-                child: Align(alignment: Alignment.centerLeft, child : Text(
-                    getBahasa.toString() == "1" ? "(jarak tidak boleh lebih dari "+rangemaxstr.toString()+" meter)":
-                    "(Not Allowed in more than "+AppHelper().range_max.toString()+" meters)",
-                    style: GoogleFonts.varelaRound(fontSize: 10))),
-              ),
-              Padding(padding: const EdgeInsets.only(top: 5,left: 25,right: 25),
-                child: Divider(),
-              ),
-            ],
-          )
+                      Text(jarak.toString()+" meters",
+                          style: GoogleFonts.varelaRound(fontSize: 13,fontWeight: FontWeight.bold)),
+                    ],
+                  ),),
+                Padding(padding: const EdgeInsets.only(top: 5,left: 25,right: 25),
+                  child: Align(alignment: Alignment.centerLeft, child : Text(
+                      getBahasa.toString() == "1" ? "(jarak tidak boleh lebih dari "+rangemaxstr.toString()+" meter)":
+                      "(Not Allowed in more than "+AppHelper().range_max.toString()+" meters)",
+                      style: GoogleFonts.varelaRound(fontSize: 10))),
+                ),
+                Padding(padding: const EdgeInsets.only(top: 5,left: 25,right: 25),
+                  child: Divider(),
+                ),
+              ],
+            )
         ),
       ),
       bottomSheet: Container(
-        height: 125,
-        width: double.infinity,
-        child : Column(
-          children: [
+          height: 145,
+          width: double.infinity,
+          child : Column(
+            children: [
 
-            gpsOff == "0" ?
-       Opacity(
-         opacity: 0.8,
-         child :    Container(
-           width: double.infinity,
-           color: HexColor("#DDDDDD"),
-           padding : const EdgeInsets.only(left: 25,right: 25),
-           child: ListTile(
-               leading: FaIcon(FontAwesomeIcons.infoCircle,size: 25,),
-               title: Padding(
-                 padding: const EdgeInsets.all(5),
-                 child: Text(
-                   getBahasa.toString() == "1" ?
-                   "Pastikan GPS anda menyala saat melakukan absensi. Jika map loading terus maka tap icon refresh yang ada di pojok kanan atas"
-                       : "Make sure your GPS is on when making attendance"
-                   ,style: GoogleFonts.nunitoSans(fontSize: 12),),
-               )
-           ),
-         ),
-       ) :
-            Opacity(
-              opacity: 0.8,
-              child :    Container(
-                width: double.infinity,
-                color: HexColor("#ffeaef"),
-                padding : const EdgeInsets.only(left: 25,right: 25),
-                child: ListTile(
-                    leading: FaIcon(FontAwesomeIcons.infoCircle,size: 25,),
-                    title: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Text(
-                        getBahasa.toString() == "1" ?
-                        "Mohon maaf, Layanan GPS anda tidak aktif, aktifkan lokasi GPS dan silahkan coba lagi"
-                            : "Sorry, your GPS service is not active, please activate GPS location and please try again"
-                        ,style: GoogleFonts.nunitoSans(fontSize: 12),),
-                    )
+              gpsOff == "0" ?
+              Opacity(
+                opacity: 0.8,
+                child :    Container(
+                  width: double.infinity,
+                  color: HexColor("#DDDDDD"),
+                  padding : const EdgeInsets.only(left: 25,right: 25),
+                  child: ListTile(
+                      leading: FaIcon(FontAwesomeIcons.infoCircle,size: 25,),
+                      title: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Text(
+                          getBahasa.toString() == "1" ?
+                          "Pastikan GPS anda menyala saat melakukan absensi. Jika map loading terus maka tap icon refresh yang ada di pojok kanan atas"
+                              : "Make sure your GPS is on when making attendance"
+                          ,style: GoogleFonts.nunitoSans(fontSize: 12),),
+                      )
+                  ),
+                ),
+              ) :
+              Opacity(
+                opacity: 0.8,
+                child :    Container(
+                  width: double.infinity,
+                  color: HexColor("#ffeaef"),
+                  padding : const EdgeInsets.only(left: 25,right: 25),
+                  child: ListTile(
+                      leading: FaIcon(FontAwesomeIcons.infoCircle,size: 25,),
+                      title: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Text(
+                          getBahasa.toString() == "1" ?
+                          "Mohon maaf, Layanan GPS anda tidak aktif, aktifkan lokasi GPS dan silahkan coba lagi"
+                              : "Sorry, your GPS service is not active, please activate GPS location and please try again"
+                          ,style: GoogleFonts.nunitoSans(fontSize: 12),),
+                      )
+                  ),
                 ),
               ),
-            ),
 
 
-            Container(
-                width: double.infinity,
-                height: 62,
-                padding : const EdgeInsets.only(left: 25,right: 25,bottom: 10,top: 5),
-                child :
+              Container(
+                  width: double.infinity,
+                  height: 62,
+                  padding : const EdgeInsets.only(left: 25,right: 25,bottom: 10,top: 5),
+                  child :
                   Visibility(
-                    visible: _isvisibleBtn,
-                    child:
+                      visible: _isvisibleBtn,
+                      child:
 
-                    isPressed == true ?
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          //primary: HexColor("#075E54"),
-                          primary: HexColor("#00aa5b"),
-                          shape: RoundedRectangleBorder(side: BorderSide(
-                              color: Colors.white,
-                              width: 0.1,
-                              style: BorderStyle.solid
-                          ),
-                            borderRadius: BorderRadius.circular(5.0),
-                          )),
-                      child : Text(widget.getAttendanceType.toString(),style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
-                          fontSize: 14),),
-                      onPressed: (){
-                        setState(() {
-                          //isPressed = true;
-                        });
-                        //_addattendance();
-                        if(int.parse(jarak.toString()) > int.parse(rangemaxstr) ) {
-                          getBahasa.toString() == "1" ?
-                            AppHelper().showFlushBarerror(context, "Maaf anda tidak bisa absen karena berada diluar area yang ditentukan")
-                          : AppHelper().showFlushBarerror(context, "Sorry you can't do attendance because you are outside the designated area");
-                          setState(() {
-                            //isPressed = false;
-                          });
-                          return;
-                        } else {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          _goattendance();
-                        }
-                        //EasyLoading.show(status: "Loading...");
-                      },
-                    )
-                :
-                Opacity(
-                  opacity : 0.5,
-                      child : ElevatedButton(
+                      isPressed == true ?
+                      ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             elevation: 0,
-                            primary: HexColor("#DDDDDD"),
+                            //primary: HexColor("#075E54"),
+                            primary: HexColor("#00aa5b"),
                             shape: RoundedRectangleBorder(side: BorderSide(
                                 color: Colors.white,
                                 width: 0.1,
@@ -814,16 +747,52 @@ class _PageClockIn extends State<PageClockIn> {
                             ),
                               borderRadius: BorderRadius.circular(5.0),
                             )),
-                        child : Text("CLOCK IN",style: GoogleFonts.lexendDeca(color:Colors.white,fontWeight: FontWeight.bold,
+                        child : Text(widget.getAttendanceType.toString(),style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
                             fontSize: 14),),
                         onPressed: (){
+                          setState(() {
+                            //isPressed = true;
+                          });
+                          //_addattendance();
+                          if(int.parse(jarak.toString()) > int.parse(rangemaxstr) ) {
+                            getBahasa.toString() == "1" ?
+                            AppHelper().showFlushBarerror(context, "Maaf anda tidak bisa absen karena berada diluar area yang ditentukan")
+                                : AppHelper().showFlushBarerror(context, "Sorry you can't do attendance because you are outside the designated area");
+                            setState(() {
+                              //isPressed = false;
+                            });
+                            return;
+                          } else {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            _goattendance();
+                          }
+                          //EasyLoading.show(status: "Loading...");
                         },
                       )
-                    )
-                )
-            ),
-          ],
-        )
+                          :
+                      Opacity(
+                          opacity : 0.5,
+                          child : ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                primary: HexColor("#DDDDDD"),
+                                shape: RoundedRectangleBorder(side: BorderSide(
+                                    color: Colors.white,
+                                    width: 0.1,
+                                    style: BorderStyle.solid
+                                ),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                )),
+                            child : Text("CLOCK IN",style: GoogleFonts.lexendDeca(color:Colors.white,fontWeight: FontWeight.bold,
+                                fontSize: 14),),
+                            onPressed: (){
+                            },
+                          )
+                      )
+                  )
+              ),
+            ],
+          )
       ),
     ), onWillPop: onWillPop);
   }

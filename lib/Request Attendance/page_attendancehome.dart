@@ -89,9 +89,9 @@ class _PageAttendanceHome extends State<PageAttendanceHome> {
                     title: Text(getBahasa.toString() == "1" ? "Riwayat Kehadiran" : "Attendance History",style: TextStyle(
                         color: Colors.black, fontFamily: 'VarelaRound',fontSize: 15,
                         fontWeight: FontWeight.bold)),
-                    subtitle: Text(getBahasa.toString() == "1" ? "Telusuri riwayat kehadiran kamu setiap harinya" :
+                    subtitle: Padding(padding: EdgeInsets.only(top: 5),child: Text(getBahasa.toString() == "1" ? "Telusuri riwayat kehadiran kamu setiap harinya" :
                     "Track your attendance history every day",style: TextStyle(
-                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 12)),
+                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 12))),
                     trailing: FaIcon(FontAwesomeIcons.angleRight,color: HexColor("#594d75"),size: 15,),
                   ),
                 ),
@@ -106,9 +106,9 @@ class _PageAttendanceHome extends State<PageAttendanceHome> {
                     title: Text(getBahasa.toString() == "1" ? "Pengajuan Koreksi Kehadiran" : "Attendance Correction",style: TextStyle(
                         color: Colors.black, fontFamily: 'VarelaRound',fontSize: 15,
                         fontWeight: FontWeight.bold)),
-                    subtitle: Text(getBahasa.toString() == "1" ? "Ajukan koreksi kehadiran kamu jika terjadi kesalahan" :
+                    subtitle: Padding(padding: EdgeInsets.only(top: 5),child: Text(getBahasa.toString() == "1" ? "Ajukan koreksi kehadiran kamu jika terjadi kesalahan" :
                     "Submit your attendance correction if something goes wrong",style: TextStyle(
-                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 12)),
+                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 12,height: 1.2)),),
                     trailing: FaIcon(FontAwesomeIcons.angleRight,color: HexColor("#594d75"),size: 15,),
                   ),
                 ),
@@ -123,9 +123,9 @@ class _PageAttendanceHome extends State<PageAttendanceHome> {
                     title: Text(getBahasa.toString() == "1" ? "Pengajuan Ganti Shift" : "Change Shift",style: TextStyle(
                         color: Colors.black, fontFamily: 'VarelaRound',fontSize: 15,
                         fontWeight: FontWeight.bold)),
-                    subtitle: Text(getBahasa.toString() == "1" ? "Ajukan pergantian shift dengan mudah hanya disini" :
+                    subtitle: Padding(padding: EdgeInsets.only(top: 5),child: Text(getBahasa.toString() == "1" ? "Ajukan pergantian shift dengan mudah hanya disini" :
                     "Apply for a change of shift easily only here",style: TextStyle(
-                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 12)),
+                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 12,height: 1.2))),
                     trailing: FaIcon(FontAwesomeIcons.angleRight,color: HexColor("#594d75"),size: 15,),
                   ),
                 ),
