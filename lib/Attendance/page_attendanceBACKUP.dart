@@ -90,6 +90,19 @@ class _PageClockIn extends State<PageClockIn> {
 
   String gpsOff = "0";
 
+  checkGps2() async {
+    servicestatus = await Geolocator.isLocationServiceEnabled();
+    if(servicestatus){
+    }else{
+      setState(() {
+        gpsOff = "1";
+        _isvisibleBtn = false;
+      });
+      EasyLoading.dismiss();
+    }
+  }
+
+
 
 
   late LocationSettings locationSettings;
@@ -159,8 +172,6 @@ class _PageClockIn extends State<PageClockIn> {
         _loaddata();
       });});
   }
-
-
 
 
 
@@ -253,6 +264,7 @@ class _PageClockIn extends State<PageClockIn> {
   void _getCurrentTime()  {
     setState(() {
       _timeString = "${DateFormat('HH').format(DateTime.now())}:${DateFormat('mm').format(DateTime.now())}";
+      checkGps2();
     });
   }
 
@@ -261,7 +273,7 @@ class _PageClockIn extends State<PageClockIn> {
   void initState() {
     super.initState();
     Timer.periodic(Duration(seconds:1), (Timer t)=> _getCurrentTime());
-   setState(() {
+    setState(() {
       locationLat = widget.getLocationLat;
       locationLong = widget.getLocationLong;
       _locationCabang = LatLng(double.parse(locationLat), double.parse(locationLong));

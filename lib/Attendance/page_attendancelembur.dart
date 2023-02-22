@@ -90,67 +90,6 @@ class _PageClockInLembur extends State<PageClockInLembur> {
 
 
   String gpsOff = "0";
-  checkGps() async {
-    EasyLoading.show(status: AppHelper().loading_text);
-    //EasyLoading.dismiss();
-    LocationPermission permission = await Geolocator.checkPermission();
-    servicestatus = await Geolocator.isLocationServiceEnabled();
-    if(servicestatus){
-      permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          AppHelper().showFlushBarerror(context,'Location permissions are denied');
-          EasyLoading.dismiss();
-        }else if(permission == LocationPermission.deniedForever){
-          AppHelper().showFlushBarerror(context,"'Location permissions are permanently denied");
-          EasyLoading.dismiss();
-        }else{
-          haspermission = true;
-          await getLocation();
-          EasyLoading.dismiss();
-        }
-        EasyLoading.dismiss();
-      }else{
-        haspermission = true;
-        await getLocation();
-        EasyLoading.dismiss();
-      }
-      if(haspermission){
-        await getLocation();
-        EasyLoading.dismiss();
-      }
-      setState(() {
-        gpsOff = "0";
-      });
-    }else{
-      getBahasa.toString() == "1" ?
-      AppHelper().showFlushBarerror(context,"Layanan GPS tidak diaktifkan, aktifkan lokasi GPS")
-          :
-      AppHelper().showFlushBarerror(context,"GPS Service is not enabled, turn on GPS location");
-      setState(() {
-        gpsOff = "1";
-        _isvisibleBtn = false;
-      });
-      EasyLoading.dismiss();
-    }
-    EasyLoading.dismiss();
-  }
-
-
-
-  checkGps2() async {
-    servicestatus = await Geolocator.isLocationServiceEnabled();
-    if(servicestatus){
-
-    }else{
-      setState(() {
-        gpsOff = "1";
-        _isvisibleBtn = false;
-      });
-      EasyLoading.dismiss();
-    }
-  }
 
 
 
@@ -164,7 +103,6 @@ class _PageClockInLembur extends State<PageClockInLembur> {
       long = position.longitude.toString();
       lat = position.latitude.toString();
       getme(long,lat);
-      _isvisibleBtn = true;
     });
 
   }
@@ -191,6 +129,9 @@ class _PageClockInLembur extends State<PageClockInLembur> {
     _distanceInMeters = await GeolocatorPlatform.instance.distanceBetween(double.parse(locationLat)
         , double.parse(locationLong), double.parse(LatVal), double.parse(LongVal));
     jarak = _distanceInMeters.ceil();
+    setState(() {
+      _isvisibleBtn = true;
+    });
   }
 
   String getBahasa = "1";
@@ -254,7 +195,7 @@ class _PageClockInLembur extends State<PageClockInLembur> {
           EasyLoading.dismiss();
         }
       });});
-    await checkGps();
+    await getLocation();
     EasyLoading.dismiss();
   }
 
@@ -315,7 +256,6 @@ class _PageClockInLembur extends State<PageClockInLembur> {
   void _getCurrentTime()  {
     setState(() {
       _timeString = "${DateFormat('HH').format(DateTime.now())}:${DateFormat('mm').format(DateTime.now())}";
-      checkGps2();
     });
   }
 

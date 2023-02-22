@@ -254,8 +254,16 @@ class _PageTimeOffHome2 extends State<PageTimeOffHome2> {
          showBadge: true,
          position: BadgePosition.topStart(top: 9,start: 10),
          badgeContent: Text(getNotifCountme.toString(),style: GoogleFonts.nunitoSans(color:Colors.white,fontSize: 9),),
-         animationType:  BadgeAnimationType.scale,
-         shape: BadgeShape.circle,
+         badgeAnimation: BadgeAnimation.scale (
+           animationDuration: Duration(seconds: 1),
+           loopAnimation: false,
+         ),
+         badgeStyle: BadgeStyle(
+           shape: BadgeShape.circle,
+           badgeColor: Colors.red,
+           padding: EdgeInsets.all(5),
+           elevation: 0,
+         ),
          child: Padding(
            padding: EdgeInsets.only(top: 0,right: 22,left: 18),
            child: Positioned(
@@ -503,9 +511,17 @@ class _PageTimeOffHome2 extends State<PageTimeOffHome2> {
                     Badge(
                       showBadge: true,
                       position: BadgePosition.topStart(top: -7,start: -5),
-                      animationType:  BadgeAnimationType.scale,
                       badgeContent: Text(approval_count.toString(),style: GoogleFonts.nunitoSans(color:Colors.white,fontSize: 13),),
-                      shape: BadgeShape.circle,
+                      badgeAnimation: BadgeAnimation.scale (
+                        animationDuration: Duration(seconds: 1),
+                        loopAnimation: false,
+                      ),
+                      badgeStyle: BadgeStyle(
+                        shape: BadgeShape.circle,
+                        badgeColor: Colors.red,
+                        padding: EdgeInsets.all(5),
+                        elevation: 0,
+                      ),
                       child: Container(
                         height: 50,
                         width: double.infinity,

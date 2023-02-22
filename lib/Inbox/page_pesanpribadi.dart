@@ -234,8 +234,16 @@ class _PagePesanPribadi extends State<PagePesanPribadi> {
                                             snapshot.data![i]["l"].toString() == "0" ?
                                                 Badge(
                                                   showBadge: true,
-                                                  animationType:  BadgeAnimationType.scale,
-                                                  shape: BadgeShape.circle,
+                                                  badgeAnimation: BadgeAnimation.scale (
+                                                    animationDuration: Duration(seconds: 1),
+                                                    loopAnimation: false,
+                                                  ),
+                                                  badgeStyle: BadgeStyle(
+                                                    shape: BadgeShape.circle,
+                                                    badgeColor: Colors.red,
+                                                    padding: EdgeInsets.all(5),
+                                                    elevation: 0,
+                                                  ),
                                                   position: BadgePosition.topStart(top: -2,start: -3),
                                                   child: Container(
                                                     width: 35,height: 35,

@@ -183,22 +183,44 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                       "Sorry, your approval data is incomplete, please contact HRD regarding this matter");
                   return;
                 } else if (value[0] == '2') {
-                  getBahasa.toString() == "1"?
                   AppHelper().showFlushBarsuccess(context,
-                      "Maaf anda masih ada request attendance yang belum di tindaklanjuti  di hari yang sama,"
-                          "silahkan batalkan request attendance atau tunggu pengajuan di approved") :
+                      "Maaf pengajuan gagal, karena ada pengajuan attendance lain di hari yang sama");
+                  return;
+                } else if (value[0] == '2b') {
                   AppHelper().showFlushBarsuccess(context,
-                      "Sorry, you still have attendance requests that have not been followed up on the same day,"
-                          "Please cancel the attendance request or wait for the submission to be approved");
+                      "Maaf pengajuan gagal, karena ada pengajuan attendance lain di salah satu hari pengajuan anda");
                   return;
                 } else if (value[0] == '3') {
-                  getBahasa.toString() == "1"?
                   AppHelper().showFlushBarsuccess(context,
-                      "Maaf anda masih ada pengajuan lain yang belum di tindaklanjuti  di hari yang sama,"
-                          "silahkan batalkan pengajuan dan coba lagi") :
+                      "Maaf pengajuan gagal, karena ada pengajuan time off lain di hari yang sama");
+                  return;
+                } else if (value[0] == '3b') {
                   AppHelper().showFlushBarsuccess(context,
-                      "Sorry, you still have a Time Off application that has not been followed up on the same day,"
-                          "Please cancel the Time Off application or wait for the application to be approved");
+                      "Maaf pengajuan gagal, karena ada pengajuan time off lain di salah satu hari pengajuan anda");
+                  return;
+                } else if (value[0] == '8') {
+                  AppHelper().showFlushBarsuccess(context,
+                      "Maaf pengajuan gagal, karena ada pengajuan lembur di hari yang sama");
+                  return;
+                }  else if (value[0] == '8b') {
+                  AppHelper().showFlushBarsuccess(context,
+                      "Maaf pengajuan gagal, karena ada pengajuan lembur di salah satu hari pengajuan anda");
+                  return;
+                } else if (value[0] == '9') {
+                  AppHelper().showFlushBarsuccess(context,
+                      "Maaf pengajuan gagal, karena tidak ada attendance di hari pengajuan anda");
+                  return;
+                } else if (value[0] == '9b') {
+                  AppHelper().showFlushBarsuccess(context,
+                      "Maaf pengajuan gagal, karena tidak ada attendance di salah satu hari pengajuan anda");
+                  return;
+                } else if (value[0] == '10') {
+                  AppHelper().showFlushBarsuccess(context,
+                      "Maaf pengajuan gagal, karena ada pengajuan time off ijin lain di hari pengajuan anda");
+                  return;
+                } else if (value[0] == '10b') {
+                  AppHelper().showFlushBarsuccess(context,
+                      "Maaf pengajuan gagal, karena ada pengajuan time off ijin lain di salah satu hari pengajuan anda");
                   return;
                 } else if (value[0] == '4') {
                   getBahasa.toString() == "1"?
@@ -212,6 +234,14 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                   return;
                 } else if (value[0] == '6a') {
                   AppHelper().showFlushBarsuccess(context,"Maaf cuti anda belum bisa dipakai, atau cuti anda sudah habis masa berlaku");
+                  return;
+                } else if (value[0] == '7') {
+                  AppHelper().showFlushBarsuccess(context,"Maaf pengajuan gagal, karena ada kehadiran yang sudah terbentuk. "
+                      "Silahkan memilih hari lain");
+                  return;
+                } else if (value[0] == '7b') {
+                  AppHelper().showFlushBarsuccess(context,"Maaf pengajuan gagal, karena ada kehadiran yang sudah terbentuk di salah satu hari pengajuan anda. "
+                      "Silahkan memilih hari lain");
                   return;
                 } else if (value[0] == '5') {
                   //Navigator.pop(context);

@@ -233,8 +233,16 @@ class _PageSpecificNotification extends State<PageSpecificNotification> {
                                               Badge(
                                                 showBadge: true,
                                                 position: BadgePosition.topStart(top: -2,start: -5),
-                                                animationType:  BadgeAnimationType.scale,
-                                                shape: BadgeShape.circle,
+                                                badgeAnimation: BadgeAnimation.scale (
+                                                  animationDuration: Duration(seconds: 1),
+                                                  loopAnimation: false,
+                                                ),
+                                                badgeStyle: BadgeStyle(
+                                                  shape: BadgeShape.circle,
+                                                  badgeColor: Colors.red,
+                                                  padding: EdgeInsets.all(5),
+                                                  elevation: 0,
+                                                ),
                                                 child: Container(
                                                   width: double.infinity,
                                                   padding : EdgeInsets.all(6),

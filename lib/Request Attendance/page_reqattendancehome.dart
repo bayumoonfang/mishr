@@ -70,7 +70,7 @@ class _PageReqAttendanceHome extends State<PageReqAttendanceHome> with SingleTic
   @override
   void initState() {
     super.initState();
-    controller = new TabController(vsync: this, length: 4);
+    controller = new TabController(vsync: this, length: 2);
     loadData();
   }
   @override
@@ -139,30 +139,39 @@ class _PageReqAttendanceHome extends State<PageReqAttendanceHome> with SingleTic
         ),
         actions: [
           getNotifCountme != '0' ?
+          Container(width: 50, height: 60, child :
           Badge(
             showBadge: true,
             position: BadgePosition.topStart(top: 9,start: 10),
             badgeContent: Text(getNotifCountme.toString(),style: GoogleFonts.nunitoSans(color:Colors.white,fontSize: 9),),
-            animationType:  BadgeAnimationType.scale,
-            shape: BadgeShape.circle,
-            child: Padding(
-              padding: EdgeInsets.only(top: 0,right: 24,left: 18),
-              child: Positioned(
-                  top: -10,
-                  child : InkWell(
+              badgeAnimation: BadgeAnimation.scale (
+                animationDuration: Duration(seconds: 1),
+                loopAnimation: false,
+              ),
+              badgeStyle: BadgeStyle(
+                shape: BadgeShape.circle,
+                badgeColor: Colors.red,
+                padding: EdgeInsets.all(5),
+                elevation: 0,
+              ),
+            child:
+            Padding(
+                padding: EdgeInsets.only(top: 17.5),
+                child: InkWell(
                     child : FaIcon(FontAwesomeIcons.bell,color: HexColor("#535967"),size: 20,),
                     onTap: (){
                       FocusScope.of(context).requestFocus(FocusNode());
                       Navigator.push(context, ExitPage(page: PageSpecificNotification(widget.getEmail, "2"))).then(onGoBack);
-
                     },
-                  )
-              ) ,),
-          ) :
+                )))) :
+      Container(width: 50, height: 60, child :
           Padding(
             padding: EdgeInsets.only(top: 17,right: 24,left: 18),
-            child: FaIcon(FontAwesomeIcons.bell,color: HexColor("#535967"),size: 20,),),
-
+            child: FaIcon(FontAwesomeIcons.bell,color: HexColor("#535967"),size: 20,),)),
+      Container(
+        width: 50,
+        height: 50,
+        child :
           Padding(
             padding: EdgeInsets.only(top: 17,right: 22),
             child: InkWell(
@@ -171,7 +180,7 @@ class _PageReqAttendanceHome extends State<PageReqAttendanceHome> with SingleTic
                 FocusScope.of(context).requestFocus(FocusNode());
                 showInfoDialog(context);
               },
-            ),)
+            ),))
         ],
         bottom: new TabBar(
           indicatorColor: Colors.black,

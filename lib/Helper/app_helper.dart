@@ -1215,4 +1215,26 @@ class AppHelper{
     ];
   }
 
+
+
+  Future<dynamic> getNearestLocationData(getCabangNama, getKaryawanNo) async {
+    http.Response response = await http.Client().get(
+        Uri.parse(applink+"mobile/api_mobile.php?act=getNearestLocationData&getCabangNama="+getCabangNama+"&getKaryawanNo="+getKaryawanNo),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"}).timeout(
+        Duration(seconds: 20),onTimeout: (){
+      http.Client().close();
+      return http.Response('Error',500);
+    }
+    );
+    var data = jsonDecode(response.body);
+    return [
+      data["cabang_lat"].toString(),
+      data["cabang_long"].toString()
+    ];
+  }
+
+
+
 }

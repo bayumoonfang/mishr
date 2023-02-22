@@ -159,6 +159,10 @@ class _TimeOffDetail extends State<TimeOffDetail> {
               SchedulerBinding.instance?.addPostFrameCallback((_) {
                 AppHelper().showFlushBarconfirmed(context, "Time Off Request has been Cancel");
               });
+            } else if(value[0] == '2') {
+              //Navigator.pop(context);
+              AppHelper().showFlushBarsuccess(context, "Gagal membatalkan pengajuan anda.");
+              return;
             } else {
               AppHelper().showFlushBarsuccess(context, value[0]);
               return;

@@ -557,7 +557,9 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                   style: GoogleFonts.workSans(fontSize: 12,color: Colors.black)),
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(5),
-                                                color: snapshot.data![i]["r"].toString() == 'Absen' ? HexColor("#Fcdedf") : HexColor("#EDEDED"),
+                                                color: snapshot.data![i]["b"].toString() == '00:00' && snapshot.data![i]["c"].toString() == '00:00'  ?
+                                                HexColor("#Fcdedf") : snapshot.data![i]["b"].toString() != '00:00' && snapshot.data![i]["c"].toString() == '00:00' ?
+                                                HexColor("#FF851B") : HexColor("#EDEDED"),
                                               ),
                                             ) : Container(
                                               width: double.infinity,
@@ -573,7 +575,9 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                   style: GoogleFonts.workSans(fontSize: 12,color: Colors.white)),
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(5),
-                                                color: HexColor("#2196f3") ,
+                                                color: snapshot.data![i]["b"].toString() == '00:00' && snapshot.data![i]["c"].toString() == '00:00'  ?
+                                                HexColor("#Fcdedf") : snapshot.data![i]["b"].toString() != '00:00' && snapshot.data![i]["c"].toString() == '00:00' ?
+                                                HexColor("#FF851B") : HexColor("#2196f3") ,
                                               ),
                                             ),
                                             subtitle:Column(
@@ -584,7 +588,7 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                     Align(alignment: Alignment.centerLeft,
                                                       child: Text(
 
-                                                          snapshot.data![i]["r"].toString() == 'Absen' ? "ABSEN" :
+                                                          snapshot.data![i]["b"].toString() == '00:00' && snapshot.data![i]["c"].toString() == '00:00' ? "ABSEN" :
                                                           snapshot.data![i]["b"].toString() != '00:00' && snapshot.data![i]["c"].toString() == '00:00'  ?
                                                           "Clock In : "+snapshot.data![i]["b"].toString()+" | Clock Out : -" :
                                                           snapshot.data![i]["b"].toString() == '00:00' && snapshot.data![i]["c"].toString() == '00:00'  ?
@@ -599,7 +603,7 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                     padding: EdgeInsets.only(top: 3,left: 3),
                                                     child: Align(alignment: Alignment.centerLeft,
                                                       child: Text(
-                                                          snapshot.data![i]["r"].toString() == 'Absen' ? "(Tidak melakukan absensi)" :
+                                                          snapshot.data![i]["b"].toString() == '00:00' && snapshot.data![i]["c"].toString() == '00:00' ? "(Tidak melakukan absensi)" :
                                                           getBahasa.toString() =="1" ? "Telat : "+snapshot.data![i]["d"].toString()+" menit | "
                                                               "Overtime : "+snapshot.data![i]["e"].toString()+" menit" :
                                                           "Late : "+snapshot.data![i]["d"].toString()+" minute | "

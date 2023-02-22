@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:geolocator/geolocator.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:abzeno/MySchedule/page_myschedule.dart';
 import 'package:abzeno/Profile/page_changepin.dart';
@@ -477,6 +478,33 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
     );
   }
 
+  bool servicestatus = false;
+  cekPermissionGeolocator(String Type2, String TimeMe2) async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    servicestatus = await Geolocator.isLocationServiceEnabled();
+    if(servicestatus){
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          AppHelper().showFlushBarerror(context,'Location permissions are denied');
+          EasyLoading.dismiss();
+          return;
+        } else if (permission == LocationPermission.deniedForever) {
+          AppHelper().showFlushBarerror(context,"'Location permissions are permanently denied");
+          EasyLoading.dismiss();
+          return;
+        } else {
+          cek_datetimesetting(Type2, TimeMe2);
+        }
+      } else {
+        cek_datetimesetting(Type2, TimeMe2);
+      }
+    } else {
+      AppHelper().showFlushBarerror(context,"Layanan GPS tidak diaktifkan, aktifkan lokasi GPS");
+      EasyLoading.dismiss();
+      return;
+    }
+  }
 
   cek_datetimesetting(String Type, String TimeMe) async {
     bool timeAuto = await DatetimeSetting.timeIsAuto();
@@ -629,8 +657,11 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                 fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
                           )),
                           Positioned(
-                              top: 70, right: 0, left:0, child: Text(
-                            widget.getKaryawanNama.toString(),
+                              top: 70, right: 0, left:0, child:
+                          Text(
+                            overflow: TextOverflow.ellipsis,
+                            applink == "https://dev.mishr.missolution.id/" ?
+                            widget.getKaryawanNama.toString()+ " (UAT. Ver.) ": widget.getKaryawanNama.toString(),
                             style: TextStyle(color: Colors.white, fontFamily: 'VarelaRound', fontWeight: FontWeight.bold, fontSize: 22),)
                           ),
                           Positioned(
@@ -781,7 +812,8 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                     )),
                                                 onPressed: (){
                                                   EasyLoading.show(status: AppHelper().loading_text);
-                                                  cek_datetimesetting("Daily","Clock In");
+                                                  cekPermissionGeolocator("Daily","Clock In");
+                                                  //cek_datetimesetting("Daily","Clock In");
                                                  /* Navigator.push(context, ExitPage(page: PageClockIn(
                                                       widget.getKaryawanNo,
                                                       getJam, getWorkLocationId,AppHelper().getNamaHari().toString(),
@@ -832,7 +864,8 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                       borderRadius: BorderRadius.circular(5.0),
                                                     )),onPressed: (){
                                                   EasyLoading.show(status: AppHelper().loading_text);
-                                                  cek_datetimesetting("Daily","Clock Out");
+                                                  cekPermissionGeolocator("Daily","Clock Out");
+                                                  //cek_datetimesetting("Daily","Clock Out");
                                                 },) :
                                               Opacity(
                                                   opacity: 0.6,
@@ -944,7 +977,8 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                             )),
                                                         onPressed: (){
                                                           EasyLoading.show(status: AppHelper().loading_text);
-                                                          cek_datetimesetting("Lembur","Clock In");
+                                                          cekPermissionGeolocator("Lembur","Clock In");
+                                                          //cek_datetimesetting("Lembur","Clock In");
                                                         },) :
                                                       Opacity(
                                                           opacity: 0.6,
@@ -979,8 +1013,8 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                               borderRadius: BorderRadius.circular(5.0),
                                                             )),onPressed: (){
                                                           EasyLoading.show(status: AppHelper().loading_text);
-                                                          cek_datetimesetting("Lembur","Clock Out");
-
+                                                          cekPermissionGeolocator("Lembur","Clock Out");
+                                                          //cek_datetimesetting("Lembur","Clock Out");
                                                         },) :
                                                       Opacity(
                                                           opacity: 0.6,

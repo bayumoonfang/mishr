@@ -105,7 +105,7 @@ class _JadwalLembur extends State<JadwalLembur> {
                                     Padding(
                                       padding: EdgeInsets.only(left: 13),
                                       child:  new Text(
-                                        getBahasa.toString() == "1" ? "Data Tidak Ditemukan": "Data Not Found",
+                                        getBahasa.toString() == "1" ? "Tidak ada data": "Data Not Found",
                                         style: new TextStyle(
                                             fontFamily: 'VarelaRound', fontSize: 13),
                                       ),

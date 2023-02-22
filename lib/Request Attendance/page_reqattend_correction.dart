@@ -81,37 +81,14 @@ class _CorrectionAttendance extends State<CorrectionAttendance> {
 
 
 
-  String getAttenceMessage = "...";
-  _get_ReqAttendCheck() async {
-    await g_reqattend().get_ReqAttendCheck(
-        widget.getKaryawanNo, widget.getDate).then((value) {
-      if (value[0] == 'ConnInterupted') {
-        getBahasa.toString() == "1"?
-        AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
-        AppHelper().showFlushBarsuccess(context, "Connection Interupted...");
-        return false;
-      } else {
-        setState(() {
-          getAttenceMessage = value[0].toString();
-          if(value[0].toString() == "0") {
-            _get_ReqAttendSchedule();
-          } else {
-            _isPressedBtn = false;
-          }
-          _isVisibleForm = true;
-        });
-      }
-    });
-  }
 
-
-
+String getAttenceMessage = "";
   @override
   void initState() {
     super.initState();
     EasyLoading.show(status: AppHelper().loading_text);
     getSettings();
-    _get_ReqAttendCheck();
+    _get_ReqAttendSchedule();
   }
 
 
@@ -147,18 +124,6 @@ class _CorrectionAttendance extends State<CorrectionAttendance> {
                       "Sorry, your approval data is incomplete, please contact HRD regarding this matter");
                 });
                 return;
-            } else if (value[0] == '1') {
-                setState(() {
-                  _isPressedBtn = true;
-                  getBahasa.toString() == "1"?
-                  AppHelper().showFlushBarsuccess(context,
-                      "Maaf anda sudah ada request di tanggal tersebut yang belum ditindaklanjuti, silahkan batalkan "
-                          "request atau tunggu approval diproses") :
-                  AppHelper().showFlushBarsuccess(context,
-                      "Sorry, you already have a request on that date that hasn't been followed up, please cancel "
-                          "request or wait for approval to be processed");
-                });
-                return;
             } else {
                 Navigator.pop(context);
                 Navigator.pop(context);
@@ -180,7 +145,7 @@ class _CorrectionAttendance extends State<CorrectionAttendance> {
 
   showDialogme(BuildContext context) {
     //FocusScope.of(context).requestFocus(new FocusNode());
-    if(_TimeStart.text == "") {
+    if(_TimeStart.text == "" || _TimeEnd.text == "") {
       getBahasa.toString() == "1"?
       AppHelper().showFlushBarsuccess(context, "Jam tidak boleh kosong") :
       AppHelper().showFlushBarsuccess(context, "Please filled clock");
@@ -248,7 +213,7 @@ class _CorrectionAttendance extends State<CorrectionAttendance> {
         ),
       ),
       body: Visibility(
-        visible: _isVisibleForm,
+        visible: true,
         child: Container(
             width: double.infinity,
             height: double.infinity,

@@ -128,6 +128,10 @@ class _PageRLemburHome extends State<PageRLemburHome> with SingleTickerProviderS
           ],
         ),
         actions: [
+        Container(
+        width: 50,
+        height: 50,
+        child :
           Padding(
             padding: EdgeInsets.only(top: 17,right: 22),
             child: InkWell(
@@ -136,7 +140,7 @@ class _PageRLemburHome extends State<PageRLemburHome> with SingleTickerProviderS
                 FocusScope.of(context).requestFocus(FocusNode());
                 showInfoDialog(context);
               },
-            ),)
+            ),))
 
         ],
       ),

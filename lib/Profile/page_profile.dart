@@ -1,7 +1,11 @@
 
 
 
+import 'dart:convert';
+
 import 'package:abzeno/Helper/app_helper.dart';
+import 'package:abzeno/Helper/app_link.dart';
+import 'package:abzeno/Profile/S_HELPER/m_profile.dart';
 import 'package:abzeno/Profile/page_aboutus.dart';
 import 'package:abzeno/Profile/page_activity.dart';
 import 'package:abzeno/Profile/page_attendancehistory.dart';
@@ -10,13 +14,18 @@ import 'package:abzeno/Profile/page_fullprofile.dart';
 import 'package:abzeno/helper/page_route.dart';
 import 'package:abzeno/page_intoduction.dart';
 import 'package:abzeno/page_login.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
+
 
 class Profile extends StatefulWidget{
   final String getKaryawanNama;
@@ -54,11 +63,25 @@ class _Profile extends State<Profile>{
     });
   }
 
+  String photo_path = "";
+  _getPhoto() async {
+    await m_profile().getPhoto(widget.getKaryawanNo).then((value){
+      setState(() {
+        photo_path = value[0];
+      });});
+  }
+
+
+  _loaddata() async {
+    await _getPhoto();
+    await getSettings();
+    await getVersion();
+    EasyLoading.dismiss();
+  }
 
   void initState() {
     super.initState();
-    getSettings();
-    getVersion();
+    _loaddata();
   }
 
   _clearallpref() async {
@@ -81,6 +104,114 @@ class _Profile extends State<Profile>{
   }
 
 
+  _profile_changephoto() async {
+    EasyLoading.show(status: AppHelper().loading_text);
+    await m_profile().profile_changephoto(widget.getKaryawanNo, Base64).then((value){
+      if(value[0] == 'ConnInterupted'){
+        getBahasa.toString() == "1"?
+        AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
+        AppHelper().showFlushBarsuccess(context, "Connection Interupted...");
+        return false;
+      } else {
+        setState(() {
+          if (value[0] == '1') {
+            AppHelper().showFlushBarsuccess(context, "Photo berhasil dirubah");
+            _loaddata();
+          }
+        });
+      }
+    });
+  }
+
+
+
+  clearPhoto() async {
+    EasyLoading.show(status: AppHelper().loading_text);
+    await m_profile().clearPhoto(widget.getKaryawanNo).then((value){
+      if(value[0] == 'ConnInterupted'){
+        getBahasa.toString() == "1"?
+        AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
+        AppHelper().showFlushBarsuccess(context, "Connection Interupted...");
+        return false;
+      } else {
+        setState(() {
+          if (value[0] == '1') {
+            AppHelper().showFlushBarsuccess(context, "Photo berhasil dihapus");
+            _loaddata();
+          }
+        });
+      }
+    });
+  }
+
+
+  String fileName = "";
+  var Base64;
+  imageSelectorGallery() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'png', 'jpeg']);
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      if (file.size > 5243194) {
+        AppHelper().showFlushBarerror(context, "File tidak boleh lebih dari 5 MB");
+        return false;
+      } else {
+        final file = result.files.first;
+        final bytes = File(file.path!).readAsBytesSync();
+        setState(() {
+          fileName = file.name;
+          Base64 = base64Encode(bytes);
+        });
+        _profile_changephoto();
+      }}else{}
+  }
+
+
+  Offset _tapPosition = Offset.zero;
+  void _showContextMenu(BuildContext context) async {
+    final RenderObject? overlay =
+    Overlay.of(context)?.context.findRenderObject();
+
+    final result = await showMenu(
+        context: context,
+
+        // Show the context menu at the tap location
+        position: RelativeRect.fromRect(
+            Rect.fromLTWH(_tapPosition.dx, _tapPosition.dy, 30, 30),
+            Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width,
+                overlay.paintBounds.size.height)),
+        // set a list of choices for the context menu
+        items: [
+          const PopupMenuItem(
+            value: '1',
+            child: Text('Clear Avatar',style: TextStyle(fontFamily: 'VarelaRound',fontSize: 16),),
+          ),
+          const PopupMenuItem(
+            value: '2',
+            child: Text('Change Avatar',style: TextStyle(fontFamily: 'VarelaRound',fontSize: 15),),
+          ),
+        ]);
+
+    // Implement the logic for each choice here
+    switch (result) {
+      case '1':
+        clearPhoto();
+        break;
+      case '2':
+        imageSelectorGallery();
+        break;
+    }
+  }
+
+  void _getTapPosition(TapDownDetails details) {
+    final RenderBox referenceBox = context.findRenderObject() as RenderBox;
+    setState(() {
+      _tapPosition = referenceBox.globalToLocal(details.globalPosition);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(onWillPop: onWillPop, child: Scaffold(
@@ -91,22 +222,47 @@ class _Profile extends State<Profile>{
         child: SingleChildScrollView(
           child: Column(
             children: [
+             Padding(
+               padding: const EdgeInsets.only(right: 25),
+               child:  Align(alignment: Alignment.topRight,
+                 child:
+                 GestureDetector(
+                   onTapDown: (details){
+                     _getTapPosition(details);
+                   },
+                   onTap: (){
+                     _showContextMenu(context);
+                   },
+                   child:
+                Container(
+                  width: 20,
+                  child:  FaIcon(FontAwesomeIcons.ellipsisVertical,size: 19,),
+                ),)),
+             ),
               Padding(
                 padding: const EdgeInsets.only(left: 25,right: 25,bottom: 20),
                 child:   ListTile(
-                  leading: Container(
-                    width: 55,
-                    height: 55,
-                    decoration: BoxDecoration(shape: BoxShape.circle,
-                        border: Border.all(
-                          color: HexColor("#DDDDDD"), width: 1,
-                        )
-                    ),
-                    child: const CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: AssetImage(
-                          'assets/user.png'),
-                    ),),
+                  leading: SizedBox(
+                        width: 55,
+                        height: 55,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child : CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl:
+                            photo_path == '' || photo_path == 'null' ?
+                            applink+"assets/file_upload/fotokaryawan/user.png"
+                                :
+                            applink+"assets/file_upload/fotokaryawan/"+photo_path,
+                            progressIndicatorBuilder: (context, url,
+                                downloadProgress) =>
+                                CircularProgressIndicator(value:
+                                downloadProgress.progress),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
+                        ),
+                  ),
                   title: Text(widget.getKaryawanNama, style: GoogleFonts.nunitoSans(fontSize: 17),),
                   subtitle: Column(
                     children: [

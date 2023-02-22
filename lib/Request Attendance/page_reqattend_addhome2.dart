@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
+import 'S_HELPER/g_reqattend.dart';
 import 'page_reqattend_correction.dart';
 import 'page_reqattend_gantishift.dart';
 import 'page_reqattend_lemburanotherday.dart';
@@ -49,6 +50,69 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
         _requesttype.text = widget.getModul;
       });
     }
+
+    _get_ReqAttendCheck() async {
+      await g_reqattend().get_ReqAttendCheck2(
+          widget.getKaryawanNo, startDate.toString().substring(0,10), widget.getModul).then((value) {
+        if (value[0] == 'ConnInterupted') {
+          getBahasa.toString() == "1"?
+          AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
+          AppHelper().showFlushBarsuccess(context, "Connection Interupted...");
+          return false;
+        } else {
+          setState(() {
+            //AppHelper().showFlushBarsuccess(context,value[0].toString());
+            if(value[0].toString() == "1") {
+              AppHelper().showFlushBarsuccess(context, "Mohon maaf, ada pengajuan lain di hari yang sama.");
+              return ;
+            } else if(value[0].toString() == "1a") {
+              AppHelper().showFlushBarsuccess(context, "Mohon maaf, ada pengajuan lain di hari yang sama.");
+              return ;
+            } else if(value[0].toString() == "2") {
+              AppHelper().showFlushBarsuccess(context, "Mohon maaf, anda tidak bisa mengajukan di hari terpilih karena sudah ada kehadiran yang terbuat");
+              return;
+            } else if(value[0].toString() == "3") {
+              AppHelper().showFlushBarsuccess(context, "Mohon maaf, anda tidak bisa mengajukan di hari terpilih karena jadwal anda OFF");
+              return;
+            } else if(value[0].toString() == "4") {
+              AppHelper().showFlushBarsuccess(context, "Mohon maaf, anda tidak bisa mengajukan di hari terpilih karena anda tidak ada jadwaldi ari tersebut");
+              return;
+            } else if(value[0].toString() == "5") {
+              AppHelper().showFlushBarsuccess(context, "Mohon maaf, ada pengajuan lain di hari yang sama.");
+              return;
+            } else if(value[0].toString() == "6") {
+              AppHelper().showFlushBarsuccess(context, "Mohon maaf, ada pengajuan lain di hari yang sama.");
+              return;
+            } else if(value[0].toString() == "7") {
+              AppHelper().showFlushBarsuccess(context, "Mohon maaf, anda tidak bisa membuat pengajuan di hari terpilih karena tidak ada jadwal di hari tersebut.");
+              return;
+            } else if(value[0].toString() == "8") {
+              AppHelper().showFlushBarsuccess(context, "Mohon maaf, anda tidak bisa membuat pengajuan di hari terpilih karena jadwal anda OFF.");
+              return;
+            } else {
+
+              if(_requesttype.text == 'Correction') {
+                Navigator.push(context, ExitPage(page: CorrectionAttendance(widget.getKaryawanNo, _requesttype.text, startDate.toString(), _description.text,
+                    _requestdatefrom.text)));
+              } else if(_requesttype.text == 'Ganti Shift')  {
+                Navigator.push(context, ExitPage(page: RequestGantiShift(widget.getKaryawanNo, _requesttype.text, startDate.toString(), _description.text,
+                    _requestdatefrom.text)));
+              } else if(_requesttype.text == 'Lembur in Same Day')  {
+                Navigator.push(context, ExitPage(page: RequestLemburSameDay(widget.getKaryawanNo, _requesttype.text, startDate.toString(), _description.text,
+                    _requestdatefrom.text)));
+              } else if(_requesttype.text == 'Lembur Another Day')  {
+                Navigator.push(context, ExitPage(page: RequestLemburAnotherDay(widget.getKaryawanNo, _requesttype.text, startDate.toString(), _description.text,
+                    _requestdatefrom.text)));
+              }
+
+            }
+
+          });
+        }
+      });
+    }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -312,19 +376,8 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
                                           return;
                                         } else {
                                           FocusScope.of(context).requestFocus(new FocusNode());
-                                          if(_requesttype.text == 'Correction') {
-                                            Navigator.push(context, ExitPage(page: CorrectionAttendance(widget.getKaryawanNo, _requesttype.text, startDate.toString(), _description.text,
-                                                _requestdatefrom.text)));
-                                          } else if(_requesttype.text == 'Ganti Shift')  {
-                                            Navigator.push(context, ExitPage(page: RequestGantiShift(widget.getKaryawanNo, _requesttype.text, startDate.toString(), _description.text,
-                                                _requestdatefrom.text)));
-                                          } else if(_requesttype.text == 'Lembur in Same Day')  {
-                                            Navigator.push(context, ExitPage(page: RequestLemburSameDay(widget.getKaryawanNo, _requesttype.text, startDate.toString(), _description.text,
-                                                _requestdatefrom.text)));
-                                          } else if(_requesttype.text == 'Lembur Another Day')  {
-                                            Navigator.push(context, ExitPage(page: RequestLemburAnotherDay(widget.getKaryawanNo, _requesttype.text, startDate.toString(), _description.text,
-                                                _requestdatefrom.text)));
-                                          }
+                                          _get_ReqAttendCheck();
+
                                         }
 
 

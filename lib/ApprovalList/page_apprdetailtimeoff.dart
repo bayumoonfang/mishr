@@ -675,12 +675,12 @@ class _ApprTimeOffDetail extends State<ApprTimeOffDetail> {
                                     child: Text(timeoff_reqBy.toString(), style: GoogleFonts.nunito(fontSize: 14) ),),
                                 ]),
 
-                                TableRow(children :[
+                               /* TableRow(children :[
                                   Padding(padding: EdgeInsets.only(bottom: 5),
                                     child: Text(getBahasa.toString() == "1"? 'Delegasi':'Delegate', style: GoogleFonts.nunito(fontSize: 14) ),),
                                   Padding(padding: EdgeInsets.only(bottom: 5),
                                     child: Text(timeoff_delegate == 'null' ? '-' : timeoff_delegate_name, style: GoogleFonts.nunito(fontSize: 14) ),),
-                                ]),
+                                ]),*/
 
                                 TableRow(children :[
                                   Padding(padding: EdgeInsets.only(bottom: 5),

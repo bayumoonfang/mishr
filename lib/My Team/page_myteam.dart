@@ -10,6 +10,7 @@ import 'package:abzeno/Notification/page_detailnotification.dart';
 import 'package:abzeno/Time%20Off/S_HELPER/g_timeoff.dart';
 import 'package:abzeno/helper/app_helper.dart';
 import 'package:badges/badges.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -140,18 +141,26 @@ class _PageMyTeam extends State<PageMyTeam> {
                                             child : ListTile(
                                               visualDensity: VisualDensity(vertical: -2),
                                               dense : true,
-                                              leading: Container(
-                                                width: 35,
-                                                height: 35,
-                                                decoration: new BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(color: HexColor("#DDDDDD"), width: 1,)
-                                                ),
-                                                child: CircleAvatar(
-                                                  backgroundColor: Colors.white,
-                                                  backgroundImage: AssetImage(
-                                                      'assets/user.png'),
-                                                ),),
+                                              leading: SizedBox(
+                                                  width: 40,
+                                                  height:40,
+                                                  child: ClipRRect(
+                                                    borderRadius: BorderRadius.circular(50),
+                                                    child : CachedNetworkImage(
+                                                      fit: BoxFit.cover,
+                                                      imageUrl:
+                                                      snapshot.data![i]["d"].toString() == '' || snapshot.data![i]["d"].toString()== 'null' ?
+                                                      applink+"assets/file_upload/fotokaryawan/user.png"
+                                                          :
+                                                      applink+"assets/file_upload/fotokaryawan/"+snapshot.data![i]["d"].toString(),
+                                                      progressIndicatorBuilder: (context, url,
+                                                          downloadProgress) =>
+                                                          CircularProgressIndicator(value:
+                                                          downloadProgress.progress),
+                                                      errorWidget: (context, url, error) =>
+                                                          Icon(Icons.error),
+                                                    ),
+                                                  )),
                                               title:Text(snapshot.data![i]["a"].toString(),  style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.bold,fontSize: 14.5),),
                                               subtitle: Column(

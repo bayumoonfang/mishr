@@ -228,6 +228,31 @@ class g_reqattend{
 
 
 
+        get_ReqAttendCheck2(String getKaryawanNo, String getDate, String Modul) async {
+          EasyLoading.show(status: "Loading...");
+          int errorCode = 0;
+          await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
+            errorCode = 2; return false;}});
+          final response = await http.get(Uri.parse(
+              applink + "mobile/api_mobile.php?act=get_ReqAttendCheck2&karyawanNo=" +
+                  getKaryawanNo+"&getDate="+getDate+"&modul="+Modul)).timeout(
+              Duration(seconds: 10), onTimeout: () {
+            http.Client().close(); errorCode = 1; return http.Response('Error', 500);});
+
+          Map data = jsonDecode(response.body);
+          if(errorCode == 1 || errorCode == 2) {
+            EasyLoading.dismiss();
+            return ["ConnInterupted",http.Response('Error', 500)];
+          }  else {
+            EasyLoading.dismiss();
+            return[
+              data["message"].toString(),
+            ];
+          }
+        }
+
+
+
         get_ReqAttendSchedule_Gantishift(String getKaryawanNo, String getDate) async {
           EasyLoading.show(status: "Loading...");
           int errorCode = 0;

@@ -211,8 +211,16 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
                 getCountApprovalList != "0" ?
                 Badge(
                   showBadge: true,
-                  animationType:  BadgeAnimationType.scale,
-                  shape: BadgeShape.circle,
+                  badgeAnimation: BadgeAnimation.scale (
+                    animationDuration: Duration(seconds: 1),
+                    loopAnimation: false,
+                  ),
+                  badgeStyle: BadgeStyle(
+                    shape: BadgeShape.circle,
+                    badgeColor: Colors.red,
+                    padding: EdgeInsets.all(5),
+                    elevation: 0,
+                  ),
                   position: BadgePosition.topEnd(top: -2,end: -1),
                   child: const FaIcon(FontAwesomeIcons.fileSignature,size: 22,),
                 ) :
@@ -224,8 +232,16 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
                 getNotifCountme != "0" ?
                 Badge(
                   showBadge: true,
-                  animationType:  BadgeAnimationType.scale,
-                  shape: BadgeShape.circle,
+                  badgeAnimation: BadgeAnimation.scale (
+                    animationDuration: Duration(seconds: 1),
+                    loopAnimation: false,
+                  ),
+                  badgeStyle: BadgeStyle(
+                    shape: BadgeShape.circle,
+                    badgeColor: Colors.red,
+                    padding: EdgeInsets.all(5),
+                    elevation: 0,
+                  ),
                   position: BadgePosition.topEnd(top: -2,end: -3),
                   child: const FaIcon(FontAwesomeIcons.bell,size: 22,),
                 ) :
@@ -241,8 +257,16 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
                 getCountPesanList != "0" ?
                 Badge(
                   showBadge: true,
-                  animationType:  BadgeAnimationType.scale,
-                  shape: BadgeShape.circle,
+                  badgeAnimation: BadgeAnimation.scale (
+                    animationDuration: Duration(seconds: 1),
+                    loopAnimation: false,
+                  ),
+                  badgeStyle: BadgeStyle(
+                    shape: BadgeShape.circle,
+                    badgeColor: Colors.red,
+                    padding: EdgeInsets.all(5),
+                    elevation: 0,
+                  ),
                   position: BadgePosition.topEnd(top: -2,end: -3),
                   child: const FaIcon(FontAwesomeIcons.envelope,size: 22,),
                 ) :
