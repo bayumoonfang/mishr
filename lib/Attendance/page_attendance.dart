@@ -320,7 +320,7 @@ class _PageClockIn extends State<PageClockIn> {
     );
   }
 
-  _goattendanceiOS async() {
+  _goattendanceiOS() async {
     widget.getAttendanceType.toString() == 'Clock In' ?
     Navigator.push(context, ExitPage(page: ClockOut(
         widget.getKaryawanNo,
