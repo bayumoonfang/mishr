@@ -7,7 +7,7 @@ import 'package:abzeno/Helper/page_route.dart';
 import 'package:abzeno/Inbox/S_HELPER/g_inbox.dart';
 import 'package:abzeno/Inbox/page_pesanpribadi.dart';
 import 'package:abzeno/Setting/page_bahasa.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -76,19 +76,19 @@ class _InboxHome extends State<InboxHome> {
                   },
                   leading:
                   getCountPesanPribadi != "0" ?
-                  Badge(
+                  badges.Badge(
                     showBadge: true,
-                    badgeAnimation: BadgeAnimation.scale (
+                    badgeAnimation: badges.BadgeAnimation.scale (
                       animationDuration: Duration(seconds: 1),
                       loopAnimation: false,
                     ),
-                    badgeStyle: BadgeStyle(
-                      shape: BadgeShape.circle,
+                    badgeStyle: badges.BadgeStyle(
+                      shape: badges.BadgeShape.circle,
                       badgeColor: Colors.red,
                       padding: EdgeInsets.all(5),
                       elevation: 0,
                     ),
-                    position: BadgePosition.topStart(top: -2,start: -4),
+                    position: badges.BadgePosition.topStart(top: -2,start: -4),
                     child: FaIcon(FontAwesomeIcons.envelope),
                   ) :
                   FaIcon(FontAwesomeIcons.envelope),

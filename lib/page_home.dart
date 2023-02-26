@@ -15,7 +15,7 @@ import 'package:abzeno/Profile/page_profile.dart';
 import 'package:abzeno/attendance/page_doattendance.dart';
 import 'package:abzeno/page_changecabang.dart';
 import 'package:abzeno/page_home2.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/cupertino.dart';
@@ -209,19 +209,19 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
               BottomNavigationBarItem(
                 icon:
                 getCountApprovalList != "0" ?
-                Badge(
+                badges.Badge(
                   showBadge: true,
-                  badgeAnimation: BadgeAnimation.scale (
+                  badgeAnimation: badges.BadgeAnimation.scale (
                     animationDuration: Duration(seconds: 1),
                     loopAnimation: false,
                   ),
-                  badgeStyle: BadgeStyle(
-                    shape: BadgeShape.circle,
+                  badgeStyle: badges.BadgeStyle(
+                    shape: badges.BadgeShape.circle,
                     badgeColor: Colors.red,
                     padding: EdgeInsets.all(5),
                     elevation: 0,
                   ),
-                  position: BadgePosition.topEnd(top: -2,end: -1),
+                  position: badges.BadgePosition.topEnd(top: -2,end: -1),
                   child: const FaIcon(FontAwesomeIcons.fileSignature,size: 22,),
                 ) :
                 FaIcon(FontAwesomeIcons.fileSignature,size: 22,),
@@ -230,19 +230,19 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
               BottomNavigationBarItem(
                 icon:
                 getNotifCountme != "0" ?
-                Badge(
+                badges.Badge(
                   showBadge: true,
-                  badgeAnimation: BadgeAnimation.scale (
+                  badgeAnimation: badges.BadgeAnimation.scale (
                     animationDuration: Duration(seconds: 1),
                     loopAnimation: false,
                   ),
-                  badgeStyle: BadgeStyle(
-                    shape: BadgeShape.circle,
+                  badgeStyle: badges.BadgeStyle(
+                    shape: badges.BadgeShape.circle,
                     badgeColor: Colors.red,
                     padding: EdgeInsets.all(5),
                     elevation: 0,
                   ),
-                  position: BadgePosition.topEnd(top: -2,end: -3),
+                  position: badges.BadgePosition.topEnd(top: -2,end: -3),
                   child: const FaIcon(FontAwesomeIcons.bell,size: 22,),
                 ) :
                 FaIcon(FontAwesomeIcons.bell,size: 22,),
@@ -255,19 +255,19 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
               BottomNavigationBarItem(
                 icon:
                 getCountPesanList != "0" ?
-                Badge(
+                badges.Badge(
                   showBadge: true,
-                  badgeAnimation: BadgeAnimation.scale (
+                  badgeAnimation: badges.BadgeAnimation.scale (
                     animationDuration: Duration(seconds: 1),
                     loopAnimation: false,
                   ),
-                  badgeStyle: BadgeStyle(
-                    shape: BadgeShape.circle,
+                  badgeStyle: badges.BadgeStyle(
+                    shape: badges.BadgeShape.circle,
                     badgeColor: Colors.red,
                     padding: EdgeInsets.all(5),
                     elevation: 0,
                   ),
-                  position: BadgePosition.topEnd(top: -2,end: -3),
+                  position: badges.BadgePosition.topEnd(top: -2,end: -3),
                   child: const FaIcon(FontAwesomeIcons.envelope,size: 22,),
                 ) :
                 FaIcon(FontAwesomeIcons.message,size: 22,),

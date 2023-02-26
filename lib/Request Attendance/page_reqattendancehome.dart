@@ -10,7 +10,7 @@ import 'package:abzeno/Notification/page_notificationspecific.dart';
 import 'package:abzeno/Request%20Attendance/page_reqattendance.dart';
 import 'package:abzeno/Time%20Off/ARCHIVED/page_myapproval.dart';
 import 'package:abzeno/page_home.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -140,16 +140,16 @@ class _PageReqAttendanceHome extends State<PageReqAttendanceHome> with SingleTic
         actions: [
           getNotifCountme != '0' ?
           Container(width: 50, height: 60, child :
-          Badge(
+          badges.Badge(
             showBadge: true,
-            position: BadgePosition.topStart(top: 9,start: 10),
+            position: badges.BadgePosition.topStart(top: 9,start: 10),
             badgeContent: Text(getNotifCountme.toString(),style: GoogleFonts.nunitoSans(color:Colors.white,fontSize: 9),),
-              badgeAnimation: BadgeAnimation.scale (
+              badgeAnimation: badges.BadgeAnimation.scale (
                 animationDuration: Duration(seconds: 1),
                 loopAnimation: false,
               ),
-              badgeStyle: BadgeStyle(
-                shape: BadgeShape.circle,
+              badgeStyle: badges.BadgeStyle(
+                shape: badges.BadgeShape.circle,
                 badgeColor: Colors.red,
                 padding: EdgeInsets.all(5),
                 elevation: 0,

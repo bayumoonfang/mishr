@@ -11,7 +11,7 @@ import 'package:abzeno/Helper/page_route.dart';
 import 'package:abzeno/Notification/page_notificationspecific.dart';
 import 'package:abzeno/Time%20Off/ARCHIVED/page_myapproval.dart';
 import 'package:abzeno/page_home.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -250,16 +250,16 @@ class _PageTimeOffHome2 extends State<PageTimeOffHome2> {
         ),
         actions: [
          getNotifCountme != '0' ?
-       Badge(
+         badges.Badge(
          showBadge: true,
-         position: BadgePosition.topStart(top: 9,start: 10),
+         position: badges.BadgePosition.topStart(top: 9,start: 10),
          badgeContent: Text(getNotifCountme.toString(),style: GoogleFonts.nunitoSans(color:Colors.white,fontSize: 9),),
-         badgeAnimation: BadgeAnimation.scale (
+         badgeAnimation: badges.BadgeAnimation.scale (
            animationDuration: Duration(seconds: 1),
            loopAnimation: false,
          ),
-         badgeStyle: BadgeStyle(
-           shape: BadgeShape.circle,
+         badgeStyle: badges.BadgeStyle(
+           shape: badges.BadgeShape.circle,
            badgeColor: Colors.red,
            padding: EdgeInsets.all(5),
            elevation: 0,
@@ -508,16 +508,16 @@ class _PageTimeOffHome2 extends State<PageTimeOffHome2> {
                   child:
 
                   approval_count.toString() != "0" ?
-                    Badge(
+                  badges.Badge(
                       showBadge: true,
-                      position: BadgePosition.topStart(top: -7,start: -5),
+                      position: badges.BadgePosition.topStart(top: -7,start: -5),
                       badgeContent: Text(approval_count.toString(),style: GoogleFonts.nunitoSans(color:Colors.white,fontSize: 13),),
-                      badgeAnimation: BadgeAnimation.scale (
+                      badgeAnimation: badges.BadgeAnimation.scale (
                         animationDuration: Duration(seconds: 1),
                         loopAnimation: false,
                       ),
-                      badgeStyle: BadgeStyle(
-                        shape: BadgeShape.circle,
+                      badgeStyle: badges.BadgeStyle(
+                        shape: badges.BadgeShape.circle,
                         badgeColor: Colors.red,
                         padding: EdgeInsets.all(5),
                         elevation: 0,

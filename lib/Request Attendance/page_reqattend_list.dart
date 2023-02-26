@@ -11,7 +11,7 @@ import 'package:abzeno/Request%20Attendance/S_HELPER/g_reqattend.dart';
 import 'package:abzeno/Request%20Attendance/page_reqattendance.dart';
 import 'package:abzeno/Time%20Off/ARCHIVED/page_myapproval.dart';
 import 'package:abzeno/page_home.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -235,16 +235,16 @@ class _PageReqAttend extends State<PageReqAttend> {
         ),
         actions: [
           getNotifCountme != '0' ?
-          Badge(
+          badges.Badge(
             showBadge: true,
-            position: BadgePosition.topStart(top: 9,start: 10),
+            position: badges.BadgePosition.topStart(top: 9,start: 10),
             badgeContent: Text(getNotifCountme.toString(),style: GoogleFonts.nunitoSans(color:Colors.white,fontSize: 9),),
-            badgeAnimation: BadgeAnimation.scale (
+            badgeAnimation: badges.BadgeAnimation.scale (
               animationDuration: Duration(seconds: 1),
               loopAnimation: false,
             ),
-            badgeStyle: BadgeStyle(
-              shape: BadgeShape.circle,
+            badgeStyle: badges.BadgeStyle(
+              shape: badges.BadgeShape.circle,
               badgeColor: Colors.red,
               padding: EdgeInsets.all(5),
               elevation: 0,
@@ -534,15 +534,15 @@ class _PageReqAttend extends State<PageReqAttend> {
                     },
                     child:
                     approval_count.toString() != "0" ?
-                    Badge(
+                    badges.Badge(
                       showBadge: true,
-                      position: BadgePosition.topStart(top: -7,start: -5),
-                      badgeAnimation: BadgeAnimation.scale (
+                      position: badges.BadgePosition.topStart(top: -7,start: -5),
+                      badgeAnimation: badges.BadgeAnimation.scale (
                         animationDuration: Duration(seconds: 1),
                         loopAnimation: false,
                       ),
-                      badgeStyle: BadgeStyle(
-                        shape: BadgeShape.circle,
+                      badgeStyle: badges.BadgeStyle(
+                        shape: badges.BadgeShape.circle,
                         badgeColor: Colors.red,
                         padding: EdgeInsets.all(5),
                         elevation: 0,

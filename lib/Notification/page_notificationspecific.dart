@@ -9,7 +9,7 @@ import 'package:abzeno/Helper/page_route.dart';
 import 'package:abzeno/Notification/page_detailnotification.dart';
 import 'package:abzeno/Time%20Off/S_HELPER/g_timeoff.dart';
 import 'package:abzeno/helper/app_helper.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -230,15 +230,15 @@ class _PageSpecificNotification extends State<PageSpecificNotification> {
                                               dense : true,
                                               title:
                                               snapshot.data![i]["f"].toString() == "0" ?
-                                              Badge(
+                                              badges.Badge(
                                                 showBadge: true,
-                                                position: BadgePosition.topStart(top: -2,start: -5),
-                                                badgeAnimation: BadgeAnimation.scale (
+                                                position: badges.BadgePosition.topStart(top: -2,start: -5),
+                                                badgeAnimation: badges.BadgeAnimation.scale (
                                                   animationDuration: Duration(seconds: 1),
                                                   loopAnimation: false,
                                                 ),
-                                                badgeStyle: BadgeStyle(
-                                                  shape: BadgeShape.circle,
+                                                badgeStyle: badges.BadgeStyle(
+                                                  shape: badges.BadgeShape.circle,
                                                   badgeColor: Colors.red,
                                                   padding: EdgeInsets.all(5),
                                                   elevation: 0,

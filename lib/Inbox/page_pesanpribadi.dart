@@ -8,7 +8,7 @@ import 'package:abzeno/Inbox/page_pesanpribadi_detail.dart';
 import 'package:abzeno/Profile/page_attendancehistory.dart';
 import 'package:abzeno/Setting/page_bahasa.dart';
 import 'package:abzeno/Setting/page_notification.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -232,19 +232,19 @@ class _PagePesanPribadi extends State<PagePesanPribadi> {
                                                    child: ListTile(
                                                      leading:
                                             snapshot.data![i]["l"].toString() == "0" ?
-                                                Badge(
+                                            badges.Badge(
                                                   showBadge: true,
-                                                  badgeAnimation: BadgeAnimation.scale (
+                                                  badgeAnimation: badges.BadgeAnimation.scale (
                                                     animationDuration: Duration(seconds: 1),
                                                     loopAnimation: false,
                                                   ),
-                                                  badgeStyle: BadgeStyle(
-                                                    shape: BadgeShape.circle,
+                                                  badgeStyle: badges.BadgeStyle(
+                                                    shape: badges.BadgeShape.circle,
                                                     badgeColor: Colors.red,
                                                     padding: EdgeInsets.all(5),
                                                     elevation: 0,
                                                   ),
-                                                  position: BadgePosition.topStart(top: -2,start: -3),
+                                                  position: badges.BadgePosition.topStart(top: -2,start: -3),
                                                   child: Container(
                                                     width: 35,height: 35,
                                                     decoration: new BoxDecoration(
