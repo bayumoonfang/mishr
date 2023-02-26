@@ -3,7 +3,7 @@
 
 
 import 'dart:convert';
-
+import 'dart:io' show Platform;
 import 'package:abzeno/Helper/m_helper.dart';
 import 'package:abzeno/helper/app_helper.dart';
 import 'package:abzeno/helper/app_link.dart';
@@ -238,7 +238,12 @@ class _ClockOut extends State<ClockOut> {
                         )),
                     onPressed: (){
                       EasyLoading.show(status: AppHelper().loading_text);
-                      cek_datetimesetting();
+                      if (Platform.isIOS) {
+                        _add_attendance();
+                      }else {
+                        cek_datetimesetting();
+                      }
+
                       //_add_attendance();
                       //Navigator.push(context, ExitPage(page: PageClockIn(getKaryawanNo, getJam, getWorkLocationId, AppHelper().getNamaHari().toString(),getWorkLat.toString(),getWorkLong.toString(),getScheduleID.toString()))).then(onGoBack);
                     },)

@@ -139,7 +139,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
         ),
         onPressed: () {
           //Navigator.pop(context);
-          if (Platform.isAndroid || Platform.isIOS) {
+          if (Platform.isAndroid) {
             final appId =
                 Platform.isAndroid ? 'com.Android.mishr' : 'YOUR_IOS_APP_ID';
             final url = Uri.parse(
@@ -559,7 +559,82 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
         } else {
           //AppHelper().showFlushBarerror(context, "ALLOWED");
           if (Platform.isIOS) {
-            // iOS-specific code
+
+            if (Type2 == 'Daily' && TimeMe2 == 'Clock In') {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                  builder: (context) => PageClockIn(
+                      widget.getKaryawanNo,
+                      getJam,
+                      getWorkLocationId,
+                      AppHelper().getNamaHari().toString(),
+                      getWorkLat.toString(),
+                      getWorkLong.toString(),
+                      "Clock In",
+                      widget.getKaryawanNama.toString(),
+                      widget.getKaryawanJabatan.toString(),
+                      widget.getStartTime.toString(),
+                      widget.getEndTime.toString(),
+                      widget.getScheduleName,
+                      getWorkLocation.toString())))
+                  .then(onGoBack);
+            } else if (Type2 == 'Daily' && TimeMe2 == 'Clock Out') {
+              Navigator.push(
+                  context,
+                  ExitPage(
+                      page: PageClockIn(
+                          widget.getKaryawanNo,
+                          getJam,
+                          getWorkLocationId,
+                          AppHelper().getNamaHari().toString(),
+                          getWorkLat.toString(),
+                          getWorkLong.toString(),
+                          "Clock Out",
+                          widget.getKaryawanNama.toString(),
+                          widget.getKaryawanJabatan.toString(),
+                          widget.getStartTime.toString(),
+                          widget.getEndTime.toString(),
+                          widget.getScheduleName,
+                          getWorkLocation.toString())))
+                  .then(onGoBack);
+            } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock In') {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                  builder: (context) => PageClockInLembur(
+                      widget.getKaryawanNo,
+                      getJam,
+                      getWorkLocationId,
+                      AppHelper().getNamaHari().toString(),
+                      getWorkLat.toString(),
+                      getWorkLong.toString(),
+                      "CLOCK IN",
+                      widget.getKaryawanNama.toString(),
+                      widget.getKaryawanJabatan.toString(),
+                      widget.getStartTime.toString(),
+                      widget.getEndTime.toString(),
+                      widget.getScheduleName,
+                      getWorkLocation.toString())))
+                  .then(onGoBack);
+            } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock Out') {
+              Navigator.push(
+                  context,
+                  ExitPage(
+                      page: PageClockInLembur(
+                          widget.getKaryawanNo,
+                          getJam,
+                          getWorkLocationId,
+                          AppHelper().getNamaHari().toString(),
+                          getWorkLat.toString(),
+                          getWorkLong.toString(),
+                          "CLOCK OUT",
+                          widget.getKaryawanNama.toString(),
+                          widget.getKaryawanJabatan.toString(),
+                          widget.getStartTime.toString(),
+                          widget.getEndTime.toString(),
+                          widget.getScheduleName,
+                          getWorkLocation.toString())))
+                  .then(onGoBack);
+            }
           } else {
             cek_datetimesetting(Type2, TimeMe2);
           }
@@ -567,7 +642,81 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
         }
       } else {
           if (Platform.isIOS) {
-            // iOS-specific code
+            if (Type2 == 'Daily' && TimeMe2 == 'Clock In') {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                  builder: (context) => PageClockIn(
+                      widget.getKaryawanNo,
+                      getJam,
+                      getWorkLocationId,
+                      AppHelper().getNamaHari().toString(),
+                      getWorkLat.toString(),
+                      getWorkLong.toString(),
+                      "Clock In",
+                      widget.getKaryawanNama.toString(),
+                      widget.getKaryawanJabatan.toString(),
+                      widget.getStartTime.toString(),
+                      widget.getEndTime.toString(),
+                      widget.getScheduleName,
+                      getWorkLocation.toString())))
+                  .then(onGoBack);
+            } else if (Type2 == 'Daily' && TimeMe2 == 'Clock Out') {
+              Navigator.push(
+                  context,
+                  ExitPage(
+                      page: PageClockIn(
+                          widget.getKaryawanNo,
+                          getJam,
+                          getWorkLocationId,
+                          AppHelper().getNamaHari().toString(),
+                          getWorkLat.toString(),
+                          getWorkLong.toString(),
+                          "Clock Out",
+                          widget.getKaryawanNama.toString(),
+                          widget.getKaryawanJabatan.toString(),
+                          widget.getStartTime.toString(),
+                          widget.getEndTime.toString(),
+                          widget.getScheduleName,
+                          getWorkLocation.toString())))
+                  .then(onGoBack);
+            } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock In') {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                  builder: (context) => PageClockInLembur(
+                      widget.getKaryawanNo,
+                      getJam,
+                      getWorkLocationId,
+                      AppHelper().getNamaHari().toString(),
+                      getWorkLat.toString(),
+                      getWorkLong.toString(),
+                      "CLOCK IN",
+                      widget.getKaryawanNama.toString(),
+                      widget.getKaryawanJabatan.toString(),
+                      widget.getStartTime.toString(),
+                      widget.getEndTime.toString(),
+                      widget.getScheduleName,
+                      getWorkLocation.toString())))
+                  .then(onGoBack);
+            } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock Out') {
+              Navigator.push(
+                  context,
+                  ExitPage(
+                      page: PageClockInLembur(
+                          widget.getKaryawanNo,
+                          getJam,
+                          getWorkLocationId,
+                          AppHelper().getNamaHari().toString(),
+                          getWorkLat.toString(),
+                          getWorkLong.toString(),
+                          "CLOCK OUT",
+                          widget.getKaryawanNama.toString(),
+                          widget.getKaryawanJabatan.toString(),
+                          widget.getStartTime.toString(),
+                          widget.getEndTime.toString(),
+                          widget.getScheduleName,
+                          getWorkLocation.toString())))
+                  .then(onGoBack);
+            }
           } else {
             cek_datetimesetting(Type2, TimeMe2);
           }

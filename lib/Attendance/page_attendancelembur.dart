@@ -3,7 +3,7 @@
 
 import 'dart:async';
 import 'dart:convert';
-
+import 'dart:io' show Platform;
 import 'package:abzeno/Attendance/page_doattendancelembur.dart';
 import 'package:abzeno/attendance/page_doattendance.dart';
 import 'package:datetime_setting/datetime_setting.dart';
@@ -322,6 +322,38 @@ class _PageClockInLembur extends State<PageClockInLembur> {
       },
     );
   }
+
+
+
+  _goattendanceiOS() async {
+    widget.getAttendanceType.toString() == 'CLOCK IN' ?
+    Navigator.push(context, ExitPage(page: ClockOutLembur(
+        widget.getKaryawanNo,
+        _timeString,
+        AppHelper().getNamaHari().toString(),
+        _noteclockin.text,
+        "Clock In",
+        widget.getKaryawanNama,
+        widget.getKaryawanJabatan,
+        widget.getStartTime,widget.getEndTime,widget.getScheduleName,
+        selectedscheduleList,
+        locationLat,
+        locationLong)))
+        :
+    Navigator.push(context, ExitPage(page: ClockOutLembur(
+        widget.getKaryawanNo,
+        _timeString,
+        AppHelper().getNamaHari().toString(),
+        _noteclockin.text,
+        "Clock Out",
+        widget.getKaryawanNama,
+        widget.getKaryawanJabatan,
+        widget.getStartTime,widget.getEndTime,widget.getScheduleName,
+        selectedscheduleList,
+        locationLat,
+        locationLong)));
+  }
+
 
 
 
@@ -709,7 +741,11 @@ class _PageClockInLembur extends State<PageClockInLembur> {
                             return;
                           } else {
                             FocusScope.of(context).requestFocus(FocusNode());
-                            _goattendance();
+                            if (Platform.isIOS) {
+                              _goattendanceiOS();
+                            }else {
+                              _goattendance();
+                            }
                           }
                           //EasyLoading.show(status: "Loading...");
                         },

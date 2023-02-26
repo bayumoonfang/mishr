@@ -3,7 +3,7 @@
 
 import 'dart:async';
 import 'dart:convert';
-
+import 'dart:io' show Platform;
 import 'package:abzeno/attendance/page_doattendance.dart';
 import 'package:datetime_setting/datetime_setting.dart';
 import 'package:flutter/cupertino.dart';
@@ -320,7 +320,34 @@ class _PageClockIn extends State<PageClockIn> {
     );
   }
 
-
+  _goattendanceiOS async() {
+    widget.getAttendanceType.toString() == 'Clock In' ?
+    Navigator.push(context, ExitPage(page: ClockOut(
+        widget.getKaryawanNo,
+        _timeString,
+        AppHelper().getNamaHari().toString(),
+        _noteclockin.text,
+        "Clock In",
+        widget.getKaryawanNama,
+        widget.getKaryawanJabatan,
+        widget.getStartTime,widget.getEndTime,widget.getScheduleName,
+        selectedscheduleList,
+        locationLat,
+        locationLong)))
+        :
+    Navigator.push(context, ExitPage(page: ClockOut(
+        widget.getKaryawanNo,
+        _timeString,
+        AppHelper().getNamaHari().toString(),
+        _noteclockin.text,
+        "Clock Out",
+        widget.getKaryawanNama,
+        widget.getKaryawanJabatan,
+        widget.getStartTime,widget.getEndTime,widget.getScheduleName,
+        selectedscheduleList,
+        locationLat,
+        locationLong)));
+  }
 
   _goattendance() async {
     bool timeAuto = await DatetimeSetting.timeIsAuto();
@@ -665,7 +692,12 @@ class _PageClockIn extends State<PageClockIn> {
                             return;
                           } else {
                             FocusScope.of(context).requestFocus(FocusNode());
-                            _goattendance();
+                              if (Platform.isIOS) {
+                                _goattendanceiOS();
+                              }else {
+                                _goattendance();
+                              }
+
                           }
                           //EasyLoading.show(status: "Loading...");
                         },
