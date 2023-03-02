@@ -27,13 +27,13 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app needs access to location.</string>
+	<string>This app needs access to location. Turning on location service allow us to know your current location with your work location. This is necessary so that your attendance data can be processed by the application.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string>
+	<string>This app needs access to location when in the background. Turning on location service allow us to know your current location with your work location for real time. This is necessary so that your attendance data can be processed by the application.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string>
+	<string>This app needs access to location when open. Turning on location service allow us to know your current location with your work location. This is necessary so that your attendance data can be processed by the application.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app requires access to the photo library.</string>
+	<string>This app requires access to the photo library. Turning on, so that the app can find the files you want to include in your request.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
