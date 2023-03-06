@@ -2,18 +2,12 @@
 
 import 'package:abzeno/Helper/app_helper.dart';
 import 'package:abzeno/Helper/page_route.dart';
-import 'package:abzeno/Profile/page_attendancehistory.dart';
-import 'package:abzeno/Request%20Attendance/page_reqattend_list.dart';
-import 'package:abzeno/Request%20Attendance/page_reqattendanceadd2.dart';
-import 'package:abzeno/Setting/page_bahasa.dart';
-import 'package:abzeno/Setting/page_notification.dart';
+import 'package:abzeno/Request%20Attendance/page_attendancehistory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-
-import 'page_reqattend_addhome.dart';
 import 'page_reqattend_addhome2.dart';
 import 'page_reqattendancehome.dart';
 
@@ -42,6 +36,7 @@ class _PageAttendanceHome extends State<PageAttendanceHome> {
 
   String getBahasa = "1";
   getSettings() async {
+    //=====================
     await AppHelper().getSession().then((value){
       setState(() {
         getBahasa = value[20];

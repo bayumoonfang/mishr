@@ -147,15 +147,16 @@ class m_helper{
 
 
 
-  review_create(reviewText, getKaryawanNo) async {
+  review_create(reviewText, getKaryawanNo, getKaryawanNama) async {
     int errorCode = 0;
     await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
       errorCode = 2; return false;}});
     final response = await http.post(
         Uri.parse(applink+"mobile/api_mobile.php?act=review_create"),
         body: {
-          "review_karyawanno": reviewText,
-          "review_namaHari": getKaryawanNo
+          "review_karyawancontent": reviewText,
+          "review_karyawanNo": getKaryawanNo,
+          "review_karyawanNama": getKaryawanNama
         }).timeout(Duration(seconds: 10), onTimeout: () {
       http.Client().close(); errorCode = 1; return http.Response('Error', 500);}
     );

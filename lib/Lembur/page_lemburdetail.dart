@@ -3,30 +3,19 @@
 
 
 
-import 'dart:convert';
-
 import 'package:abzeno/Helper/app_helper.dart';
-import 'package:abzeno/Helper/app_link.dart';
 import 'package:abzeno/Helper/page_route.dart';
 import 'package:abzeno/Lembur/S_HELPER/g_lembur.dart';
 import 'package:abzeno/Lembur/S_HELPER/m_lembur.dart';
 import 'package:abzeno/Lembur/page_lemburactivity.dart';
-import 'package:abzeno/Request%20Attendance/S_HELPER/m_reqattend.dart';
-import 'package:abzeno/Request%20Attendance/page_reqattend_gantishiftdetailattend.dart';
-import 'package:abzeno/Request%20Attendance/page_reqattendactivitydetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:steps/steps.dart';
-
-import '../Request Attendance/S_HELPER/g_reqattend.dart';
-import '../Request Attendance/page_reqattendapprovedetail.dart';
-import '../Time Off/page_detailactivitytimeoff.dart';
 
 
 class LemburDetail extends StatefulWidget{

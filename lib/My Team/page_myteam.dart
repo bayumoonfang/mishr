@@ -2,23 +2,13 @@
 
 
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:abzeno/Helper/app_link.dart';
-import 'package:abzeno/Helper/page_route.dart';
-import 'package:abzeno/Notification/page_detailnotification.dart';
-import 'package:abzeno/Time%20Off/S_HELPER/g_timeoff.dart';
 import 'package:abzeno/helper/app_helper.dart';
-import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
-
 import 'S_HELPER/g_myteam.dart';
 
 class PageMyTeam extends StatefulWidget{
@@ -66,12 +56,11 @@ class _PageMyTeam extends State<PageMyTeam> {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(child: Scaffold(
       appBar: new AppBar(
         titleSpacing: 0,
         backgroundColor: Colors.white,
-        //shape: Border(bottom: BorderSide(color: Colors.red)),
-        // backgroundColor: HexColor("#3a5664"),
         title: Text("My Team", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
@@ -130,7 +119,7 @@ class _PageMyTeam extends State<PageMyTeam> {
                               children: [
                                 Expanded(
                                   child: ListView.builder(
-                                    itemExtent: 85,
+                                    itemExtent: textScale.toString() == '1.17' ? 115: 85,
                                     itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                     padding: const EdgeInsets.only(bottom: 85),
                                     itemBuilder: (context, i) {

@@ -1,18 +1,12 @@
 
 
 
-import 'dart:convert';
-
 import 'package:abzeno/Helper/app_helper.dart';
-import 'package:abzeno/Helper/app_link.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:map_launcher/map_launcher.dart';
 
@@ -64,6 +58,7 @@ class _JadwalLembur extends State<JadwalLembur> {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(child: Scaffold(
 
       body: Container(
@@ -117,7 +112,7 @@ class _JadwalLembur extends State<JadwalLembur> {
                           children: [
                             Expanded(
                               child: ListView.builder(
-                                itemExtent: 82,
+                                itemExtent: textScale.toString() == '1.17' ? 86 : 82,
                                 itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                 padding: const EdgeInsets.only(bottom: 85,top: 5),
                                 itemBuilder: (context, i) {

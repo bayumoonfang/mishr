@@ -154,6 +154,8 @@ class _PageTimeOffList extends State<PageTimeOffList> {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
+
     return Scaffold(
       body: Container(
           color: Colors.white,
@@ -419,7 +421,7 @@ class _PageTimeOffList extends State<PageTimeOffList> {
                                 children: [
                                   Expanded(
                                     child: ListView.builder(
-                                      itemExtent: 85,
+                                      itemExtent: textScale.toString() == '1.17' ? 95 : 85,
                                       itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                       padding: const EdgeInsets.only(bottom: 85,top: 5),
                                       itemBuilder: (context, i) {

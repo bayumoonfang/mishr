@@ -1,12 +1,5 @@
 
-
-
-
-
-import 'dart:convert';
-
 import 'package:abzeno/Helper/app_helper.dart';
-import 'package:abzeno/Helper/app_link.dart';
 import 'package:abzeno/Helper/page_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -14,13 +7,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:steps/steps.dart';
-
 import 'S_HELPER/g_reqattend.dart';
 import 'S_HELPER/m_reqattend.dart';
-import 'page_reqattend_gantishiftdetailattend.dart';
 import 'page_reqattendactivitydetail.dart';
 
 
@@ -133,6 +123,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
   String fcm_message = "";
   String fcm_message2 = "";
   _reqattend_approve(getAppr) async {
+    //======================================
     Navigator.pop(context);
     setState(() {
       _isPressedHUD = true;
@@ -293,7 +284,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
     Widget continueButton = Container(
       width: 100,
       child: TextButton(
-        child: Text(getBahasa.toString() == "1"?  "Setujui": "Approve",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
+        child: Text(getBahasa.toString() == "1"?  "SETUJUI": "Approve",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           _reqattend_approve("2");
         },
@@ -955,7 +946,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
 
 
                               TableRow(children :[
-                                Padding(padding: EdgeInsets.only(bottom: 5),
+                                Padding(padding: EdgeInsets.only(bottom: 5,right: 5),
                                   child: Text(getBahasa.toString() == "1"? 'Kehadiran Sebelumnya': 'Previous Attendance', style: GoogleFonts.nunito(fontSize: 14) ),),
                                 Padding(padding: EdgeInsets.only(bottom: 5),
                                     child: InkWell(

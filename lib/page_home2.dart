@@ -1,20 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io' show Platform;
 import 'dart:ui';
-
 import 'package:geolocator/geolocator.dart';
 import 'package:trust_location/trust_location.dart';
-import 'package:abzeno/MySchedule/page_myschedule.dart';
 import 'package:abzeno/Profile/page_changepin.dart';
-import 'package:abzeno/Request%20Attendance/page_reqattend_list.dart';
-import 'package:abzeno/Request%20Attendance/page_reqattendancehome.dart';
-import 'package:abzeno/attendance/page_doattendance.dart';
 import 'package:abzeno/page_changecabang.dart';
-import 'package:abzeno/page_home.dart';
 import 'package:datetime_setting/datetime_setting.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -25,35 +16,23 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
-import 'package:overlay_support/overlay_support.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:safe_device/safe_device.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
-import 'Announecement/page_announcement.dart';
 import 'Attendance/page_attendancelembur.dart';
 import 'Helper/m_helper.dart';
 import 'Lembur/page_lemburhome.dart';
 import 'My Team/page_myteam.dart';
 import 'MySchedule/page_myschedule2.dart';
-import 'NotificationBadge.dart';
 import 'Report/page_report.dart';
 import 'Reprimand/page_reprimand.dart';
 import 'Request Attendance/page_attendancehome.dart';
-import 'Lembur/page_lembur_add.dart';
-import 'Request Attendance/page_reqattendance.dart';
 import 'Setting/page_setting.dart';
-import 'Time Off/ARCHIVED/page_timeoffhome.dart';
-import 'Time Off/page_timeoffhome2.dart';
 import 'Time Off/page_timeoffhome2a.dart';
 import 'helper/app_helper.dart';
 import 'helper/app_link.dart';
 import 'helper/page_route.dart';
 import 'attendance/page_attendance.dart';
-import 'main.dart';
-import 'page_login.dart';
-import 'package:draggable_fab/draggable_fab.dart';
 
 class Home2 extends StatefulWidget {
   final String getKaryawanNama;
@@ -95,6 +74,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
   var getJam = DateFormat('HH:mm').format(DateTime.now());
   PushNotification? _notificationInfo;
 
+
   String getWorkLocation = "...";
   String getWorkLocationId = "...";
   String getWorkLong = "...";
@@ -119,10 +99,11 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
   }
 
   showVersionDialog(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     Widget cancelButton = TextButton(
       child: Text(
         getBahasa.toString() == "1" ? "TUTUP" : "CLOSE",
-        style: GoogleFonts.lexendDeca(color: Colors.blue),
+        style: GoogleFonts.lexendDeca(color: Colors.blue,fontSize: textScale.toString() == '1.17' ? 13 : 15),
       ),
       onPressed: () {
         Navigator.pop(context);
@@ -135,6 +116,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
           getBahasa.toString() == "1" ? "UPDATE NOW" : "UPDATE NOW",
           style: GoogleFonts.lexendDeca(
             color: Colors.blue,
+              fontSize: textScale.toString() == '1.17' ? 13 : 15
           ),
         ),
         onPressed: () {
@@ -161,19 +143,19 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
             ? "Perbarui Versi ?"
             : "New Version Available",
         style:
-            GoogleFonts.nunitoSans(fontSize: 18, fontWeight: FontWeight.bold),
+            GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 16 : 18, fontWeight: FontWeight.bold),
         textAlign: TextAlign.left,
       ),
       content: Container(
-          height: 120,
+          height: textScale.toString() == '1.17' ? 140 : 150,
           child: Column(
             children: [
               Text(
                 "Versi terbaru untuk aplikasi MISHR sudah tersedia ! Untuk versi terbaru adalah " +
-                    getVersionNew +
+                    getFullVersionNew +
                     ", sedangkan versi anda saat ini adalah " +
-                    getVersionExisting,
-                style: GoogleFonts.nunitoSans(),
+                    getFullVersionExisting,
+                style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 13 : 15),
                 textAlign: TextAlign.left,
               ),
               SizedBox(
@@ -182,8 +164,8 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Apakah anda ingin memperbarui versi ?",
-                  style: GoogleFonts.nunitoSans(),
+                  "Apakah anda ingin memperbarui ?",
+                  style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 13 : 15),
                   textAlign: TextAlign.left,
                 ),
               )
@@ -296,7 +278,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
 
   _review_create() async {
     await m_helper()
-        .review_create(_ulasanController.text, widget.getKaryawanNo);
+        .review_create(_ulasanController.text, widget.getKaryawanNo, widget.getKaryawanNama);
   }
 
   showDialogme(BuildContext context) {
@@ -827,6 +809,9 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
   final ScrollController scrollcontroller = new ScrollController();
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
+   // AppHelper().showFlushBarsuccess(context, textScale.toString());
+
     return WillPopScope(
         child: Scaffold(
           body: Container(
@@ -982,9 +967,10 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                             child: Text(
                                               DateFormat('HH:mm')
                                                   .format(DateTime.now()),
-                                              style: GoogleFonts.lato(
-                                                  fontSize: 32,
-                                                  fontWeight: FontWeight.bold),
+                                              style:
+                                              textScale.toString() == '1.17' ?
+                                              GoogleFonts.lato(fontSize: 27, fontWeight: FontWeight.bold)
+                                              : GoogleFonts.lato(fontSize: 32, fontWeight: FontWeight.bold),
                                             ),
                                           );
                                         },
@@ -1000,8 +986,12 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                 : AppHelper()
                                                     .getTanggal_withhariEnglish()
                                                     .toString(),
-                                            style: GoogleFonts.nunito(
-                                                fontSize: 13)),
+                                            style:
+                                             textScale.toString() == '1.17' ?
+                                            GoogleFonts.nunito(fontSize:11)
+                                                 : GoogleFonts.nunito(fontSize: 13)
+
+                                        ),
                                       ),
                                       widget.getScheduleID.toString() == '1' ||
                                               widget.getScheduleID.toString() ==
@@ -1012,10 +1002,10 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                               child: Text(
                                                   widget.getScheduleName
                                                       .toString(),
-                                                  style: GoogleFonts.nunito(
-                                                      fontSize: 17,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
+                                                  style:  textScale.toString() == '1.17' ?
+                                                  GoogleFonts.nunito(fontSize: 14, fontWeight: FontWeight.bold)
+                                                      : GoogleFonts.nunito(fontSize: 17, fontWeight: FontWeight.bold)
+                                              ),
                                             )
                                           : Padding(
                                               padding: const EdgeInsets.only(
@@ -1034,22 +1024,20 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                         widget.getStartTime
                                                             .toString(),
                                                         style:
-                                                            GoogleFonts.nunito(
-                                                                fontSize: 17,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
+                                                        textScale.toString() == '1.17' ?
+                                                        GoogleFonts.nunito(fontSize: 14, fontWeight: FontWeight.bold)
+                                                            : GoogleFonts.nunito(fontSize: 17, fontWeight: FontWeight.bold)
+                                                    ),
                                                     Padding(
                                                       padding:
                                                           const EdgeInsets.only(
                                                               left: 10),
                                                       child: Text("-",
-                                                          style: GoogleFonts
-                                                              .nunito(
-                                                                  fontSize: 17,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold)),
+                                                          style:
+                                                          textScale.toString() == '1.17' ?
+                                                          GoogleFonts.nunito(fontSize: 14, fontWeight: FontWeight.bold)
+                                                              : GoogleFonts.nunito(fontSize: 17, fontWeight: FontWeight.bold)
+                                                      ),
                                                     ),
                                                     Padding(
                                                       padding:
@@ -1058,12 +1046,11 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                       child: Text(
                                                           widget.getEndTime
                                                               .toString(),
-                                                          style: GoogleFonts
-                                                              .nunito(
-                                                                  fontSize: 17,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold)),
+                                                          style:
+                                                          textScale.toString() == '1.17' ?
+                                                              GoogleFonts.nunito(fontSize: 14, fontWeight: FontWeight.bold)
+                                                            : GoogleFonts.nunito(fontSize: 17, fontWeight: FontWeight.bold)
+                                                              ),
                                                     )
                                                   ],
                                                 ),
@@ -1090,9 +1077,12 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                       /*getWorkLocation.toString() != 'null' || getWorkLocation.toString() != '' ? getWorkLocation.toString() :
                                               "Belum Disetting"*/
                                                       ,
-                                                      style: GoogleFonts.nunito(
-                                                          fontSize: 17,
-                                                          color: Colors.blue)),
+                                                      style:
+                                                      textScale.toString() == '1.17' ?
+                                                      GoogleFonts.nunito(fontSize:14, color: Colors.blue)
+                                                          :
+                                                      GoogleFonts.nunito(fontSize: 17, color: Colors.blue)
+                                                  ),
                                                 )
                                               ],
                                             ),
@@ -1131,15 +1121,15 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                     '00:00')
                                                         ? ElevatedButton(
                                                             child: Text(
+
                                                               "Clock In",
-                                                              style: GoogleFonts.lexendDeca(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      11.5),
+                                                              style:
+                                                              textScale.toString() == '1.17' ?
+                                                              GoogleFonts.lexendDeca(
+                                                                  color: Colors.white, fontWeight: FontWeight.bold, fontSize: 8.5)
+                                                                  :
+                                                              GoogleFonts.lexendDeca(
+                                                                  color: Colors.white, fontWeight: FontWeight.bold, fontSize: 11.5),
                                                             ),
                                                             style: ElevatedButton
                                                                 .styleFrom(
@@ -1189,14 +1179,13 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                 ElevatedButton(
                                                               child: Text(
                                                                 "Clock In",
-                                                                style: GoogleFonts.lexendDeca(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        11.5),
+                                                                style:
+                                                                textScale.toString() == '1.17' ?
+                                                                GoogleFonts.lexendDeca(
+                                                                    color: Colors.white, fontWeight: FontWeight.bold, fontSize: 8.5)
+                                                                    :
+                                                                GoogleFonts.lexendDeca(
+                                                                    color: Colors.white, fontWeight: FontWeight.bold, fontSize: 11.5),
                                                               ),
                                                               style: ElevatedButton
                                                                   .styleFrom(
@@ -1238,14 +1227,13 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                         ? ElevatedButton(
                                                             child: Text(
                                                               "Clock Out",
-                                                              style: GoogleFonts.lexendDeca(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      11.5),
+                                                              style:
+                                                              textScale.toString() == '1.17' ?
+                                                              GoogleFonts.lexendDeca(
+                                                                  color: Colors.white, fontWeight: FontWeight.bold, fontSize: 8.5)
+                                                                  :
+                                                              GoogleFonts.lexendDeca(
+                                                                  color: Colors.white, fontWeight: FontWeight.bold, fontSize: 11.5),
                                                             ),
                                                             style: ElevatedButton
                                                                 .styleFrom(
@@ -1283,14 +1271,13 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                 ElevatedButton(
                                                               child: Text(
                                                                 "Clock Out",
-                                                                style: GoogleFonts.lexendDeca(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        11.5),
+                                                                style:
+                                                                textScale.toString() == '1.17' ?
+                                                                GoogleFonts.lexendDeca(
+                                                                    color: Colors.white, fontWeight: FontWeight.bold, fontSize: 8.5)
+                                                                    :
+                                                                GoogleFonts.lexendDeca(
+                                                                    color: Colors.white, fontWeight: FontWeight.bold, fontSize: 11.5),
                                                               ),
                                                               style: ElevatedButton
                                                                   .styleFrom(
@@ -1427,7 +1414,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                           style: GoogleFonts.lexendDeca(
                                                                               color: Colors.white,
                                                                               fontWeight: FontWeight.bold,
-                                                                              fontSize: 11.5),
+                                                                              fontSize: textScale.toString() == '1.17' ? 8.5: 11.5),
                                                                         ),
                                                                         style: ElevatedButton.styleFrom(
                                                                             elevation: 0,
@@ -1456,7 +1443,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                             style: GoogleFonts.lexendDeca(
                                                                                 color: Colors.black,
                                                                                 fontWeight: FontWeight.bold,
-                                                                                fontSize: 11.5),
+                                                                                fontSize: textScale.toString() == '1.17' ? 8.5: 11.5),
                                                                           ),
                                                                           style: ElevatedButton.styleFrom(
                                                                               elevation: 0,
@@ -1482,7 +1469,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                           style: GoogleFonts.lexendDeca(
                                                                               color: Colors.white,
                                                                               fontWeight: FontWeight.bold,
-                                                                              fontSize: 11.5),
+                                                                              fontSize: textScale.toString() == '1.17' ? 8.5: 11.5),
                                                                         ),
                                                                         style: ElevatedButton.styleFrom(
                                                                             elevation: 0,
@@ -1512,7 +1499,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                             style: GoogleFonts.lexendDeca(
                                                                                 color: Colors.black,
                                                                                 fontWeight: FontWeight.bold,
-                                                                                fontSize: 11.5),
+                                                                                fontSize: textScale.toString() == '1.17' ? 8.5: 11.5),
                                                                           ),
                                                                           style: ElevatedButton.styleFrom(
                                                                               elevation: 0,
@@ -1621,14 +1608,15 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                         50),
                                                           )),
                                                   child: Text("Semua",
-                                                      style: GoogleFonts
-                                                          .lexendDeca(
-                                                              color: HexColor(
-                                                                  "#075E54"),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 11)),
+                                                      style:
+                                                      textScale.toString() == '1.17' ?
+                                                       GoogleFonts.lexendDeca(color: HexColor("#075E54"), fontWeight: FontWeight.bold,
+                                                              fontSize: 9)
+                                                              :
+                                                      GoogleFonts.lexendDeca(color: HexColor("#075E54"), fontWeight: FontWeight.bold,
+                                                          fontSize: 10.5)
+
+                                                  ),
                                                   onPressed: () {
                                                     setState(() {
                                                       pressBtnSemua = "1";
@@ -1669,14 +1657,13 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                         50),
                                                           )),
                                                   child: Text("Cuti",
-                                                      style: GoogleFonts
-                                                          .lexendDeca(
-                                                              color: HexColor(
-                                                                  "#075E54"),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 11)),
+                                                      style:
+                                                               textScale.toString() == '1.17' ?
+                                                      GoogleFonts.lexendDeca(color: HexColor("#075E54"), fontWeight: FontWeight.bold,
+                                                          fontSize: 9)
+                                                          :
+                                                      GoogleFonts.lexendDeca(color: HexColor("#075E54"), fontWeight: FontWeight.bold,
+                                                          fontSize: 10.5)),
                                                   onPressed: () {
                                                     setState(() {
                                                       pressBtnSemua = "0";
@@ -1717,14 +1704,13 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                         50),
                                                           )),
                                                   child: Text("Kehadiran",
-                                                      style: GoogleFonts
-                                                          .lexendDeca(
-                                                              color: HexColor(
-                                                                  "#075E54"),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 11)),
+                                                      style:
+                                                      textScale.toString() == '1.17' ?
+                                                      GoogleFonts.lexendDeca(color: HexColor("#075E54"), fontWeight: FontWeight.bold,
+                                                          fontSize: 9)
+                                                          :
+                                                      GoogleFonts.lexendDeca(color: HexColor("#075E54"), fontWeight: FontWeight.bold,
+                                                          fontSize: 10.5)),
                                                   onPressed: () {
                                                     setState(() {
                                                       pressBtnSemua = "0";
@@ -1765,14 +1751,13 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                         50),
                                                           )),
                                                   child: Text("Informasi",
-                                                      style: GoogleFonts
-                                                          .lexendDeca(
-                                                              color: HexColor(
-                                                                  "#075E54"),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 11)),
+                                                      style:
+                                                      textScale.toString() == '1.17' ?
+                                                      GoogleFonts.lexendDeca(color: HexColor("#075E54"), fontWeight: FontWeight.bold,
+                                                          fontSize: 9)
+                                                          :
+                                                      GoogleFonts.lexendDeca(color: HexColor("#075E54"), fontWeight: FontWeight.bold,
+                                                          fontSize: 10.5)),
                                                   onPressed: () {
                                                     setState(() {
                                                       pressBtnSemua = "0";
@@ -1800,16 +1785,8 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                               onTap: () {
                                                 Navigator.push(
                                                         context,
-                                                        ExitPage(
-                                                            page: PageTimeOffHome2a(
-                                                                widget
-                                                                    .getKaryawanNo,
-                                                                widget
-                                                                    .getKaryawanNama
-                                                                    .toString(),
-                                                                widget
-                                                                    .getKaryawanEmail)))
-                                                    .then(onGoBack2);
+                                                        ExitPage(page: PageTimeOffHome2a(widget.getKaryawanNo, widget.getKaryawanNama.toString(),
+                                                                widget.getKaryawanEmail))).then(onGoBack2);
                                               },
                                               child: Column(
                                                 children: [
@@ -1847,8 +1824,10 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                             ? "Cuti"
                                                             : "Time Off",
                                                         style:
-                                                            GoogleFonts.nunito(
-                                                                fontSize: 13)),
+                                                            textScale.toString() == '1.17' ?
+                                                            GoogleFonts.nunito(fontSize: 11) :
+                                                            GoogleFonts.nunito(fontSize: 13)
+                                                    ),
                                                   )
                                                 ],
                                               ),
@@ -1909,8 +1888,11 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                               '1'
                                                           ? "Kehadiran"
                                                           : "Attendance",
-                                                      style: GoogleFonts.nunito(
-                                                          fontSize: 13),
+                                                      style:
+
+                                                      textScale.toString() == '1.17' ?
+                                                      GoogleFonts.nunito(fontSize: 11) :
+                                                      GoogleFonts.nunito(fontSize: 13),
                                                       textAlign:
                                                           TextAlign.center,
                                                     ),
@@ -1974,8 +1956,10 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                               '1'
                                                           ? "Lembur"
                                                           : "Overtime",
-                                                      style: GoogleFonts.nunito(
-                                                          fontSize: 13),
+                                                      style:
+                                                      textScale.toString() == '1.17' ?
+                                                      GoogleFonts.nunito(fontSize: 11) :
+                                                      GoogleFonts.nunito(fontSize: 13),
                                                       textAlign:
                                                           TextAlign.center,
                                                     ),
@@ -2036,8 +2020,10 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                               '1'
                                                           ? "Jadwal"
                                                           : "Schedule",
-                                                      style: GoogleFonts.nunito(
-                                                          fontSize: 13),
+                                                      style:
+                                                      textScale.toString() == '1.17' ?
+                                                      GoogleFonts.nunito(fontSize: 11) :
+                                                      GoogleFonts.nunito(fontSize: 13),
                                                       textAlign:
                                                           TextAlign.center,
                                                     ),
@@ -2094,8 +2080,10 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                               '1'
                                                           ? "Resume"
                                                           : "Resume",
-                                                      style: GoogleFonts.nunito(
-                                                          fontSize: 13),
+                                                      style:
+                                                      textScale.toString() == '1.17' ?
+                                                      GoogleFonts.nunito(fontSize: 11) :
+                                                      GoogleFonts.nunito(fontSize: 13),
                                                       textAlign:
                                                           TextAlign.center,
                                                     ),
@@ -2153,8 +2141,10 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                               '1'
                                                           ? "Teguran"
                                                           : "Reprimand",
-                                                      style: GoogleFonts.nunito(
-                                                          fontSize: 13),
+                                                      style:
+                                                      textScale.toString() == '1.17' ?
+                                                      GoogleFonts.nunito(fontSize: 11) :
+                                                      GoogleFonts.nunito(fontSize: 13),
                                                       textAlign:
                                                           TextAlign.center,
                                                     ),
@@ -2241,8 +2231,10 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                               '1'
                                                           ? "My Team"
                                                           : "Information",
-                                                      style: GoogleFonts.nunito(
-                                                          fontSize: 13),
+                                                      style:
+                                                      textScale.toString() == '1.17' ?
+                                                      GoogleFonts.nunito(fontSize: 11) :
+                                                      GoogleFonts.nunito(fontSize: 13),
                                                       textAlign:
                                                           TextAlign.center,
                                                     ),
@@ -2315,7 +2307,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                             style: GoogleFonts
                                                                 .nunitoSans(
                                                                     fontSize:
-                                                                        13,
+                                                                    textScale.toString() == '1.17' ? 11: 13,
                                                                     color: Colors
                                                                         .black,
                                                                     fontWeight:
@@ -2370,7 +2362,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                               ? "Jam Masuk"
                                                                               : "Clock In",
                                                                           style: GoogleFonts.lato(
-                                                                              fontSize: 10,
+                                                                              fontSize:  textScale.toString() == '1.17' ? 9 : 10,
                                                                               color: Colors.black,
                                                                               fontWeight: FontWeight.bold)),
                                                                     ),
@@ -2436,7 +2428,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                               ? "Jam Keluar"
                                                                               : "Clock Out",
                                                                           style: GoogleFonts.lato(
-                                                                              fontSize: 10,
+                                                                              fontSize: textScale.toString() == '1.17' ? 9 : 10,
                                                                               color: Colors.black,
                                                                               fontWeight: FontWeight.bold)),
                                                                     ),
@@ -2509,14 +2501,15 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                     .getTanggal_nohariEnglish()
                                                                     .toString() +
                                                                 ')',
-                                                        style: GoogleFonts
-                                                            .nunitoSans(
-                                                                fontSize: 13,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
+                                                        style:
+                                                        textScale.toString() == '1.17' ?
+                                                        GoogleFonts.nunitoSans(fontSize: 11, color: Colors.black,
+                                                                fontWeight: FontWeight.bold) :
+                                                        GoogleFonts.nunitoSans(fontSize: 13, color: Colors.black,
+                                                            fontWeight: FontWeight.bold)
+
+
+                                                            ),
                                                   ))
                                             ]),
                                         TableRow(children: [
@@ -2559,13 +2552,15 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                       getBahasa.toString() == '1'
                                                                           ? "Jam Masuk"
                                                                           : "Clock In",
-                                                                      style: GoogleFonts.lato(
-                                                                          fontSize:
-                                                                              10,
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontWeight:
-                                                                              FontWeight.bold)),
+                                                                      style:
+                                                                      textScale.toString() == '1.17' ?
+                                                                      GoogleFonts.lato(fontSize: 9, color: Colors.black,
+                                                                          fontWeight: FontWeight.bold) :
+                                                                      GoogleFonts.lato(fontSize: 10, color: Colors.black,
+                                                                          fontWeight: FontWeight.bold)
+
+
+                                                                          ),
                                                                 ),
                                                               ),
                                                             ),
@@ -2584,13 +2579,14 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                         ? "-"
                                                                         : getJamMasuk
                                                                             .toString(),
-                                                                    style: GoogleFonts.lato(
-                                                                        fontSize:
-                                                                            19,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontWeight:
-                                                                            FontWeight.bold)),
+                                                                    style:
+                                                                    textScale.toString() == '1.17' ?
+                                                                    GoogleFonts.lato(fontSize: 17,
+                                                                        color: Colors.black,
+                                                                        fontWeight: FontWeight.bold) :
+                                                                    GoogleFonts.lato(fontSize: 19,
+                                                                        color: Colors.black,
+                                                                        fontWeight: FontWeight.bold)),
                                                               ),
                                                             )
                                                           ],
@@ -2626,13 +2622,12 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                       getBahasa.toString() == '1'
                                                                           ? "Jam Keluar"
                                                                           : "Clock Out",
-                                                                      style: GoogleFonts.lato(
-                                                                          fontSize:
-                                                                              10,
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontWeight:
-                                                                              FontWeight.bold)),
+                                                                      style:
+                                                                              textScale.toString() == '1.17' ?
+                                                                      GoogleFonts.lato(fontSize: 9, color: Colors.black,
+                                                                          fontWeight: FontWeight.bold) :
+                                                                      GoogleFonts.lato(fontSize: 10, color: Colors.black,
+                                                                          fontWeight: FontWeight.bold)),
                                                                 ),
                                                               ),
                                                             ),
@@ -2651,13 +2646,14 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                         ? "-"
                                                                         : getJamKeluar
                                                                             .toString(),
-                                                                    style: GoogleFonts.lato(
-                                                                        fontSize:
-                                                                            19,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontWeight:
-                                                                            FontWeight.bold)),
+                                                                    style:
+                                                                    textScale.toString() == '1.17' ?
+                                                                    GoogleFonts.lato(fontSize: 17,
+                                                                        color: Colors.black,
+                                                                        fontWeight: FontWeight.bold) :
+                                                                    GoogleFonts.lato(fontSize: 19,
+                                                                        color: Colors.black,
+                                                                        fontWeight: FontWeight.bold)),
                                                               ),
                                                             )
                                                           ],
@@ -2703,14 +2699,12 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                     .getTanggal_nohari_beforeEnglish()
                                                                     .toString() +
                                                                 ')',
-                                                        style: GoogleFonts
-                                                            .nunitoSans(
-                                                                fontSize: 13,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
+                                                        style:
+                                                        textScale.toString() == '1.17' ?
+                                                        GoogleFonts.nunitoSans(fontSize: 11, color: Colors.black,
+                                                            fontWeight: FontWeight.bold) :
+                                                        GoogleFonts.nunitoSans(fontSize: 13, color: Colors.black,
+                                                            fontWeight: FontWeight.bold)),
                                                   ))
                                             ]),
                                         TableRow(children: [
@@ -2753,13 +2747,12 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                       getBahasa.toString() == '1'
                                                                           ? "Jam Masuk"
                                                                           : "Clock In",
-                                                                      style: GoogleFonts.lato(
-                                                                          fontSize:
-                                                                              10,
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontWeight:
-                                                                              FontWeight.bold)),
+                                                                      style:
+                                                                      textScale.toString() == '1.17' ?
+                                                                      GoogleFonts.lato(fontSize: 9, color: Colors.black,
+                                                                          fontWeight: FontWeight.bold) :
+                                                                      GoogleFonts.lato(fontSize: 10, color: Colors.black,
+                                                                          fontWeight: FontWeight.bold)),
                                                                 ),
                                                               ),
                                                             ),
@@ -2779,13 +2772,15 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                         : widget
                                                                             .getJamMasukSebelum
                                                                             .toString(),
-                                                                    style: GoogleFonts.lato(
-                                                                        fontSize:
-                                                                            19,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontWeight:
-                                                                            FontWeight.bold)),
+                                                                    style:
+                                                                    textScale.toString() == '1.17' ?
+                                                                    GoogleFonts.lato(fontSize: 17,
+                                                                        color: Colors.black,
+                                                                        fontWeight: FontWeight.bold) :
+                                                                    GoogleFonts.lato(fontSize: 19,
+                                                                        color: Colors.black,
+                                                                        fontWeight: FontWeight.bold)
+                                                                ),
                                                               ),
                                                             )
                                                           ],
@@ -2821,13 +2816,12 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                       getBahasa.toString() == '1'
                                                                           ? "Jam Keluar"
                                                                           : "Clock Out",
-                                                                      style: GoogleFonts.lato(
-                                                                          fontSize:
-                                                                              10,
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontWeight:
-                                                                              FontWeight.bold)),
+                                                                      style:
+                                                                      textScale.toString() == '1.17' ?
+                                                                      GoogleFonts.lato(fontSize: 9, color: Colors.black,
+                                                                          fontWeight: FontWeight.bold) :
+                                                                      GoogleFonts.lato(fontSize: 10, color: Colors.black,
+                                                                          fontWeight: FontWeight.bold)),
                                                                 ),
                                                               ),
                                                             ),
@@ -2847,13 +2841,14 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                         : widget
                                                                             .getJamKeluarSebelum
                                                                             .toString(),
-                                                                    style: GoogleFonts.lato(
-                                                                        fontSize:
-                                                                            19,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontWeight:
-                                                                            FontWeight.bold)),
+                                                                    style:
+                                                                    textScale.toString() == '1.17' ?
+                                                                    GoogleFonts.lato(fontSize: 17,
+                                                                        color: Colors.black,
+                                                                        fontWeight: FontWeight.bold) :
+                                                                    GoogleFonts.lato(fontSize: 19,
+                                                                        color: Colors.black,
+                                                                        fontWeight: FontWeight.bold)),
                                                               ),
                                                             )
                                                           ],

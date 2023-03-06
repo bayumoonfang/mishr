@@ -5,15 +5,13 @@ import 'dart:convert';
 
 import 'package:abzeno/Helper/app_helper.dart';
 import 'package:abzeno/Helper/app_link.dart';
+import 'package:abzeno/Helper/m_helper.dart';
 import 'package:abzeno/Profile/S_HELPER/m_profile.dart';
 import 'package:abzeno/Profile/page_aboutus.dart';
-import 'package:abzeno/Profile/page_activity.dart';
-import 'package:abzeno/Profile/page_attendancehistory.dart';
 import 'package:abzeno/Profile/page_changepin.dart';
 import 'package:abzeno/Profile/page_fullprofile.dart';
 import 'package:abzeno/helper/page_route.dart';
 import 'package:abzeno/page_intoduction.dart';
-import 'package:abzeno/page_login.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -210,7 +208,82 @@ class _Profile extends State<Profile>{
       _tapPosition = referenceBox.globalToLocal(details.globalPosition);
     });
   }
+  _review_create() async {
+    await m_helper().review_create(_ulasanController.text, widget.getKaryawanNo, widget.getKaryawanNama);
+    setState(() {
+      _ulasanController.clear();
+      _ulasanController.text = '';
+    });
+  }
 
+  TextEditingController _ulasanController = TextEditingController();
+  showDialogme(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
+    if (_ulasanController.text == '') {
+      AppHelper().showFlushBarsuccess(context, "Kritik dan saran tidak boleh kosong");
+      return false;
+    }
+
+    Widget cancelButton = TextButton(
+      child: Text(
+        getBahasa.toString() == "1" ? "TUTUP" : "CLOSE",
+        style: GoogleFonts.lexendDeca(color: Colors.blue,fontSize: textScale.toString() == '1.17' ? 13 : 15),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    Widget continueButton = Container(
+      width: 120,
+      child: TextButton(
+        child: Text(
+          getBahasa.toString() == "1" ? "POST" : "POST",
+          style: GoogleFonts.lexendDeca(
+              color: Colors.blue,
+              fontSize: textScale.toString() == '1.17' ? 13 : 15
+          ),
+        ),
+        onPressed: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+          Navigator.pop(context);
+          Navigator.pop(context);
+          AppHelper().showFlushBarconfirmed(context, "Kritik dan saran berhasil diposting");
+          _review_create();
+        },
+      ),
+    );
+
+
+    AlertDialog alert = AlertDialog(
+      actionsAlignment: MainAxisAlignment.end,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      title: Text(
+        getBahasa.toString() == "1" ? "Posting Kritik dan Saran" : "Add Review",
+        style:
+        GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 16 : 18, fontWeight: FontWeight.bold),
+        textAlign: TextAlign.left,
+      ),
+      content: Text(
+        getBahasa.toString() == "1"
+            ? "Apakah anda yakin memposting kritik dan saran ini ?"
+            : "Would you like to continue add review ?",
+        style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 13 : 15),
+        textAlign: TextAlign.left,
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -323,6 +396,114 @@ class _Profile extends State<Profile>{
                        Navigator.push(context, ExitPage(page: ChangePIN(widget.getKaryawanNo)));
                      },
                    ),
+
+                   const Padding(
+                     padding: EdgeInsets.only(bottom: 5),
+                     child: Divider(height: 2,),
+                   ),
+                   InkWell(
+                     child : Padding(
+                       padding: const EdgeInsets.only(bottom: 5),
+                       child: ListTile(
+                         minLeadingWidth : 25,
+                         dense:true,
+                         contentPadding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                         leading: FaIcon(FontAwesomeIcons.envelope,color : HexColor("#6338b6")),
+                         title: Text("Kritik dan Saran", style: GoogleFonts.nunitoSans(fontSize: 16),),
+                         subtitle: Text("Kirim kritik dan saran kamu", style: GoogleFonts.nunito(fontSize: 13),),
+                         trailing: const FaIcon(FontAwesomeIcons.angleRight, size: 18,),
+                       ),
+                     ),
+                     onTap: (){
+                       showModalBottomSheet(
+                           isScrollControlled: true,
+                           shape: RoundedRectangleBorder(
+                             borderRadius: BorderRadius.only(
+                               topLeft: Radius.circular(15),
+                               topRight: Radius.circular(15),
+                             ),
+                           ),
+                           context: context,
+                           builder: (context) {
+                             return SingleChildScrollView(
+                               child: Container(
+                                   padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                   child : Padding(
+                                     padding: EdgeInsets.only(left: 25,right: 25,top: 25),
+                                     child: Column(
+                                       children: [
+
+                                         Padding(
+                                           padding: EdgeInsets.only(top: 15,bottom: 15),
+                                           child: TextFormField(
+                                             style: GoogleFonts.nunitoSans(fontSize: 16),
+                                             textCapitalization: TextCapitalization
+                                                 .sentences,
+                                             maxLines: 4,
+                                             controller: _ulasanController,
+                                             decoration: InputDecoration(
+                                               prefixIcon: Padding(
+                                                 padding: const EdgeInsets.only(right: 10),
+                                                 child: FaIcon(
+                                                   FontAwesomeIcons.audioDescription,
+                                                   //color: clockColor,
+                                                 ),
+                                               ),
+                                               contentPadding: const EdgeInsets.only(
+                                                   top: 2),
+                                               hintText: 'Tulis kritik dan saran kamu',
+                                               labelText: 'Kritik dan Saran',
+                                               labelStyle: TextStyle(
+                                                   fontFamily: "VarelaRound",
+                                                   fontSize: 16.5, color: Colors.black87
+                                               ),
+                                               floatingLabelBehavior: FloatingLabelBehavior
+                                                   .always,
+                                               hintStyle: GoogleFonts.nunito(
+                                                   color: HexColor("#c4c4c4"),
+                                                   fontSize: 15),
+                                               enabledBorder: UnderlineInputBorder(
+                                                 borderSide: BorderSide(
+                                                     color: HexColor("#DDDDDD")),
+                                               ),
+                                               focusedBorder: UnderlineInputBorder(
+                                                 borderSide: BorderSide(
+                                                     color: HexColor("#8c8989")),
+                                               ),
+                                               border: UnderlineInputBorder(
+                                                 borderSide: BorderSide(
+                                                     color: HexColor("#DDDDDD")),
+                                               ),
+                                             ),
+
+                                           ),
+                                         ),
+
+                                         Padding(
+                                             padding: EdgeInsets.only(top:15,bottom: 15),
+                                             child: Container(
+                                               width: double.infinity,
+                                               height: 50,
+                                               child: ElevatedButton(
+                                                 child: Text(getBahasa.toString() == "1"? "Kirim" : "Send Review",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
+                                                     fontSize: 14)),
+                                                 onPressed: (){
+                                                   showDialogme(context);
+
+                                                 },
+                                               ),
+                                             )
+                                         )
+                                       ],
+                                     ),
+                                   )
+                               ),
+                             );
+                           }
+                       );
+                     },
+                   ),
+
 
                    const Padding(
                      padding: EdgeInsets.only(bottom: 5),

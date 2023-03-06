@@ -7,18 +7,14 @@ import 'package:abzeno/Attendance/page_attendance.dart';
 import 'package:abzeno/Helper/app_helper.dart';
 import 'package:abzeno/Helper/app_link.dart';
 import 'package:abzeno/Helper/page_route.dart';
-import 'package:abzeno/Profile/page_attendancehistory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:http/http.dart' as http;
-
 import '../Request Attendance/page_attendancehome.dart';
 
 
@@ -75,9 +71,9 @@ class _MySchedule2 extends State<MySchedule2> {
             DateTime dt = DateTime.parse(item['tahun'].toString()+"-"+item['bulan'].toString()+"-"+item['tgl'].toString());
             _events[dt] = [
               getBahasa.toString() == "1"?  "Jadwal : "+item['keterangan'].toString()+" \n"+
-                  item['start'].toString()+" - "+item['end'].toString() :
+                  "("+item['kodeschedule'].toString()+") "+item['start'].toString()+" - "+item['end'].toString() :
               "Schedule Name : "+item['keterangan'].toString()+" \n"+
-                  item['start'].toString()+" - "+item['end'].toString()
+                  "("+item['kodeschedule'].toString()+") "+item['start'].toString()+" - "+item['end'].toString()
             ];
           }
           //prefs.setString("events", json.encode(encodeMap(_events)));

@@ -182,9 +182,9 @@ class _ChangePIN extends State<ChangePIN> {
         ),
       ),
         bottomSheet: Container(
-            padding: EdgeInsets.only(left: 45, right: 45, bottom: 10),
+            padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
             width: double.infinity,
-            height: 58,
+            height: 68,
             child:
             ElevatedButton(
                 style: ElevatedButton.styleFrom(

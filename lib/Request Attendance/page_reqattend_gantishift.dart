@@ -6,20 +6,12 @@
 import 'dart:convert';
 
 import 'package:abzeno/Helper/app_helper.dart';
-import 'package:abzeno/Helper/app_link.dart';
-import 'package:abzeno/Helper/page_route.dart';
-import 'package:abzeno/page_home.dart';
-import 'package:abzeno/page_home2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
-
 import 'S_HELPER/g_reqattend.dart';
 import 'S_HELPER/m_reqattend.dart';
 
@@ -71,30 +63,6 @@ class _RequestGantiShift extends State<RequestGantiShift> {
   }
 
 
-  String getAttenceMessage = "...";
-  _get_ReqAttendCheck() async {
-    await g_reqattend().get_ReqAttendCheck_gantishift(
-        widget.getKaryawanNo, widget.getDate).then((value) {
-      if (value[0] == 'ConnInterupted') {
-        getBahasa.toString() == "1"?
-        AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
-        AppHelper().showFlushBarsuccess(context, "Connection Interupted...");
-        return false;
-      } else {
-        setState(() {
-          getAttenceMessage = value[0].toString();
-          if(value[0].toString() == "0") {
-            _get_ReqAttendSchedule_Gantishift();
-            getAllSchedule();
-          } else {
-            _isPressedBtn = false;
-          }
-          _isVisibleForm = true;
-
-        });
-      }
-    });
-  }
 
   List scheduleList = [];
   var selectedscheduleList;
@@ -127,7 +95,8 @@ class _RequestGantiShift extends State<RequestGantiShift> {
     super.initState();
     EasyLoading.show(status: AppHelper().loading_text);
     getSettings();
-    _get_ReqAttendCheck();
+    _get_ReqAttendSchedule_Gantishift();
+    getAllSchedule();
 
   }
 
@@ -137,9 +106,9 @@ class _RequestGantiShift extends State<RequestGantiShift> {
     EasyLoading.show(status: AppHelper().loading_text);
     setState(() {
       _isPressedBtn = false;
-      fcm_message =  getBahasa.toString() == "1" ? "Terdapat permintaan Koreksi Kehadiran yang membutuhkan approval anda, "
+      fcm_message =  getBahasa.toString() == "1" ? "Terdapat permintaan Ganti Shift yang membutuhkan approval anda, "
           "silahkan buka aplikasi MISHR untuk melihat pengajuan ini." :
-      "There is a Attendance Correction request that requires your approval, please open the MISHR application to view this submission.";
+      "There is a Change Shift request that requires your approval, please open the MISHR application to view this submission.";
     });
     await m_reqattend().reqattend_gantishift_create(widget.getKaryawanNo, widget.getDate,
         widget.getType, widget.getDescription, selectedscheduleList , getNameShift.toString(), getClockIn2, getClockOut2, fcm_message).then((value){
@@ -265,59 +234,14 @@ class _RequestGantiShift extends State<RequestGantiShift> {
         ),
       ),
       body: Visibility(
-        visible: _isVisibleForm,
+        visible: true,
         child: Container(
             width: double.infinity,
             height: double.infinity,
             color: Colors.white,
             padding: EdgeInsets.only(left: 25,right: 25),
-            child: getAttenceMessage == "1" || getAttenceMessage == "2" ?
-            Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/empty2.png',width: 140,),
-                    Text(getBahasa.toString() == "1"? "Mohon Maaf": "Oh Sorry", style: GoogleFonts.nunito(fontSize: 45,fontWeight: FontWeight.bold)),
-                    Text(getBahasa.toString() == "1"? "Kami menemukan permintaan yang lain":"We find another attendance request", style: GoogleFonts.nunito(fontSize: 15),
-                      textAlign: TextAlign.center,),
-                    Text(getBahasa.toString() == "1"? "Harap tunggu persetujuan atau batalkan permintaan terbaru Anda": "Please wait for approval or cancel your latest request", style: GoogleFonts.nunito(fontSize: 15),
-                      textAlign: TextAlign.center,)
-                  ]),
-            ) : getAttenceMessage == "3" ?
-            Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/empty2.png',width: 140,),
-                    Text(getBahasa.toString() == "1"? "Mohon Maaf":"Oh Sorry", style: GoogleFonts.nunito(fontSize: 45,fontWeight: FontWeight.bold)),
-                    Text(getBahasa.toString() == "1"? "Anda sudah membuat kehadiran di tanggal ini":"You already create attendance in this date", style: GoogleFonts.nunito(fontSize: 15),
-                      textAlign: TextAlign.center,),
-                    Text(getBahasa.toString() == "1"? "Coba gunakan koreksi Kehadiran untuk kasus ini": "Try use Attendance correction for this case", style: GoogleFonts.nunito(fontSize: 15),
-                      textAlign: TextAlign.center,)
-                  ]),
-            )  : getAttenceMessage == "4" ?
-            Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/empty2.png',width: 140,),
-                    Text(getBahasa.toString() == "1"? "Mohon Maaf": "Oh Sorry", style: GoogleFonts.nunito(fontSize: 45,fontWeight: FontWeight.bold)),
-                    Text(getBahasa.toString() == "1"? "Anda tidak dapat menggunakan tanggal ini, karena anda tidaka ada jadwal": "You cant use this date , because your schedule is OFF", style: GoogleFonts.nunito(fontSize: 15)),
-                  ]),
-            ) : getAttenceMessage == "5" ?
-            Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/empty2.png',width: 140,),
-                    Text(getBahasa.toString() == "1"? "Mohon Maaf":"Oh Sorry", style: GoogleFonts.nunito(fontSize: 45,fontWeight: FontWeight.bold)),
-                    Text(getBahasa.toString() == "1"? "Kami tidak menemukan jadwal dalam permintaan tanggal Anda": "We dont find schedule in your date request", style: GoogleFonts.nunito(fontSize: 15)),
-                  ]),
-            )  :
+            child:
+
             Column(
               children: [
 

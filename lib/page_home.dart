@@ -16,8 +16,6 @@ import 'package:abzeno/attendance/page_doattendance.dart';
 import 'package:abzeno/page_changecabang.dart';
 import 'package:abzeno/page_home2.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:double_back_to_close/double_back_to_close.dart';
-import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';

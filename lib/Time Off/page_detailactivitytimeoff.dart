@@ -56,6 +56,7 @@ class _PageDetailActivityTimeOff extends State<PageDetailActivityTimeOff> {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -103,12 +104,15 @@ class _PageDetailActivityTimeOff extends State<PageDetailActivityTimeOff> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: <Widget>[
-                                        Image.asset('assets/nodata.png',width: 150,),
-                                        new Text(
-                                          "Data Not Found",
-                                          style: new TextStyle(
-                                              fontFamily: 'VarelaRound', fontSize: 15),
-                                        ),
+                                        Image.asset('assets/empty2.png',width: 150,),
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 13),
+                                          child:  new Text(
+                                            getBahasa.toString() == "1" ? "Tidak ada data": "No Data",
+                                            style: new TextStyle(
+                                                fontFamily: 'VarelaRound', fontSize: 13),
+                                          ),
+                                        )
                                       ],
                                     )))
                                 :
@@ -116,7 +120,7 @@ class _PageDetailActivityTimeOff extends State<PageDetailActivityTimeOff> {
                               children: [
                                 Expanded(
                                   child: ListView.builder(
-                                    itemExtent: 92,
+                                    itemExtent: textScale.toString() == '1.17' ? 115 : 95,
                                     itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                     padding: const EdgeInsets.only(bottom: 85,top: 10),
                                     itemBuilder: (context, i) {
@@ -153,7 +157,11 @@ class _PageDetailActivityTimeOff extends State<PageDetailActivityTimeOff> {
                                                     padding: EdgeInsets.only(top: 5,left: 2),
                                                     child:  Align(alignment: Alignment.centerLeft,
                                                       child: Text(snapshot.data![i]["b"].toString(),
-                                                          style: GoogleFonts.nunitoSans(fontSize: 14,color: Colors.black)),),
+                                                          style:
+                                                          textScale.toString() == '1.17' ?
+                                                          GoogleFonts.nunitoSans(fontSize: 12,color: Colors.black) :
+                                                          GoogleFonts.nunitoSans(fontSize: 14,color: Colors.black)
+                                                      )),
                                                   )
                                                 ],
                                               ),

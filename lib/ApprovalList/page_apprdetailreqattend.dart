@@ -9,7 +9,7 @@ import 'package:abzeno/Helper/app_helper.dart';
 import 'package:abzeno/Helper/app_link.dart';
 import 'package:abzeno/Helper/page_route.dart';
 import 'package:abzeno/Request%20Attendance/S_HELPER/m_reqattend.dart';
-import 'package:abzeno/Request%20Attendance/page_reqattend_gantishiftdetailattend.dart';
+
 import 'package:abzeno/Request%20Attendance/page_reqattendactivitydetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -691,7 +691,7 @@ class _ApprReqAttenDetail extends State<ApprReqAttenDetail> {
 
 
                               TableRow(children :[
-                                Padding(padding: EdgeInsets.only(bottom: 5),
+                                Padding(padding: EdgeInsets.only(bottom: 5,right: 5),
                                   child: Text(getBahasa.toString() == "1"? 'Kehadiran Sebelumnya': 'Previous Attendance', style: GoogleFonts.nunito(fontSize: 14) ),),
                                 Padding(padding: EdgeInsets.only(bottom: 5),
                                     child: InkWell(

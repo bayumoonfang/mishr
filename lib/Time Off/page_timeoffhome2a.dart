@@ -62,25 +62,32 @@ class _PageTimeOffHome2a extends State<PageTimeOffHome2a> with SingleTickerProvi
 
 
   showInfoDialog(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     Widget cancelButton = TextButton(
-      child: Text(getBahasa.toString() == "1"? "TUTUP" : "CLOSE",style: GoogleFonts.lexendDeca(color: Colors.blue),),
+      child: Text(getBahasa.toString() == "1"? "TUTUP" : "CLOSE",style: GoogleFonts.lexendDeca(color: Colors.blue,
+          fontSize: textScale.toString() == '1.17' ? 13 : 15),),
       onPressed:  () {Navigator.pop(context);},
     );
     AlertDialog alert = AlertDialog(
       actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Informasi" :"Information", style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+      title: Text(getBahasa.toString() == "1"? "Informasi" :"Information",
+        style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 16 : 18,fontWeight: FontWeight.bold),textAlign:
       TextAlign.left,),
       content: Container(
-          height: 170,
+          height: textScale.toString() == '1.17' ? 170 : 190,
           child : Column(
             children: [
               Text("Ini adalah menu untuk pengajuan time off seperti cuti, ijin, dan lain - lain. Jika ada ketidaksesuaian saldo pengajuan "
-                  "maka bisa menghubungi HRD anda untuk pengecekan data lebih lanjut", style: GoogleFonts.nunitoSans(),textAlign:
+                  "maka bisa menghubungi HRD anda untuk pengecekan data lebih lanjut",
+                style: textScale.toString() == '1.17' ? GoogleFonts.nunitoSans(fontSize: 12) :
+                GoogleFonts.nunitoSans(fontSize: 15),textAlign:
               TextAlign.left,),
               SizedBox(height: 10,),
-              Text("Anda bisa menghapus data pengajuan anda yang sudah anda batalkan dengan tahan tap 2 detik pada data anda ", style: GoogleFonts.nunitoSans(),textAlign:
+              Text("Anda bisa menghapus data pengajuan anda yang sudah anda batalkan dengan tahan tap 2 detik pada data anda ",
+                style: textScale.toString() == '1.17' ? GoogleFonts.nunitoSans(fontSize: 12) :
+                GoogleFonts.nunitoSans(fontSize: 15),textAlign:
               TextAlign.left,),
 
 
@@ -142,6 +149,7 @@ class _PageTimeOffHome2a extends State<PageTimeOffHome2a> with SingleTickerProvi
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     var onWillPop;
     return WillPopScope(child: Scaffold(
       appBar: new AppBar(

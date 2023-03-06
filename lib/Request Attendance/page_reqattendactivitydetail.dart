@@ -55,6 +55,7 @@ class _PageReqAttendActivityDetail extends State<PageReqAttendActivityDetail> {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -102,12 +103,15 @@ class _PageReqAttendActivityDetail extends State<PageReqAttendActivityDetail> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: <Widget>[
-                                        Image.asset('assets/nodata.png',width: 150,),
-                                        new Text(
-                                          "Data Not Found",
-                                          style: new TextStyle(
-                                              fontFamily: 'VarelaRound', fontSize: 15),
-                                        ),
+                                        Image.asset('assets/empty2.png',width: 150,),
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 13),
+                                          child:  new Text(
+                                            "Tidak ada data",
+                                            style: new TextStyle(
+                                                fontFamily: 'VarelaRound', fontSize: 13),
+                                          ),
+                                        )
                                       ],
                                     )))
                                 :
@@ -115,7 +119,7 @@ class _PageReqAttendActivityDetail extends State<PageReqAttendActivityDetail> {
                               children: [
                                 Expanded(
                                   child: ListView.builder(
-                                    itemExtent: 92,
+                                    itemExtent: textScale.toString() == '1.17' ? 130 :95,
                                     itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                     padding: const EdgeInsets.only(bottom: 85,top: 10),
                                     itemBuilder: (context, i) {

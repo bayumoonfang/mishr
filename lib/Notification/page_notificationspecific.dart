@@ -120,6 +120,7 @@ class _PageSpecificNotification extends State<PageSpecificNotification> {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -206,7 +207,7 @@ class _PageSpecificNotification extends State<PageSpecificNotification> {
                                         Padding(
                                           padding: EdgeInsets.only(left: 13),
                                           child:  new Text(
-                                            getBahasa.toString() == "1" ? "Data Tidak Ditemukan": "Data Not Found",
+                                            getBahasa.toString() == "1" ? "Tidak ada data": "No Data",
                                             style: new TextStyle(
                                                 fontFamily: 'VarelaRound', fontSize: 13),
                                           ),
@@ -218,7 +219,7 @@ class _PageSpecificNotification extends State<PageSpecificNotification> {
                               children: [
                                 Expanded(
                                   child: ListView.builder(
-                                    itemExtent: 92,
+                                    itemExtent: textScale.toString() == '1.17' ? 100 : 92,
                                     itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                     padding: const EdgeInsets.only(bottom: 85),
                                     itemBuilder: (context, i) {

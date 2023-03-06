@@ -12,7 +12,7 @@ import 'package:abzeno/Lembur/S_HELPER/g_lembur.dart';
 import 'package:abzeno/Lembur/S_HELPER/m_lembur.dart';
 import 'package:abzeno/Lembur/page_lemburactivity.dart';
 import 'package:abzeno/Request%20Attendance/S_HELPER/m_reqattend.dart';
-import 'package:abzeno/Request%20Attendance/page_reqattend_gantishiftdetailattend.dart';
+
 import 'package:abzeno/Request%20Attendance/page_reqattendactivitydetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';

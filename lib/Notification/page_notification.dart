@@ -135,6 +135,7 @@ class _PageNotification extends State<PageNotification> {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -227,7 +228,7 @@ class _PageNotification extends State<PageNotification> {
                               children: [
                                 Expanded(
                                   child: ListView.builder(
-                                    itemExtent: 89,
+                                    itemExtent: textScale.toString() == '1.17' ? 95:89,
                                     itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                     padding: const EdgeInsets.only(bottom: 85),
                                     itemBuilder: (context, i) {

@@ -2,25 +2,17 @@
 
 
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:abzeno/Helper/app_helper.dart';
-import 'package:abzeno/Helper/app_link.dart';
 import 'package:abzeno/Helper/page_route.dart';
 import 'package:abzeno/Request%20Attendance/page_reqattendapprovedetail.dart';
 import 'package:abzeno/Request%20Attendance/page_reqattenddetail.dart';
-import 'package:abzeno/Time%20Off/page_addtimeoff.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
-
 import 'S_HELPER/g_reqattend.dart';
 import 'S_HELPER/m_reqattend.dart';
-import 'page_reqattendanceadd2.dart';
 
 class RequestAttendance extends StatefulWidget{
   final String getKaryawanNo;
@@ -39,6 +31,7 @@ class _RequestAttendance extends State<RequestAttendance> {
     String filter3 = "";
     String getBahasa = "1";
     getSettings() async {
+      //==========================
       await AppHelper().getSession().then((value){
         setState(() {
           getBahasa = value[20];
@@ -146,6 +139,7 @@ class _RequestAttendance extends State<RequestAttendance> {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(child: Scaffold(
       body: Container(
         color: Colors.white,
@@ -404,7 +398,7 @@ class _RequestAttendance extends State<RequestAttendance> {
                             children: [
                               Expanded(
                                 child: ListView.builder(
-                                  itemExtent: 90,
+                                  itemExtent: textScale.toString() == '1.17' ? 100: 90,
                                   itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                   padding: const EdgeInsets.only(bottom: 85),
                                   itemBuilder: (context, i) {

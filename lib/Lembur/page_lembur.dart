@@ -6,21 +6,15 @@ import 'dart:convert';
 
 import 'package:abzeno/ApprovalList/page_apprdetaillembur.dart';
 import 'package:abzeno/Helper/app_helper.dart';
-import 'package:abzeno/Helper/app_link.dart';
 import 'package:abzeno/Helper/page_route.dart';
 import 'package:abzeno/Lembur/page_lembur_add.dart';
 import 'package:abzeno/Lembur/page_lemburdetail.dart';
-import 'package:abzeno/Request%20Attendance/page_reqattendapprovedetail.dart';
-import 'package:abzeno/Request%20Attendance/page_reqattenddetail.dart';
-import 'package:abzeno/Time%20Off/page_addtimeoff.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
 
 import 'S_HELPER/g_lembur.dart';
 import 'S_HELPER/m_lembur.dart';
@@ -150,6 +144,7 @@ class _PageLembur extends State<PageLembur> {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(child: Scaffold(
         body: Container(
           color: Colors.white,
@@ -451,7 +446,7 @@ class _PageLembur extends State<PageLembur> {
                                 children: [
                                   Expanded(
                                     child: ListView.builder(
-                                      itemExtent: 85,
+                                      itemExtent: textScale.toString() == '1.17' ? 95 : 85,
                                       itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                       padding: const EdgeInsets.only(bottom: 85,top: 5),
                                       itemBuilder: (context, i) {

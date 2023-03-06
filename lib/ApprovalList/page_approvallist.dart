@@ -69,6 +69,7 @@ class _PageApprovalList extends State<PageApprovalList> {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -340,7 +341,7 @@ class _PageApprovalList extends State<PageApprovalList> {
                               children: [
                                 Expanded(
                                   child: ListView.builder(
-                                    itemExtent: 105,
+                                    itemExtent: textScale.toString() == '1.17' ? 110: 105,
                                     itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                     padding: const EdgeInsets.only(left: 10,right: 15,bottom: 85),
                                     itemBuilder: (context, i) {

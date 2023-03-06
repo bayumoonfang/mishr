@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:abzeno/Helper/app_helper.dart';
@@ -506,6 +505,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -663,8 +663,8 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
 
                                                                       snapshot.data![i]["e"].toString() == '99' ?  "(Tidak ada batas kuota)" :
                                                                       "Sisa Kuota : "+snapshot.data![i]["e"].toString()  ,
-                                                                                  style: GoogleFonts.workSans(
-                                                                                      fontSize: 12)),
+                                                                                  style:
+                                                                                  GoogleFonts.workSans(fontSize: 12)),
                                                                             ),
                                                                             onTap: (){
                                                                               setState(() {
@@ -725,15 +725,27 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                 ),
                                 title: Text(getBahasa.toString() == "1"? "Sisa Kuota : "+saldoTimeOff.toString()+ " Hari"
                                     : "Balance : "+saldoTimeOff.toString()+ " Day",
-                                    style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold)),
+                                    style:
+                                    textScale.toString() == '1.17' ?
+                                    GoogleFonts.montserrat(fontSize: 13,fontWeight: FontWeight.bold) :
+                                    GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold)
+                                ),
                                 subtitle: Column(
                                   children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(getBahasa.toString() == "1"? "Hubungi HRD jika saldo anda tidak sesuai" :
-                                          "Contact HRD if your balance does not match",
-                                          style: GoogleFonts.nunitoSans(fontSize: 13,color: Colors.black)),
-                                    )
+                              Padding(
+                                padding: EdgeInsets.only(top: 3),
+                                child : Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(getBahasa.toString() == "1"? "Hubungi HRD jika saldo anda tidak sesuai" :
+                                  "Contact HRD if your balance does not match",
+                                      style:
+                                      textScale.toString() == '1.17' ?
+                                      GoogleFonts.nunitoSans(fontSize: 11,color: Colors.black) :
+                                      GoogleFonts.nunitoSans(fontSize: 13,color: Colors.black)
+
+                                  ),
+                                )
+                              )
                                   ],
                                 )
                             )
@@ -1249,28 +1261,31 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
         child: Container(
             padding: EdgeInsets.only(left: 25, right: 25, bottom: 10),
             width: double.infinity,
-            height: 58,
+            height: 68,
             child :
 
             saldoTimeOff.toString() != "0" ?
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: HexColor("#00aa5b"),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(side: BorderSide(
-                        color: Colors.white,
-                        width: 0.1,
-                        style: BorderStyle.solid
-                    ),
-                      borderRadius: BorderRadius.circular(5.0),
-                    )),
-                child: Text(getBahasa.toString() == "1"? "Ajukan Sekarang":"Submit Now",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
-                    fontSize: 14),),
-                onPressed: () {
-                  FocusScope.of(context).requestFocus(new FocusNode());
-                  showDialogme(context);
-                }
-            ) :
+           Padding(
+             padding: EdgeInsets.only(top:10),
+             child:  ElevatedButton(
+                 style: ElevatedButton.styleFrom(
+                     primary: HexColor("#00aa5b"),
+                     elevation: 0,
+                     shape: RoundedRectangleBorder(side: BorderSide(
+                         color: Colors.white,
+                         width: 0.1,
+                         style: BorderStyle.solid
+                     ),
+                       borderRadius: BorderRadius.circular(5.0),
+                     )),
+                 child: Text(getBahasa.toString() == "1"? "Ajukan Sekarang":"Submit Now",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
+                     fontSize: 14),),
+                 onPressed: () {
+                   FocusScope.of(context).requestFocus(new FocusNode());
+                   showDialogme(context);
+                 }
+             ),
+           ) :
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     primary: HexColor("#DDDDDD"),
@@ -1282,7 +1297,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                     ),
                       borderRadius: BorderRadius.circular(5.0),
                     )),
-                child: Text(getBahasa.toString() == "1"? "Buat Permintaan":"Create Request",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
+                child: Text(getBahasa.toString() == "1"? "Ajukan Sekarang":"Create Request",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold,
                     fontSize: 14),),
                 onPressed: () {
 

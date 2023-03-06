@@ -102,6 +102,7 @@ class _Report extends State<Report>{
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         //backgroundColor: HexColor("#3a5664"),
@@ -383,11 +384,12 @@ class _Report extends State<Report>{
                                                   children: [
                                                     Padding(
                                                       padding: EdgeInsets.only(top:14),
-                                                      child: Text(getAttendance_hadir.toString(), style: GoogleFonts.montserrat(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.black)),
+                                                      child: Text(getAttendance_hadir.toString(), style: GoogleFonts.montserrat(fontSize: textScale.toString() == '1.17' ? 25 : 30,fontWeight: FontWeight.bold,color: Colors.black)),
                                                     ),
                                                     Padding(
                                                       padding: EdgeInsets.only(top:9),
-                                                      child: Text(getBahasa.toString() == "1" ? "Hadir" : "Arrive", style: GoogleFonts.nunitoSans(fontSize: 13,color: Colors.black)),
+                                                      child: Text(getBahasa.toString() == "1" ? "Hadir" : "Arrive",
+                                                          style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 10 : 13,color: Colors.black)),
                                                     ),
                                                   ],
                                                 )
@@ -415,11 +417,12 @@ class _Report extends State<Report>{
                                                   children: [
                                                     Padding(
                                                       padding: EdgeInsets.only(top:14),
-                                                      child: Text(getAttendance_tidakmasuk.toString(), style: GoogleFonts.montserrat(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.black)),
+                                                      child: Text(getAttendance_tidakmasuk.toString(), style: GoogleFonts.montserrat(fontSize: textScale.toString() == '1.17' ? 25 : 30,fontWeight: FontWeight.bold,color: Colors.black)),
                                                     ),
                                                     Padding(
                                                       padding: EdgeInsets.only(top:9),
-                                                      child: Text(getBahasa.toString() == "1" ? "Tidak Masuk" : "Leave", style: GoogleFonts.nunitoSans(fontSize: 13,color: Colors.black)),
+                                                      child: Text(getBahasa.toString() == "1" ? "Tidak Masuk" : "Leave",
+                                                          style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 10 : 13,color: Colors.black)),
                                                     ),
                                                   ],
                                                 )
@@ -447,11 +450,11 @@ class _Report extends State<Report>{
                                                   children: [
                                                     Padding(
                                                       padding: EdgeInsets.only(top:14),
-                                                      child: Text(getAttendance_ijin.toString(), style: GoogleFonts.montserrat(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.black)),
+                                                      child: Text(getAttendance_ijin.toString(), style: GoogleFonts.montserrat(fontSize: textScale.toString() == '1.17' ? 25 : 30,fontWeight: FontWeight.bold,color: Colors.black)),
                                                     ),
                                                     Padding(
                                                       padding: EdgeInsets.only(top:9),
-                                                      child: Text(getBahasa.toString() == "1" ? "Ijin" : "", style: GoogleFonts.nunitoSans(fontSize: 13,color: Colors.black)),
+                                                      child: Text(getBahasa.toString() == "1" ? "Ijin" : "", style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 10 : 13,color: Colors.black)),
                                                     ),
                                                   ],
                                                 )
@@ -479,11 +482,11 @@ class _Report extends State<Report>{
                                                   children: [
                                                     Padding(
                                                       padding: EdgeInsets.only(top:14),
-                                                      child: Text(getAttendance_alpa.toString(), style: GoogleFonts.montserrat(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.black)),
+                                                      child: Text(getAttendance_alpa.toString(), style: GoogleFonts.montserrat(fontSize: textScale.toString() == '1.17' ? 25 : 30,fontWeight: FontWeight.bold,color: Colors.black)),
                                                     ),
                                                     Padding(
                                                       padding: EdgeInsets.only(top:9),
-                                                      child: Text(getBahasa.toString() == "1" ? "Tanpa Ijin" : "Alpha", style: GoogleFonts.nunitoSans(fontSize: 13,color: Colors.black)),
+                                                      child: Text(getBahasa.toString() == "1" ? "Tanpa Ijin" : "Alpha", style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 10 : 13,color: Colors.black)),
                                                     ),
                                                   ],
                                                 )

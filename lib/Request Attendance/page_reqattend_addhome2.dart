@@ -3,18 +3,15 @@
 
 import 'package:abzeno/Helper/app_helper.dart';
 import 'package:abzeno/Helper/page_route.dart';
+import 'package:abzeno/Request%20Attendance/page_reqattend_gantishift.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
-
 import 'S_HELPER/g_reqattend.dart';
 import 'page_reqattend_correction.dart';
-import 'page_reqattend_gantishift.dart';
-import 'page_reqattend_lemburanotherday.dart';
-import 'page_reqattend_lembursameday.dart';
 
 class RequestAttendAddHome2  extends StatefulWidget {
   final String getKaryawanNo;
@@ -36,6 +33,7 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
 
     String getBahasa = "1";
     getSettings() async {
+      //=====================================
       await AppHelper().getSession().then((value){
         setState(() {
           getBahasa = value[20];
@@ -71,10 +69,12 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
             } else if(value[0].toString() == "2") {
               AppHelper().showFlushBarsuccess(context, "Mohon maaf, anda tidak bisa mengajukan di hari terpilih karena sudah ada kehadiran yang terbuat");
               return;
-            } else if(value[0].toString() == "3") {
-              AppHelper().showFlushBarsuccess(context, "Mohon maaf, anda tidak bisa mengajukan di hari terpilih karena jadwal anda OFF");
+            }
+           else if(value[0].toString() == "3") {
+              AppHelper().showFlushBarsuccess(context, "Mohon maaf, anda tidak bisa mengajukan di hari terpilih karena ada pengajuan time off lain di hari yang sama");
               return;
-            } else if(value[0].toString() == "4") {
+            }
+            else if(value[0].toString() == "4") {
               AppHelper().showFlushBarsuccess(context, "Mohon maaf, anda tidak bisa mengajukan di hari terpilih karena anda tidak ada jadwaldi ari tersebut");
               return;
             } else if(value[0].toString() == "5") {
@@ -96,12 +96,6 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
                     _requestdatefrom.text)));
               } else if(_requesttype.text == 'Ganti Shift')  {
                 Navigator.push(context, ExitPage(page: RequestGantiShift(widget.getKaryawanNo, _requesttype.text, startDate.toString(), _description.text,
-                    _requestdatefrom.text)));
-              } else if(_requesttype.text == 'Lembur in Same Day')  {
-                Navigator.push(context, ExitPage(page: RequestLemburSameDay(widget.getKaryawanNo, _requesttype.text, startDate.toString(), _description.text,
-                    _requestdatefrom.text)));
-              } else if(_requesttype.text == 'Lembur Another Day')  {
-                Navigator.push(context, ExitPage(page: RequestLemburAnotherDay(widget.getKaryawanNo, _requesttype.text, startDate.toString(), _description.text,
                     _requestdatefrom.text)));
               }
 

@@ -46,6 +46,7 @@ class _PageReqAttendanceHome extends State<PageReqAttendanceHome> with SingleTic
 
   String getBahasa = "1";
   getSettings() async {
+    //========================================
     await AppHelper().getSession().then((value){
       setState(() {
         getBahasa = value[20];
@@ -84,21 +85,25 @@ class _PageReqAttendanceHome extends State<PageReqAttendanceHome> with SingleTic
 
 
   showInfoDialog(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     Widget cancelButton = TextButton(
-      child: Text(getBahasa.toString() == "1"? "TUTUP" : "CLOSE",style: GoogleFonts.lexendDeca(color: Colors.blue),),
+      child: Text(getBahasa.toString() == "1"? "TUTUP" : "CLOSE",style: GoogleFonts.lexendDeca(color: Colors.blue,
+          fontSize: textScale.toString() == '1.17' ? 13 : 15),),
       onPressed:  () {Navigator.pop(context);},
     );
     AlertDialog alert = AlertDialog(
       actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Informasi" :"Information", style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+      title: Text(getBahasa.toString() == "1"? "Informasi" :"Information",
+        style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 16 : 18,fontWeight: FontWeight.bold),textAlign:
       TextAlign.left,),
       content: Container(
           height: 65,
           child : Column(
             children: [
-              Text("Ini adalah adalah menu untuk melihat daftar pengajuan dan approval untuk kehadiran anda", style: GoogleFonts.nunitoSans(),textAlign:
+              Text("Ini adalah adalah menu untuk melihat daftar pengajuan dan approval untuk kehadiran anda",
+                style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 13 : 15),textAlign:
               TextAlign.left,),
             ],
           )

@@ -86,6 +86,7 @@ class _PageTimeOffApprovalList extends State<PageTimeOffApprovalList> {
   @override
   Widget build(BuildContext context) {
     var onWillPop;
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(child: Scaffold(
       appBar: new AppBar(
         //shape: Border(bottom: BorderSide(color: Colors.red)),
@@ -215,7 +216,7 @@ class _PageTimeOffApprovalList extends State<PageTimeOffApprovalList> {
                                 children: [
                                   Expanded(
                                     child: ListView.builder(
-                                      itemExtent: 85,
+                                      itemExtent: textScale.toString() == '1.17' ? 95 : 85,
                                       itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                       padding: const EdgeInsets.only(bottom: 85,top: 5),
                                       itemBuilder: (context, i) {

@@ -16,7 +16,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:map_launcher/map_launcher.dart';
 
-import 'S_HELPER/g_profile.dart';
+import '../Profile/S_HELPER/g_profile.dart';
 
 
 class AttendanceHistory extends StatefulWidget{
@@ -52,6 +52,7 @@ class _AttendanceHistory extends State<AttendanceHistory> {
   bool btn1 = true;
   bool btn2 = false;
   show_map(String latme, String longme) async {
+    //===============================
     bool isGoogleMaps =
         await MapLauncher.isMapAvailable(MapType.google) ?? false;
 
@@ -557,27 +558,29 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                   style: GoogleFonts.workSans(fontSize: 12,color: Colors.black)),
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(5),
-                                                color: snapshot.data![i]["b"].toString() == '00:00' && snapshot.data![i]["c"].toString() == '00:00'  ?
-                                                HexColor("#Fcdedf") : snapshot.data![i]["b"].toString() != '00:00' && snapshot.data![i]["c"].toString() == '00:00' ?
-                                                HexColor("#FF851B") : HexColor("#EDEDED"),
+                                                color:
+                                                //Jika sama sekali belum absen
+                                                snapshot.data![i]["b"].toString() == '00:00' && snapshot.data![i]["c"].toString() == '00:00'  ? HexColor("#Fcdedf") :
+                                                //Jika belum clock out
+                                                snapshot.data![i]["b"].toString() != '00:00' && snapshot.data![i]["c"].toString() == '00:00' ? HexColor("#FF851B") :
+                                                //Jika Sudah Clock In CLock Out
+                                                HexColor("#EDEDED"),
                                               ),
-                                            ) : Container(
+                                            ) :
+
+                                            Container(
                                               width: double.infinity,
                                               padding : EdgeInsets.all(6),
                                               child: Text(
-                                                  getBahasa.toString() =="1" ?
-                                                  AppHelper().getTanggalCustom(snapshot.data![i]["a"].toString()) + " "+
+
+                                                      AppHelper().getTanggalCustom(snapshot.data![i]["a"].toString()) + " "+
                                                       AppHelper().getNamaBulanCustomFull(snapshot.data![i]["a"].toString()) + " "+
-                                                      AppHelper().getTahunCustom(snapshot.data![i]["a"].toString()) :
-                                                  AppHelper().getTanggalCustom(snapshot.data![i]["a"].toString()) + " "+
-                                                      AppHelper().getNamaBulanCustomFullEnglish(snapshot.data![i]["a"].toString()) + " "+
-                                                      AppHelper().getTahunCustom(snapshot.data![i]["a"].toString()),
-                                                  style: GoogleFonts.workSans(fontSize: 12,color: Colors.white)),
+                                                      AppHelper().getTahunCustom(snapshot.data![i]["a"].toString()) + " ("+snapshot.data![i]["q"].toString()+")" ,
+                                                  style: GoogleFonts.workSans(fontSize: 12, color: Colors.white)),
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(5),
-                                                color: snapshot.data![i]["b"].toString() == '00:00' && snapshot.data![i]["c"].toString() == '00:00'  ?
-                                                HexColor("#Fcdedf") : snapshot.data![i]["b"].toString() != '00:00' && snapshot.data![i]["c"].toString() == '00:00' ?
-                                                HexColor("#FF851B") : HexColor("#2196f3") ,
+                                                color:
+                                                HexColor("#2196f3") ,
                                               ),
                                             ),
                                             subtitle:Column(
@@ -603,7 +606,7 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                     padding: EdgeInsets.only(top: 3,left: 3),
                                                     child: Align(alignment: Alignment.centerLeft,
                                                       child: Text(
-                                                          snapshot.data![i]["b"].toString() == '00:00' && snapshot.data![i]["c"].toString() == '00:00' ? "(Tidak melakukan absensi)" :
+                                                          snapshot.data![i]["b"].toString() == '00:00' && snapshot.data![i]["c"].toString() == '00:00' ? "(Belum melakukan absensi)" :
                                                           getBahasa.toString() =="1" ? "Telat : "+snapshot.data![i]["d"].toString()+" menit | "
                                                               "Overtime : "+snapshot.data![i]["e"].toString()+" menit" :
                                                           "Late : "+snapshot.data![i]["d"].toString()+" minute | "

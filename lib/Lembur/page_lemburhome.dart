@@ -4,12 +4,8 @@
 
 import 'package:abzeno/Helper/app_helper.dart';
 import 'package:abzeno/Lembur/page_lembur.dart';
-import 'package:abzeno/Request%20Attendance/page_reqattendance.dart';
-import 'package:abzeno/Time%20Off/ARCHIVED/page_myapproval.dart';
-import 'package:abzeno/page_home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -60,22 +56,25 @@ class _PageRLemburHome extends State<PageRLemburHome> with SingleTickerProviderS
 
 
   showInfoDialog(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     Widget cancelButton = TextButton(
-      child: Text(getBahasa.toString() == "1"? "TUTUP" : "CLOSE",style: GoogleFonts.lexendDeca(color: Colors.blue),),
+      child: Text(getBahasa.toString() == "1"? "TUTUP" : "CLOSE",style: GoogleFonts.lexendDeca(color: Colors.blue,
+          fontSize: textScale.toString() == '1.17' ? 13 : 15),),
       onPressed:  () {Navigator.pop(context);},
     );
     AlertDialog alert = AlertDialog(
       actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Informasi" :"Information", style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+      title: Text(getBahasa.toString() == "1"? "Informasi" :"Information",
+        style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 16 : 17,fontWeight: FontWeight.bold),textAlign:
       TextAlign.left,),
       content: Container(
           height: 90,
           child : Column(
             children: [
-              Text("JIka pengajuan lembur anda sepenuhnya disetujui, maka akan ada menu baru di beranda anda untuk melakukan rekam kehadiran lembur."
-                  , style: GoogleFonts.nunitoSans(),textAlign:
+              Text("Jika pengajuan lembur anda sepenuhnya disetujui, maka akan ada menu baru di beranda anda untuk melakukan rekam kehadiran lembur."
+                  , style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 13 : 15),textAlign:
               TextAlign.left,),
             ],
           )

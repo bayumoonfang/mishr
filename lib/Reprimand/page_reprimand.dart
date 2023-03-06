@@ -4,20 +4,13 @@ import 'dart:async';
 
 import 'package:abzeno/Helper/app_helper.dart';
 import 'package:abzeno/Helper/page_route.dart';
-import 'package:abzeno/Inbox/page_pesanpribadi_detail.dart';
-import 'package:abzeno/Profile/page_attendancehistory.dart';
 import 'package:abzeno/Reprimand/S_HELPER/g_reprimand.dart';
-import 'package:abzeno/Setting/page_bahasa.dart';
-import 'package:abzeno/Setting/page_notification.dart';
-import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-
-import '../Inbox/S_HELPER/g_inbox.dart';
 import 'PageReprimandDetail.dart';
 
 
@@ -79,6 +72,7 @@ class _PageReprimand extends State<PageReprimand> {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
@@ -174,7 +168,7 @@ class _PageReprimand extends State<PageReprimand> {
                                   children: [
                                     Expanded(
                                       child: ListView.builder(
-                                          itemExtent: 102,
+                                          itemExtent: textScale.toString() == '1.17' ? 115:102,
                                           itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                           padding: const EdgeInsets.only(bottom: 85,top: 5),
                                           itemBuilder: (context, i) {

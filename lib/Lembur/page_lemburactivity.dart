@@ -2,23 +2,13 @@
 
 
 import 'dart:async';
-import 'dart:convert';
-
-import 'package:abzeno/Helper/app_link.dart';
-import 'package:abzeno/Helper/page_route.dart';
-import 'package:abzeno/Notification/page_detailnotification.dart';
-import 'package:abzeno/Time%20Off/S_HELPER/g_timeoff.dart';
 import 'package:abzeno/helper/app_helper.dart';
-import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
-
 import 'S_HELPER/g_lembur.dart';
 class PageActivityLembur extends StatefulWidget{
   final String getTimeOffNumber;
@@ -58,6 +48,7 @@ class _PageActivityLembur extends State<PageActivityLembur> {
 
   @override
   Widget build(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -121,7 +112,7 @@ class _PageActivityLembur extends State<PageActivityLembur> {
                               children: [
                                 Expanded(
                                   child: ListView.builder(
-                                    itemExtent: 92,
+                                    itemExtent: textScale.toString() == '1.17' ? 125: 95,
                                     itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                     padding: const EdgeInsets.only(bottom: 85,top: 10),
                                     itemBuilder: (context, i) {
