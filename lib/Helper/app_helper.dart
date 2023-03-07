@@ -1018,10 +1018,9 @@ class AppHelper{
       http.Client().close();
       return http.Response('Error',500);}
     );
-    print(applink+"mobile/api_mobile.php?act=getFCMToken&karyawanNo="+getKaryawanNo.toString()+"&token="+getToken.toString());
+   // print(applink+"mobile/api_mobile.php?act=getFCMToken&karyawanNo="+getKaryawanNo.toString()+"&token="+getToken.toString());
 
     var data = jsonDecode(response.body);
-
     print("TOKEN : "+ data["karyawantoken_token"].toString());
    // print("TOKEN BARU : "+getTokenBaru);
 

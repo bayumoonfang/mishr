@@ -69,11 +69,11 @@ class _PageClockIn extends State<PageClockIn> {
   String BtnAttend = "0";
   //LatLng _initialcameraposition = LatLng(-7.281798579483975, 112.73688279669264);
   late LatLng currentPostion = LatLng(-2.317671039583578, 115.67280345960125);
+  //late LatLng currentPostion2 = LatLng(-2.317671039583578, 115.67280345960125);
   late LatLng _locationCabang;
   late LatLng _locationCabang2 = LatLng(-2.317671039583578, 115.67280345960125);
   late String locationLat;
   late String locationLong;
-
 
 
 
@@ -116,7 +116,6 @@ class _PageClockIn extends State<PageClockIn> {
       );
     });
   }
-
 
 
 
@@ -253,6 +252,7 @@ class _PageClockIn extends State<PageClockIn> {
   void _getCurrentTime()  {
     setState(() {
       _timeString = "${DateFormat('HH').format(DateTime.now())}:${DateFormat('mm').format(DateTime.now())}";
+      //_onMapCreated();
     });
   }
 
@@ -388,7 +388,7 @@ class _PageClockIn extends State<PageClockIn> {
     }
   }
 
-
+  Completer<GoogleMapController> _controller2 = Completer();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(child: Scaffold(
@@ -515,6 +515,10 @@ class _PageClockIn extends State<PageClockIn> {
                     initialCameraPosition: CameraPosition(target: currentPostion),
                     mapType: MapType.normal,
                     onMapCreated: _onMapCreated,
+                   /*onMapCreated: (GoogleMapController controller) {
+                      _controller2.complete(controller);
+                      _onMapCreated(controller);
+                    },*/
                     myLocationEnabled: false,
                     markers: getmarkers(),
                     zoomGesturesEnabled : false,

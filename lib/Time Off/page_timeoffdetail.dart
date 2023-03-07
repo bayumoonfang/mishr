@@ -7,6 +7,7 @@ import 'package:abzeno/Helper/app_helper.dart';
 import 'package:abzeno/Helper/app_link.dart';
 import 'package:abzeno/Helper/page_route.dart';
 import 'package:abzeno/Setting/page_setting.dart';
+import 'package:abzeno/Time%20Off/page_DetailFileAttendanceReq.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -571,6 +572,24 @@ class _TimeOffDetail extends State<TimeOffDetail> {
                                 Padding(padding: EdgeInsets.only(bottom: 5),
                                   child: Text(timeoff_description.toString(), style: GoogleFonts.nunito(fontSize: 14) ),),
                               ]),
+
+                              timeoff_file != '' ?
+                              TableRow(children :[
+                                Padding(padding: EdgeInsets.only(bottom: 5),
+                                  child: Text(getBahasa.toString() == "1"? 'Attachment' : 'Attachment', style: GoogleFonts.nunito(fontSize: 14) ),),
+                                Padding(padding: EdgeInsets.only(bottom: 5),
+                                  child: InkWell(
+                                    onTap: (){
+                                      Navigator.push(context, ExitPage(page: DetailImageAttRequest(timeoff_file)));
+                                    },
+                                    child: Text(timeoff_file.toString(), style: GoogleFonts.nunito(fontSize: 14,color: Colors.blue) ),
+                                  )
+
+                                ),
+                              ]) :   TableRow(children :[
+                                Container(),
+                                Container(),
+                              ])
 
                             ]
                         ),

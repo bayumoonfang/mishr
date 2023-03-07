@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'dart:ui';
 import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:abzeno/Profile/page_changepin.dart';
 import 'package:abzeno/page_changecabang.dart';
@@ -525,6 +526,9 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
   cekPermissionGeolocator(String Type2, String TimeMe2) async {
     LocationPermission permission = await Geolocator.checkPermission();
     servicestatus = await Geolocator.isLocationServiceEnabled();
+    PermissionStatus _permissionGranted;
+    bool _serviceEnabled;
+    Location location = new Location();
     if (servicestatus) {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
@@ -539,6 +543,23 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
           EasyLoading.dismiss();
           return;
         } else {
+
+          /*_serviceEnabled = await location.serviceEnabled();
+          if (!_serviceEnabled) {
+            _serviceEnabled = await location.requestService();
+            if (!_serviceEnabled) {
+              return;
+            }
+          }
+
+          _permissionGranted = await location.hasPermission();
+          if (_permissionGranted == PermissionStatus.denied) {
+            _permissionGranted = await location.requestPermission();
+            if (_permissionGranted != PermissionStatus.granted) {
+              return;
+            }
+          }*/
+
           //AppHelper().showFlushBarerror(context, "ALLOWED");
           if (Platform.isIOS) {
 
