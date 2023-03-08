@@ -1,13 +1,10 @@
 
-
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io' show Platform;
 import 'package:abzeno/attendance/page_doattendance.dart';
 import 'package:datetime_setting/datetime_setting.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,8 +18,6 @@ import 'package:intl/intl.dart';
 import 'package:location/location.dart' as locator;
 import '../helper/app_helper.dart';
 import '../helper/app_link.dart';
-import 'package:permission_handler/permission_handler.dart';
-
 import '../helper/page_route.dart';
 import '../page_login.dart';
 
@@ -59,7 +54,12 @@ class PageClockIn extends StatefulWidget{
   _PageClockIn createState() => _PageClockIn();
 }
 
+class UserLocation {
+  final double latitude;
+  final double longitude;
 
+  UserLocation({required this.latitude, required this.longitude});
+}
 
 class _PageClockIn extends State<PageClockIn> {
   late double _distanceInMeters;
@@ -67,34 +67,22 @@ class _PageClockIn extends State<PageClockIn> {
   bool isPressed = false;
   var jarak = 0;
   String BtnAttend = "0";
-  //LatLng _initialcameraposition = LatLng(-7.281798579483975, 112.73688279669264);
   late LatLng currentPostion = LatLng(-2.317671039583578, 115.67280345960125);
-  //late LatLng currentPostion2 = LatLng(-2.317671039583578, 115.67280345960125);
   late LatLng _locationCabang;
   late LatLng _locationCabang2 = LatLng(-2.317671039583578, 115.67280345960125);
   late String locationLat;
   late String locationLong;
-
-
-
   late GoogleMapController _controller;
   locator.Location _location = locator.Location();
-  bool servicestatus = false;
-  bool haspermission = false;
   late geolocator.Position position;
   String long = "", lat = "";
   final _noteclockin = TextEditingController();
   final Set<Marker> markers = new Set();
-  var getJam2 = '';
-
-
   String gpsOff = "0";
-
-
 
   late LocationSettings locationSettings;
 
-  getLocation() async {
+  /*getLocation() async {
     position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
       currentPostion = LatLng(position.latitude, position.longitude);
@@ -102,22 +90,24 @@ class _PageClockIn extends State<PageClockIn> {
       lat = position.latitude.toString();
       getme(long,lat);
     });
-  }
+  }*/
 
 
   void _onMapCreated(GoogleMapController _cntlr) async
   {
+    var userLocation = await _location.getLocation();
     _controller = _cntlr;
     _location.onLocationChanged.listen((l) {
       _controller.animateCamera(
         CameraUpdate.newCameraPosition(
-          CameraPosition(target: currentPostion,zoom: 17),
+          CameraPosition(target: LatLng(userLocation.latitude!, userLocation.longitude!),zoom: 17),
         ),
       );
+      long = userLocation.longitude!.toString();
+      lat = userLocation.latitude!.toString();
+      getme(long,lat);
     });
   }
-
-
 
 
   void getme(String LongVal, String LatVal) async {
@@ -125,7 +115,9 @@ class _PageClockIn extends State<PageClockIn> {
         , double.parse(locationLong), double.parse(LatVal), double.parse(LongVal));
     jarak = _distanceInMeters.ceil();
     setState(() {
+      currentPostion = LatLng(double.parse(LatVal), double.parse(LongVal));
       _isvisibleBtn = true;
+      EasyLoading.dismiss();
     });
   }
 
@@ -154,7 +146,6 @@ class _PageClockIn extends State<PageClockIn> {
         locationLat = value[0];
         locationLong = value[1];
         _locationCabang = LatLng(double.parse(value[0]), double.parse(value[1]));
-        // print(value[0]+" ------ "+value[1]);
         _loaddata();
       });});
   }
@@ -190,7 +181,7 @@ class _PageClockIn extends State<PageClockIn> {
           EasyLoading.dismiss();
         }
       });});
-    await getLocation();
+    //await getLocation();
     EasyLoading.dismiss();
   }
 
@@ -252,7 +243,6 @@ class _PageClockIn extends State<PageClockIn> {
   void _getCurrentTime()  {
     setState(() {
       _timeString = "${DateFormat('HH').format(DateTime.now())}:${DateFormat('mm').format(DateTime.now())}";
-      //_onMapCreated();
     });
   }
 
@@ -388,12 +378,11 @@ class _PageClockIn extends State<PageClockIn> {
     }
   }
 
-  Completer<GoogleMapController> _controller2 = Completer();
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(child: Scaffold(
       appBar: new AppBar(
-        //backgroundColor: HexColor("#3a5664"),
         backgroundColor: Colors.white,
         title: Text(_timeString, style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
         centerTitle: true,
@@ -515,10 +504,6 @@ class _PageClockIn extends State<PageClockIn> {
                     initialCameraPosition: CameraPosition(target: currentPostion),
                     mapType: MapType.normal,
                     onMapCreated: _onMapCreated,
-                   /*onMapCreated: (GoogleMapController controller) {
-                      _controller2.complete(controller);
-                      _onMapCreated(controller);
-                    },*/
                     myLocationEnabled: false,
                     markers: getmarkers(),
                     zoomGesturesEnabled : false,

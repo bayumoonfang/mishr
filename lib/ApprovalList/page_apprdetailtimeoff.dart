@@ -578,6 +578,24 @@ class _ApprTimeOffDetail extends State<ApprTimeOffDetail> {
                                     child: Text(timeoff_description.toString(), style: GoogleFonts.nunito(fontSize: 14) ),),
                                 ]),
 
+                                timeoff_file != '' ?
+                                TableRow(children :[
+                                  Padding(padding: EdgeInsets.only(bottom: 5),
+                                    child: Text(getBahasa.toString() == "1"? 'Attachment' : 'Attachment', style: GoogleFonts.nunito(fontSize: 14) ),),
+                                  Padding(padding: EdgeInsets.only(bottom: 5),
+                                      child: InkWell(
+                                        onTap: (){
+                                          Navigator.push(context, ExitPage(page: DetailImageAttRequest(timeoff_file)));
+                                        },
+                                        child: Text(timeoff_file.toString(), style: GoogleFonts.nunito(fontSize: 14,color: Colors.blue) ),
+                                      )
+
+                                  ),
+                                ]) :   TableRow(children :[
+                                  Container(),
+                                  Container(),
+                                ])
+
                               ]
                           ),
 

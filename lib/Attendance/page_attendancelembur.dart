@@ -68,35 +68,22 @@ class _PageClockInLembur extends State<PageClockInLembur> {
   bool isPressed = false;
   var jarak = 0;
   String BtnAttend = "0";
-  //LatLng _initialcameraposition = LatLng(-7.281798579483975, 112.73688279669264);
   late LatLng currentPostion = LatLng(-2.317671039583578, 115.67280345960125);
   late LatLng _locationCabang;
   late LatLng _locationCabang2 = LatLng(-2.317671039583578, 115.67280345960125);
   late String locationLat;
   late String locationLong;
-
-
-
-
   late GoogleMapController _controller;
   locator.Location _location = locator.Location();
-  bool servicestatus = false;
-  bool haspermission = false;
   late geolocator.Position position;
   String long = "", lat = "";
   final _noteclockin = TextEditingController();
   final Set<Marker> markers = new Set();
-  var getJam2 = '';
-
-
   String gpsOff = "0";
-
-
-
 
   late LocationSettings locationSettings;
 
-  getLocation() async {
+  /*getLocation() async {
     position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
       currentPostion = LatLng(position.latitude, position.longitude);
@@ -104,25 +91,24 @@ class _PageClockInLembur extends State<PageClockInLembur> {
       lat = position.latitude.toString();
       getme(long,lat);
     });
-
-  }
+  }*/
 
 
   void _onMapCreated(GoogleMapController _cntlr) async
   {
+    var userLocation = await _location.getLocation();
     _controller = _cntlr;
     _location.onLocationChanged.listen((l) {
       _controller.animateCamera(
         CameraUpdate.newCameraPosition(
-          //CameraPosition(target: LatLng(l.latitude, l.longitude),zoom: 15),
-          CameraPosition(target: currentPostion,zoom: 17),
+          CameraPosition(target: LatLng(userLocation.latitude!, userLocation.longitude!),zoom: 17),
         ),
       );
+      long = userLocation.longitude!.toString();
+      lat = userLocation.latitude!.toString();
+      getme(long,lat);
     });
   }
-
-
-
 
 
   void getme(String LongVal, String LatVal) async {
@@ -130,7 +116,9 @@ class _PageClockInLembur extends State<PageClockInLembur> {
         , double.parse(locationLong), double.parse(LatVal), double.parse(LongVal));
     jarak = _distanceInMeters.ceil();
     setState(() {
+      currentPostion = LatLng(double.parse(LatVal), double.parse(LongVal));
       _isvisibleBtn = true;
+      EasyLoading.dismiss();
     });
   }
 
@@ -144,7 +132,6 @@ class _PageClockInLembur extends State<PageClockInLembur> {
       });});
   }
 
-
   String rangemaxstr = "0";
   getRangeMax() async {
     await AppHelper().getRangeMax().then((value){
@@ -154,17 +141,17 @@ class _PageClockInLembur extends State<PageClockInLembur> {
   }
 
 
-
   getNewWorkLocation2(getLokasi) async {
     await AppHelper().getNewWorkLocation(getLokasi).then((value){
       setState(() {
         locationLat = value[0];
         locationLong = value[1];
         _locationCabang = LatLng(double.parse(value[0]), double.parse(value[1]));
-        // print(value[0]+" ------ "+value[1]);
         _loaddata();
       });});
   }
+
+
 
 
 
@@ -195,7 +182,7 @@ class _PageClockInLembur extends State<PageClockInLembur> {
           EasyLoading.dismiss();
         }
       });});
-    await getLocation();
+    //await getLocation();
     EasyLoading.dismiss();
   }
 
@@ -219,6 +206,7 @@ class _PageClockInLembur extends State<PageClockInLembur> {
   _loaddata() async {
     await getAllCabang();
     await _startingVariable();
+
   }
 
 

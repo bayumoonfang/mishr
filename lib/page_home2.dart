@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'dart:ui';
+import 'package:abzeno/Helper/g_helper.dart';
+import 'package:abzeno/Time%20Off/S_HELPER/g_timeoff.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:location/location.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:abzeno/Profile/page_changepin.dart';
 import 'package:abzeno/page_changecabang.dart';
@@ -523,8 +524,119 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
   }
 
   bool servicestatus = false;
+  late bool _serviceEnabled;
+  //Location location = new Location();
+ // late PermissionStatus _permissionGranted;
   cekPermissionGeolocator(String Type2, String TimeMe2) async {
-    LocationPermission permission = await Geolocator.checkPermission();
+   /* _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        AppHelper().showFlushBarerror(context, "Layanan GPS tidak diaktifkan, aktifkan lokasi GPS");
+        EasyLoading.dismiss();
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        AppHelper().showFlushBarerror(context, 'Location permissions are denied');
+        EasyLoading.dismiss();
+        return;
+      } else if (_permissionGranted == PermissionStatus.deniedForever) {
+        AppHelper().showFlushBarerror(context, "'Location permissions are permanently denied");
+        EasyLoading.dismiss();
+        return;
+      }
+    }*/
+
+    if (Platform.isIOS) {
+      if (Type2 == 'Daily' && TimeMe2 == 'Clock In') {
+        Navigator.of(context)
+            .push(MaterialPageRoute(
+            builder: (context) => PageClockIn(
+                widget.getKaryawanNo,
+                getJam,
+                getWorkLocationId,
+                AppHelper().getNamaHari().toString(),
+                getWorkLat.toString(),
+                getWorkLong.toString(),
+                "Clock In",
+                widget.getKaryawanNama.toString(),
+                widget.getKaryawanJabatan.toString(),
+                widget.getStartTime.toString(),
+                widget.getEndTime.toString(),
+                widget.getScheduleName,
+                getWorkLocation.toString())))
+            .then(onGoBack);
+      } else if (Type2 == 'Daily' && TimeMe2 == 'Clock Out') {
+        Navigator.push(
+            context,
+            ExitPage(
+                page: PageClockIn(
+                    widget.getKaryawanNo,
+                    getJam,
+                    getWorkLocationId,
+                    AppHelper().getNamaHari().toString(),
+                    getWorkLat.toString(),
+                    getWorkLong.toString(),
+                    "Clock Out",
+                    widget.getKaryawanNama.toString(),
+                    widget.getKaryawanJabatan.toString(),
+                    widget.getStartTime.toString(),
+                    widget.getEndTime.toString(),
+                    widget.getScheduleName,
+                    getWorkLocation.toString())))
+            .then(onGoBack);
+      } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock In') {
+        Navigator.of(context)
+            .push(MaterialPageRoute(
+            builder: (context) => PageClockInLembur(
+                widget.getKaryawanNo,
+                getJam,
+                getWorkLocationId,
+                AppHelper().getNamaHari().toString(),
+                getWorkLat.toString(),
+                getWorkLong.toString(),
+                "CLOCK IN",
+                widget.getKaryawanNama.toString(),
+                widget.getKaryawanJabatan.toString(),
+                widget.getStartTime.toString(),
+                widget.getEndTime.toString(),
+                widget.getScheduleName,
+                getWorkLocation.toString())))
+            .then(onGoBack);
+      } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock Out') {
+        Navigator.push(
+            context,
+            ExitPage(
+                page: PageClockInLembur(
+                    widget.getKaryawanNo,
+                    getJam,
+                    getWorkLocationId,
+                    AppHelper().getNamaHari().toString(),
+                    getWorkLat.toString(),
+                    getWorkLong.toString(),
+                    "CLOCK OUT",
+                    widget.getKaryawanNama.toString(),
+                    widget.getKaryawanJabatan.toString(),
+                    widget.getStartTime.toString(),
+                    widget.getEndTime.toString(),
+                    widget.getScheduleName,
+                    getWorkLocation.toString())))
+            .then(onGoBack);
+      }
+    } else {
+      cek_datetimesetting(Type2, TimeMe2);
+    }
+  }
+
+
+/*cekPermissionGeolocator(String Type2, String TimeMe2) async {
+    cek_datetimesetting(Type2, TimeMe2);
+   LocationPermission permission = await Geolocator.checkPermission();
     servicestatus = await Geolocator.isLocationServiceEnabled();
     PermissionStatus _permissionGranted;
     bool _serviceEnabled;
@@ -543,22 +655,6 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
           EasyLoading.dismiss();
           return;
         } else {
-
-          /*_serviceEnabled = await location.serviceEnabled();
-          if (!_serviceEnabled) {
-            _serviceEnabled = await location.requestService();
-            if (!_serviceEnabled) {
-              return;
-            }
-          }
-
-          _permissionGranted = await location.hasPermission();
-          if (_permissionGranted == PermissionStatus.denied) {
-            _permissionGranted = await location.requestPermission();
-            if (_permissionGranted != PermissionStatus.granted) {
-              return;
-            }
-          }*/
 
           //AppHelper().showFlushBarerror(context, "ALLOWED");
           if (Platform.isIOS) {
@@ -639,9 +735,11 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                   .then(onGoBack);
             }
           } else {
-            cek_datetimesetting(Type2, TimeMe2);
+            //cek_datetimesetting(Type2, TimeMe2);
+            //AppHelper().showFlushBarerror(context, "ALLOWED");
+            DatetimeSetting.openSetting();
           }
-          
+
         }
       } else {
           if (Platform.isIOS) {
@@ -722,6 +820,8 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
             }
           } else {
             cek_datetimesetting(Type2, TimeMe2);
+            //AppHelper().showFlushBarerror(context, "ALLOWED");
+            //DatetimeSetting.openSetting();
           }
       }
     } else {
@@ -730,73 +830,85 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
       EasyLoading.dismiss();
       return;
     }
-  }
+  }*/
 
   cek_datetimesetting(String Type, String TimeMe) async {
     bool timeAuto = await DatetimeSetting.timeIsAuto();
     bool timezoneAuto = await DatetimeSetting.timeZoneIsAuto();
-    bool isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
-    bool canMockLocation = await SafeDevice.canMockLocation;
-    bool isMockLocation = await TrustLocation.isMockLocation;
-    
-    if (!timezoneAuto || !timeAuto) {
+
+    if(timeAuto.toString() == 'false' || timezoneAuto.toString() == 'false') {
+      DatetimeSetting.openSetting();
       EasyLoading.dismiss();
       showInvalidDateTimeSettingDialog(context);
-      return false;
-    } /* else if(!canMockLocation) {
-      EasyLoading.dismiss();
-      showMockLocDialog(context);
-      return false;
-    } */
-    else {
+      return;
+    }else {
       if (Type == 'Daily' && TimeMe == 'Clock In') {
         Navigator.of(context)
             .push(MaterialPageRoute(
-                builder: (context) => PageClockIn(
+            builder: (context) => PageClockIn(
+                widget.getKaryawanNo,
+                getJam,
+                getWorkLocationId,
+                AppHelper().getNamaHari().toString(),
+                getWorkLat.toString(),
+                getWorkLong.toString(),
+                "Clock In",
+                widget.getKaryawanNama.toString(),
+                widget.getKaryawanJabatan.toString(),
+                widget.getStartTime.toString(),
+                widget.getEndTime.toString(),
+                widget.getScheduleName,
+                getWorkLocation.toString())))
+            .then(onGoBack);
+      } else if (Type == 'Daily' && TimeMe == 'Clock Out') {
+        Navigator.push(
+            context,
+            ExitPage(
+                page: PageClockIn(
                     widget.getKaryawanNo,
                     getJam,
                     getWorkLocationId,
                     AppHelper().getNamaHari().toString(),
                     getWorkLat.toString(),
                     getWorkLong.toString(),
-                    "Clock In",
+                    "Clock Out",
                     widget.getKaryawanNama.toString(),
                     widget.getKaryawanJabatan.toString(),
                     widget.getStartTime.toString(),
                     widget.getEndTime.toString(),
                     widget.getScheduleName,
                     getWorkLocation.toString())))
-            .then(onGoBack);
-      } else if (Type == 'Daily' && TimeMe == 'Clock Out') {
-        Navigator.push(
-                context,
-                ExitPage(
-                    page: PageClockIn(
-                        widget.getKaryawanNo,
-                        getJam,
-                        getWorkLocationId,
-                        AppHelper().getNamaHari().toString(),
-                        getWorkLat.toString(),
-                        getWorkLong.toString(),
-                        "Clock Out",
-                        widget.getKaryawanNama.toString(),
-                        widget.getKaryawanJabatan.toString(),
-                        widget.getStartTime.toString(),
-                        widget.getEndTime.toString(),
-                        widget.getScheduleName,
-                        getWorkLocation.toString())))
             .then(onGoBack);
       } else if (Type == 'Lembur' && TimeMe == 'Clock In') {
         Navigator.of(context)
             .push(MaterialPageRoute(
-                builder: (context) => PageClockInLembur(
+            builder: (context) => PageClockInLembur(
+                widget.getKaryawanNo,
+                getJam,
+                getWorkLocationId,
+                AppHelper().getNamaHari().toString(),
+                getWorkLat.toString(),
+                getWorkLong.toString(),
+                "CLOCK IN",
+                widget.getKaryawanNama.toString(),
+                widget.getKaryawanJabatan.toString(),
+                widget.getStartTime.toString(),
+                widget.getEndTime.toString(),
+                widget.getScheduleName,
+                getWorkLocation.toString())))
+            .then(onGoBack);
+      } else if (Type == 'Lembur' && TimeMe == 'Clock Out') {
+        Navigator.push(
+            context,
+            ExitPage(
+                page: PageClockInLembur(
                     widget.getKaryawanNo,
                     getJam,
                     getWorkLocationId,
                     AppHelper().getNamaHari().toString(),
                     getWorkLat.toString(),
                     getWorkLong.toString(),
-                    "CLOCK IN",
+                    "CLOCK OUT",
                     widget.getKaryawanNama.toString(),
                     widget.getKaryawanJabatan.toString(),
                     widget.getStartTime.toString(),
@@ -804,27 +916,9 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                     widget.getScheduleName,
                     getWorkLocation.toString())))
             .then(onGoBack);
-      } else if (Type == 'Lembur' && TimeMe == 'Clock Out') {
-        Navigator.push(
-                context,
-                ExitPage(
-                    page: PageClockInLembur(
-                        widget.getKaryawanNo,
-                        getJam,
-                        getWorkLocationId,
-                        AppHelper().getNamaHari().toString(),
-                        getWorkLat.toString(),
-                        getWorkLong.toString(),
-                        "CLOCK OUT",
-                        widget.getKaryawanNama.toString(),
-                        widget.getKaryawanJabatan.toString(),
-                        widget.getStartTime.toString(),
-                        widget.getEndTime.toString(),
-                        widget.getScheduleName,
-                        getWorkLocation.toString())))
-            .then(onGoBack);
       }
     }
+
   }
 
   final ScrollController scrollcontroller = new ScrollController();
@@ -1549,6 +1643,8 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                         height: 30,
                                       )
                                     : Container(),
+
+
                                 getPINq == AppHelper().default_pass
                                     ? Container(
                                         padding: EdgeInsets.all(5),
@@ -2263,9 +2359,185 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                 ],
                                               ),
                                             ))
-                                        : Container()
+                                        : Container(),
+
                                   ],
                                 ),
+
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                Container(
+                                    padding: EdgeInsets.all(5),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.circular(15),
+                                      border: Border.all(
+                                        color: HexColor(
+                                            "#DDDDDD"),
+                                        width: 0.5,
+                                      ),
+                                      color: HexColor("#f5f6ff"),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(15),
+                                                topRight: Radius.circular(15),
+                                              ),
+                                            ),
+                                            context: context,
+                                            builder: (context) {
+                                              return SingleChildScrollView(
+                                                child: Container(
+                                                  height: 375,
+                                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                                    child : Padding(
+                                                      padding: EdgeInsets.only(left: 25,right: 25,top: 25),
+                                                      child: Column(
+                                                        children: [
+
+                                                          Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              Text("Bulan " + AppHelper()
+                                                                  .getNamaBulanToday()
+                                                                  .toString(),
+                                                                style: GoogleFonts.montserrat(fontWeight: FontWeight.bold,fontSize: 17),),
+                                                              InkWell(
+                                                                onTap: (){
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: FaIcon(FontAwesomeIcons.times,size: 20,),
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Padding(
+                                                            padding: EdgeInsets.only(top:15,bottom:10),
+                                                            child: Divider(height: 5,),
+                                                          ),
+
+                                                          Container(
+                                                            height: 300,
+                                                            width: double.infinity,
+                                                            child : FutureBuilder(
+                                                                  future: g_helper().getData_birthday(),
+                                                                  builder: (context, snapshot){
+                                                                    if (snapshot.data == null) {
+                                                                      return Center(
+                                                                          child: CircularProgressIndicator()
+                                                                      );
+                                                                    } else {
+                                                                      return snapshot.data == 0 || snapshot.data?.length == 0 ?
+                                                                      Container(
+                                                                          height: double.infinity, width : double.infinity,
+                                                                          child: new
+                                                                          Center(
+                                                                              child :
+                                                                              Column(
+                                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                children: <Widget>[
+                                                                                  Image.asset('assets/empty2.png',width: 150,),
+                                                                                  Padding(
+                                                                                    padding: EdgeInsets.only(left: 13),
+                                                                                    child:  new Text(
+                                                                                      getBahasa.toString() == "1" ? "Tidak ada data": "No Data",
+                                                                                      style: new TextStyle(
+                                                                                          fontFamily: 'VarelaRound', fontSize: 13),
+                                                                                    ),
+                                                                                  )
+                                                                                ],
+                                                                              )))
+                                                                          :
+                                                                      Column(
+                                                                        children: [
+                                                                          Expanded(
+                                                                            child: ListView.builder(
+                                                                              itemExtent: textScale.toString() == '1.17' ? 90 : 82,
+                                                                              itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
+                                                                              itemBuilder: (context, i) {
+                                                                                return Column(
+                                                                                  children: [
+                                                                                    InkWell(
+                                                                                      child : ListTile(
+                                                                                        leading : Container(
+                                                                                          height: 45,
+                                                                                          width : 45,
+                                                                                          decoration: BoxDecoration(
+                                                                                            borderRadius: BorderRadius.circular(10),
+                                                                                            color: HexColor("#8870e6"),
+                                                                                            border: Border.all(
+                                                                                              color: HexColor("#DDDDDD"),
+                                                                                              width: 0.5,
+                                                                                            ),
+                                                                                          ),
+                                                                                          child: Center(
+                                                                                            child : Text(snapshot.data![i]["a"].toString(),overflow: TextOverflow.ellipsis,
+                                                                                              style: GoogleFonts.montserrat(color:HexColor("#ffffff"),fontWeight: FontWeight.bold,fontSize: 18),)
+                                                                                          ),
+                                                                                        ),
+                                                                                        title:Text(snapshot.data![i]["b"].toString(),  style: GoogleFonts.nunitoSans(fontSize: 14.5,color: Colors.black)),
+                                                                                        subtitle: Column(
+                                                                                          children: [
+                                                                                            Padding(
+                                                                                              padding: EdgeInsets.only(top: 5),
+                                                                                              child:  Align(alignment: Alignment.centerLeft,
+                                                                                                  child:  Text(snapshot.data![i]["d"].toString() + " - "+snapshot.data![i]["c"].toString(),
+                                                                                                      overflow: TextOverflow.ellipsis,  style: GoogleFonts.montserrat(
+                                                                                                          fontWeight: FontWeight.bold,fontSize: 13.5,color: Colors.black))),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+
+                                                                                      ),
+                                                                                    ),
+                                                                                    Padding(padding: const EdgeInsets.only(top:5)),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            ),
+                                                                          ),
+
+                                                                        ],
+                                                                      );
+
+                                                                    }
+                                                                  },
+                                                            ),
+                                                          )
+
+
+                                                        ],
+                                                      ),
+                                                    )
+                                                ),
+                                              );
+                                            }
+                                        );
+                                      },
+                                      child: ListTile(
+                                        leading:
+                                        FaIcon(FontAwesomeIcons.birthdayCake,color: HexColor("#141b43"),),
+                                        title: Text(
+                                              "Let's celebrate birthday party with your team work",
+                                          style: GoogleFonts.nunito(
+                                              color: HexColor("#141b43"),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                              height: 1.5),
+                                        ),
+                                        trailing: FaIcon(
+                                          FontAwesomeIcons.angleRight,
+                                          size: 15,color: HexColor("#141b43"),
+                                        ),
+                                      ),
+                                    )),
+
                                 Padding(
                                     padding: const EdgeInsets.only(top: 30),
                                     child: Opacity(

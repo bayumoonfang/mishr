@@ -97,4 +97,22 @@ class g_helper {
 
 
 
+  Future<List> getData_birthday() async {
+    int errorCode = 0;
+    await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
+      errorCode = 2; return false;}});
+    http.Response response = await http.get(Uri.parse(applink+"mobile/api_mobile.php?act=getData_birthday")).
+    timeout(Duration(seconds: 10), onTimeout: () {http.Client().close(); errorCode = 1;
+    return http.Response('Error', 500);});
+    if(errorCode == 1 || errorCode == 2) {
+      EasyLoading.dismiss();
+      return ["ConnInterupted",http.Response('Error', 500)];
+    }  else {
+      EasyLoading.dismiss();
+      return json.decode(response.body);
+    }
+  }
+
+
+
 }

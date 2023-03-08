@@ -5,12 +5,14 @@ import 'package:abzeno/Helper/app_link.dart';
 import 'package:abzeno/page_home.dart';
 import 'package:abzeno/page_intoduction.dart';
 import 'package:abzeno/page_login.dart';
+import 'package:datetime_setting/datetime_setting.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'Helper/app_helper.dart';
@@ -33,7 +35,6 @@ class _PageCheck extends State<PageCheck> {
         getBahasa = value[20];
       });});
   }
-
 
 
   _startingVariable() async {
@@ -64,9 +65,49 @@ class _PageCheck extends State<PageCheck> {
       });}
     );
 
+    bool servicestatus = false;
+    bool haspermission = false;
+    late LocationPermission permission;
+    late Position position;
+    cekPermissionGeolocator() async {
+      servicestatus = await Geolocator.isLocationServiceEnabled();
+      if(servicestatus){
+        permission = await Geolocator.checkPermission();
+
+        if (permission == LocationPermission.denied) {
+          permission = await Geolocator.requestPermission();
+          if (permission == LocationPermission.denied) {
+            print('Location permissions are denied');
+          }else if(permission == LocationPermission.deniedForever){
+            print("'Location permissions are permanently denied");
+          }else{
+            haspermission = true;
+          }
+        }else{
+          haspermission = true;
+        }
+
+        if(haspermission){
+          setState(() {
+            //refresh the UI
+          });
+
+          //getLocation();
+        }
+      }else{
+        print("GPS Service is not enabled, turn on GPS location");
+      }
+
+      setState(() {
+        //refresh the UI
+      });
+    }
+
 
     await AppHelper().reloadSession();
     await AppHelper().generateTokenFCM(widget.getTokenMe);
+    //await cek_datetimesetting();
+    await cekPermissionGeolocator();
     Navigator.pushReplacement(context, ExitPage(page: Home()));
 
   }

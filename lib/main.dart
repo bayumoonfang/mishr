@@ -15,9 +15,9 @@ import 'package:overlay_support/overlay_support.dart';
 import 'NotificationBadge.dart';
 import 'package:http/http.dart' as http;
 
-Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("Handling a background message: ${message.messageId}");
-}
+/*Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  //print("Handling a background message: ${message.messageId}");
+}*/
 
 class PostHttpOverrides extends HttpOverrides{
   @override
@@ -54,13 +54,18 @@ void sendPushMessage(String body, String title, String token) async {
     );
     //print('done');
   } catch (e) {
-    print("error push notification");
+   // print("error push notification");
   }
 }
 
 late final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-var getTokenMe;
+String? getTokenMe;
+
+
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   HttpOverrides.global = new PostHttpOverrides();
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
@@ -72,22 +77,25 @@ void main() async {
     ..userInteractions = true
     ..dismissOnTap = false;
 
-
-  WidgetsFlutterBinding.ensureInitialized();
-  /*await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );*/
-  await Firebase.initializeApp();
-  FirebaseMessaging.instance.getToken().then((value) {
+  _messaging.getToken().then((value) {
     getTokenMe = value;
   });
-  //await FirebaseMessaging.instance.getToken();
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true, // Required to display a heads up notification
-    badge: true,
-    sound: true,
-  );
-  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(alert: true,badge: true,sound: true);
+
+  _messaging.setForegroundNotificationPresentationOptions(alert: true,badge: true,sound: true);
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    showSimpleNotification(
+      Text('${message.notification?.title}', style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),),
+      leading: NotificationBadge(totalNotifications: 1),
+      subtitle: Text('${message.notification?.body}', style: GoogleFonts.nunitoSans(),),
+      background: HexColor("#66000000"),
+      duration: Duration(seconds: 5),
+    );
+
+  });
+
+
+/*
+
   NotificationSettings settings = await _messaging.requestPermission(
     alert: true,
     announcement: false,
@@ -98,18 +106,10 @@ void main() async {
     sound: true,
   );
 
-
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-
-          print('User granted permission');
-          FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+          //FirebaseMessaging.onBackgroundMessage(RemoteMessage message);
+          _messaging.setForegroundNotificationPresentationOptions(alert: true,badge: true,sound: true);
           FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-            print('Handling a foreground message: ${message.messageId}');
-            print('Message data: ${message.data}');
-            print('Message notification: ${message.notification?.title}');
-            print('Message notification: ${message.notification?.body}');
-
                 showSimpleNotification(
                     Text('${message.notification?.title}', style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),),
                     leading: NotificationBadge(totalNotifications: 1),
@@ -119,11 +119,9 @@ void main() async {
                   );
 
           });
-
-
   } else {
     print('User declined or has not accepted permission');
-  }
+  }*/
 
 
   runApp(MyApp());
@@ -141,7 +139,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: PageCheck("", getTokenMe),
+        home: PageCheck("", getTokenMe?? ""),
         builder: EasyLoading.init(),
       ),
     );
