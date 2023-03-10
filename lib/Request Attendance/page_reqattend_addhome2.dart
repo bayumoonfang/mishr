@@ -146,7 +146,7 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
 
               Padding(padding: const EdgeInsets.only(top:50,left: 25,right: 25),
                   child:  Container(
-                    height: MediaQuery.of(context).size.height * 0.50,
+                    height: MediaQuery.of(context).size.height * 0.55,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -371,16 +371,10 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
                                         } else {
                                           FocusScope.of(context).requestFocus(new FocusNode());
                                           _get_ReqAttendCheck();
-
                                         }
-
-
-
                                       },
                                     )
                                 )
-
-
                               ],
                             )
                         )

@@ -1148,7 +1148,9 @@ class AppHelper{
       EasyLoading.dismiss();
       return [
         data["get_newversion"].toString(),
-        data["get_newversionbuild"].toString()
+        data["get_newversionbuild"].toString(),
+        data["get_newversion_ios"].toString(),
+        data["get_newversionbuild_ios"].toString()
       ];
     }
 

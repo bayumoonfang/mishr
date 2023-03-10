@@ -76,7 +76,7 @@ class _PageTimeOffHome2a extends State<PageTimeOffHome2a> with SingleTickerProvi
         style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 16 : 18,fontWeight: FontWeight.bold),textAlign:
       TextAlign.left,),
       content: Container(
-          height: textScale.toString() == '1.17' ? 170 : 190,
+          height: textScale.toString() == '1.17' ? 190 : 210,
           child : Column(
             children: [
               Text("Ini adalah menu untuk pengajuan time off seperti cuti, ijin, dan lain - lain. Jika ada ketidaksesuaian saldo pengajuan "

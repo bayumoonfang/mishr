@@ -6,7 +6,6 @@ import 'package:abzeno/Announecement/page_AnnouncementDetail.dart';
 import 'package:abzeno/Helper/app_helper.dart';
 import 'package:abzeno/Helper/page_route.dart';
 import 'package:abzeno/Inbox/page_pesanpribadi_detail.dart';
-import 'package:abzeno/Profile/page_attendancehistory.dart';
 import 'package:abzeno/Reprimand/S_HELPER/g_reprimand.dart';
 import 'package:abzeno/Setting/page_bahasa.dart';
 import 'package:abzeno/Setting/page_notification.dart';

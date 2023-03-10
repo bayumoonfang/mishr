@@ -120,7 +120,7 @@ class _PageDetailActivityTimeOff extends State<PageDetailActivityTimeOff> {
                               children: [
                                 Expanded(
                                   child: ListView.builder(
-                                    itemExtent: textScale.toString() == '1.17' ? 115 : 95,
+                                    itemExtent: textScale.toString() == '1.17' ? 130 : 115,
                                     itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                     padding: const EdgeInsets.only(bottom: 85,top: 10),
                                     itemBuilder: (context, i) {
