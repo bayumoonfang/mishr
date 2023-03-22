@@ -197,10 +197,19 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
     String code = packageInfo.buildNumber;
     await AppHelper().getNewVersion2().then((value) {
       setState(() {
-        getFullVersionNew = value[0] + " build " + value[1];
-        getVersionNew = value[0];
-        getFullVersionExisting = version + " build " + code;
-        getVersionExisting = version;
+
+        if(Platform.isIOS) {
+          getFullVersionNew = value[2] + " build " + value[3];
+          getVersionNew = value[2];
+          getFullVersionExisting = version + " build " + code;
+          getVersionExisting = version;
+        } else {
+          getFullVersionNew = value[0] + " build " + value[1];
+          getVersionNew = value[0];
+          getFullVersionExisting = version + " build " + code;
+          getVersionExisting = version;
+        }
+
         //String getVersion = version+ " build "+code;
 
         if (getFullVersionExisting != getFullVersionNew) {
@@ -2310,7 +2319,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                             builder: (context) {
                                               return SingleChildScrollView(
                                                 child: Container(
-                                                  height: 375,
+                                                  height: 380,
                                                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                                                     child : Padding(
                                                       padding: EdgeInsets.only(left: 25,right: 25,top: 25),
@@ -2374,7 +2383,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                                         children: [
                                                                           Expanded(
                                                                             child: ListView.builder(
-                                                                              itemExtent: textScale.toString() == '1.17' ? 90 : 82,
+                                                                              itemExtent: textScale.toString() == '1.17' ? 95 : 87,
                                                                               itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                                                               itemBuilder: (context, i) {
                                                                                 return Column(
@@ -2412,7 +2421,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
 
                                                                                       ),
                                                                                     ),
-                                                                                    Padding(padding: const EdgeInsets.only(top:5)),
+                                                                                    Padding(padding: const EdgeInsets.only(top:4)),
                                                                                   ],
                                                                                 );
                                                                               },

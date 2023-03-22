@@ -70,7 +70,7 @@ class _PageRLemburHome extends State<PageRLemburHome> with SingleTickerProviderS
         style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 16 : 17,fontWeight: FontWeight.bold),textAlign:
       TextAlign.left,),
       content: Container(
-          height: 90,
+          height: 100,
           child : Column(
             children: [
               Text("Jika pengajuan lembur anda sepenuhnya disetujui, maka akan ada menu baru di beranda anda untuk melakukan rekam kehadiran lembur."
