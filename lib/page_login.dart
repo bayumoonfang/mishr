@@ -80,8 +80,8 @@ class _PageLogin extends State<PageLogin> {
       } else if(data["message"] == '2') {
         AppHelper().showFlushBarsuccess(context,widget.getBahasa.toString() == "1" ? "Mohon maaf, email anda sudah tidak aktif" : "Sorry, your email is no longer active");
       } else if(data["message"] == '1') {
-
-        Navigator.push(context, ExitPage(page: PageLoginPIN(_emailq.text, widget.getBahasa, widget.getTokenMe)));
+        Navigator.push(context, ExitPage(page: PageLoginPIN(_emailq.text, widget.getBahasa,
+            widget.getTokenMe)));
       }
     }
 
@@ -90,6 +90,7 @@ class _PageLogin extends State<PageLogin> {
   @override
   void initState() {
     super.initState();
+    //AppHelper().showFlushBarconfirmed(context, "DEBRY I LOVE U");
     EasyLoading.dismiss();
   }
 

@@ -4,6 +4,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:abzeno/ApprovalList/page_apprdetailbertugas.dart';
 import 'package:abzeno/ApprovalList/page_apprdetaillembur.dart';
 import 'package:abzeno/ApprovalList/page_apprdetailreqattend.dart';
 import 'package:abzeno/ApprovalList/page_apprdetailtimeoff.dart';
@@ -437,10 +438,11 @@ class _PageApprovalList extends State<PageApprovalList> {
                                               FocusScope.of(context).requestFocus(FocusNode());
                                               snapshot.data![i]["b"].toString().substring(0,6) == 'REQATT' ?
                                               Navigator.push(context, ExitPage(page: ApprReqAttenDetail(snapshot.data![i]["b"].toString(), widget.getKaryawanNo, widget.getKaryawanNama))).then(onGoBack)
-      : snapshot.data![i]["b"].toString().substring(0,6) == 'OVERTI' ?
+                                              : snapshot.data![i]["b"].toString().substring(0,6) == 'OVERTI' ?
                                               Navigator.push(context, ExitPage(page: ApprLemburDetail(snapshot.data![i]["b"].toString(), widget.getKaryawanNo, widget.getKaryawanNama))).then(onGoBack)
-                                                  :
-                                              Navigator.push(context, ExitPage(page: ApprTimeOffDetail(snapshot.data![i]["b"].toString(), widget.getKaryawanNo, widget.getKaryawanNama))).then(onGoBack);
+                                              :snapshot.data![i]["b"].toString().substring(0,1) == 'B' ?
+                                              Navigator.push(context, ExitPage(page: ApprBertugasDetail(snapshot.data![i]["b"].toString(), widget.getKaryawanNo))).then(onGoBack)
+                                              : Navigator.push(context, ExitPage(page: ApprTimeOffDetail(snapshot.data![i]["b"].toString(), widget.getKaryawanNo, widget.getKaryawanNama))).then(onGoBack);
 
 
                                             },

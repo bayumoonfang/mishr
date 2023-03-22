@@ -11,9 +11,6 @@ import 'package:abzeno/Helper/page_route.dart';
 import 'package:abzeno/Lembur/S_HELPER/g_lembur.dart';
 import 'package:abzeno/Lembur/S_HELPER/m_lembur.dart';
 import 'package:abzeno/Lembur/page_lemburactivity.dart';
-import 'package:abzeno/Request%20Attendance/S_HELPER/m_reqattend.dart';
-
-import 'package:abzeno/Request%20Attendance/page_reqattendactivitydetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -23,10 +20,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:steps/steps.dart';
-
-import '../Request Attendance/S_HELPER/g_reqattend.dart';
-import '../Request Attendance/page_reqattendapprovedetail.dart';
-import '../Time Off/page_detailactivitytimeoff.dart';
 
 
 class ApprLemburDetail extends StatefulWidget{
@@ -117,7 +110,7 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
     super.initState();
     getSettings();
     EasyLoading.show(status: AppHelper().loading_text);
-    _get_LemburDetail();
+   // _get_LemburDetail();
   }
 
 
@@ -766,6 +759,8 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 alignment: WrapAlignment.spaceEvenly,
                 children: [
+
+
                   lembur_approval1.toString() == widget.getKaryawanNo && lembur_approval1status.toString() == 'Waiting Approval' ?
                   Container(
                       width: 150,

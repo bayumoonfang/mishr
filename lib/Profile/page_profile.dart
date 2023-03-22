@@ -3,9 +3,11 @@
 
 import 'dart:convert';
 
+import 'package:abzeno/ApprovalList/page_approvallist.dart';
 import 'package:abzeno/Helper/app_helper.dart';
 import 'package:abzeno/Helper/app_link.dart';
 import 'package:abzeno/Helper/m_helper.dart';
+import 'package:abzeno/Profile/S_HELPER/g_profile.dart';
 import 'package:abzeno/Profile/S_HELPER/m_profile.dart';
 import 'package:abzeno/Profile/page_aboutus.dart';
 import 'package:abzeno/Profile/page_changepin.dart';
@@ -23,6 +25,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
+
+import 'package:steps/steps.dart';
 
 
 class Profile extends StatefulWidget{
@@ -71,9 +75,11 @@ class _Profile extends State<Profile>{
 
 
   _loaddata() async {
+    await _get_ApprovalDaftar();
     await _getPhoto();
-    await getSettings();
-    await getVersion();
+    getSettings();
+    getVersion();
+
     EasyLoading.dismiss();
   }
 
@@ -121,7 +127,31 @@ class _Profile extends State<Profile>{
     });
   }
 
-
+  String appr1_name = "...";
+  String appr2_name = "...";
+  String appr3_name = "...";
+  String appr1_jabatan = "...";
+  String appr2_jabatan = "...";
+  String appr3_jabatan = "...";
+  _get_ApprovalDaftar() async {
+    await g_profile().getdata_approvaldaftar(widget.getKaryawanNo).then((value){
+      if(value[0] == 'ConnInterupted'){
+        getBahasa.toString() == "1"?
+        AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
+        AppHelper().showFlushBarsuccess(context, "Connection Interupted...");
+        return false;
+      } else {
+        setState(() {
+          appr1_name = value[0];
+          appr1_jabatan = value[1];
+          appr2_name = value[2];
+          appr2_jabatan = value[3];
+          appr3_name = value[4];
+          appr3_jabatan = value[5];
+        });
+      }
+    });
+  }
 
   clearPhoto() async {
     EasyLoading.show(status: AppHelper().loading_text);
@@ -379,6 +409,121 @@ class _Profile extends State<Profile>{
                      padding: EdgeInsets.only(bottom: 5),
                      child: Divider(height: 2,),
                    ),
+
+
+                   InkWell(
+                     child : Padding(
+                       padding: const EdgeInsets.only(bottom: 5),
+                       child: ListTile(
+                         minLeadingWidth : 25,
+                         dense:true,
+                         contentPadding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                         leading: FaIcon(FontAwesomeIcons.users,color : HexColor("#3ad3e1")),
+                         title: Text(getBahasa.toString() == "1" ? "Approval List":"About Us", style: GoogleFonts.nunitoSans(fontSize: 16),),
+                         subtitle: Text(getBahasa.toString() == "1" ? "Lihat daftar approval untuk ijin kamu": "All About Us", style: GoogleFonts.nunito(fontSize: 13),),
+                         trailing: const FaIcon(FontAwesomeIcons.angleRight, size: 18,),
+                       ),
+                     ),
+                     onTap: (){
+                       showModalBottomSheet(
+                           isScrollControlled: true,
+                           shape: RoundedRectangleBorder(
+                             borderRadius: BorderRadius.only(
+                               topLeft: Radius.circular(15),
+                               topRight: Radius.circular(15),
+                             ),
+                           ),
+                           context: context,
+                           builder: (context) {
+                             return SingleChildScrollView(
+                                 child : Container(
+                                   padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                                   child: Padding(
+                                     padding: EdgeInsets.only(left: 25,right: 25,top: 25),
+                                     child: Column(
+                                       children: [
+                                         Row(
+                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                           children: [
+                                             Text(getBahasa.toString() == "1"? "Daftar Persetujuan" :"Approval List",
+                                               style: GoogleFonts.montserrat(fontWeight: FontWeight.bold,fontSize: 17),),
+                                             InkWell(
+                                               onTap: (){
+                                                 Navigator.pop(context);
+                                               },
+                                               child: FaIcon(FontAwesomeIcons.times,size: 20,),
+                                             )
+                                           ],
+                                         ),
+                                         Padding(
+                                           padding: EdgeInsets.only(top:15),
+                                           child: Divider(height: 2,),
+                                         ),
+                                         Container(
+                                             width: double.infinity,
+                                             height: MediaQuery.of(context).size.height * 0.25,
+                                             child:
+                                             Steps(
+                                               direction: Axis.vertical,
+                                               size: 10.0,
+                                               path: {
+                                                 'color': HexColor("#DDDDDD"),
+                                                 'width': 1.0},
+                                               steps: [
+                                                 {
+                                                   'color': Colors.white,
+                                                   'background': HexColor("#00aa5b"),
+                                                   'label': '1',
+                                                   'content': Column(
+                                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                                     children: <Widget>[
+                                                       Text(appr1_name.toString(),style: GoogleFonts.montserrat(
+                                                           fontWeight: FontWeight.bold,fontSize: 15)),
+                                                       Padding(
+                                                         padding: EdgeInsets.only(top:5),
+                                                         child: Text("("+appr1_jabatan.toString()+")",style: GoogleFonts.nunitoSans(fontSize: 13)),
+                                                       ),
+                                                     ],
+                                                   ),
+                                                 },
+
+                                                 {
+                                                   'color': Colors.white,
+                                                   'background': HexColor("#00aa5b"),
+                                                   'label': '2',
+                                                   'content': Column(
+                                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                                     children: <Widget>[
+                                                       Text(appr3_name.toString(),style: GoogleFonts.montserrat(
+                                                           fontWeight: FontWeight.bold,fontSize: 15)),
+                                                       Padding(
+                                                         padding: EdgeInsets.only(top:5),
+                                                         child: Text("("+appr3_jabatan.toString()+")",style: GoogleFonts.nunitoSans(fontSize: 13)),
+                                                       ),
+
+                                                     ],
+                                                   ),
+                                                 },
+
+                                               ],
+
+                                             )),
+
+
+                                       ],
+                                     ),
+                                   ),
+                                 )
+                             );
+                           });
+                     },
+                   ),
+                   const Padding(
+                     padding: EdgeInsets.only(bottom: 5),
+                     child: Divider(height: 2,),
+                   ),
+
+
                    InkWell(
                      child : Padding(
                        padding: const EdgeInsets.only(bottom: 5),
@@ -505,10 +650,14 @@ class _Profile extends State<Profile>{
                    ),
 
 
+
                    const Padding(
                      padding: EdgeInsets.only(bottom: 5),
                      child: Divider(height: 2,),
                    ),
+
+
+
                   /* InkWell(
                      child : Padding(
                        padding: const EdgeInsets.only(bottom: 5),

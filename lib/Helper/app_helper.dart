@@ -836,6 +836,40 @@ class AppHelper{
 
 
 
+  Future<dynamic> getSpecialDay() async {
+    int errorCode = 0;
+    await AppHelper().getConnect().then((value){
+      if(value == 'ConnInterupted'){
+        EasyLoading.dismiss();
+        Fluttertoast.showToast(msg: "No Connection", toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.black, textColor: Colors.white, fontSize: 14); return false;
+      }});
+    http.Response response = await http.Client().get(
+        Uri.parse(applink+"mobile/api_mobile.php?act=getSpecialDay"),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"}).timeout(
+        Duration(seconds: 20),onTimeout: (){ errorCode = 1;http.Client().close();return http.Response('Error',500);}
+    );
+    var data = jsonDecode(response.body);
+    if(errorCode == 1) {
+      EasyLoading.dismiss();
+      Fluttertoast.showToast(msg: "Connection Timeout", toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.black, textColor: Colors.white, fontSize: 14);
+      return false;
+    }  else {
+      return [
+        data["specialday_name"].toString(), //0
+        data["specialday_tagline"].toString(), //1
+      ];
+    }
+
+  }
+
+
+
+
+
 
   Future<dynamic> getWorkLocation() async {
     String getKaryawanNo = await Session.getKaryawanNo();

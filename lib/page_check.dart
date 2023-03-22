@@ -33,6 +33,7 @@ class _PageCheck extends State<PageCheck> {
     await AppHelper().getSession().then((value){
       setState(() {
         getBahasa = value[20];
+        //getBahasa = widget.getBahasa;
       });});
   }
 
@@ -60,7 +61,8 @@ class _PageCheck extends State<PageCheck> {
     await AppHelper().getSession().then((value){
       setState(() {
         if(value[0] == '' || value[0] == null) {
-          Navigator.pushReplacement(context, ExitPage(page: Introduction(widget.getTokenMe)));
+          Navigator.pushReplacement(context, ExitPage(page:
+          Introduction(widget.getTokenMe)));
         }
       });}
     );

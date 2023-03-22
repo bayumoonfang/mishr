@@ -575,7 +575,7 @@ class _AttendanceHistory extends State<AttendanceHistory> {
 
                                                       AppHelper().getTanggalCustom(snapshot.data![i]["a"].toString()) + " "+
                                                       AppHelper().getNamaBulanCustomFull(snapshot.data![i]["a"].toString()) + " "+
-                                                      AppHelper().getTahunCustom(snapshot.data![i]["a"].toString()) + " ("+snapshot.data![i]["q"].toString()+")" ,
+                                                      AppHelper().getTahunCustom(snapshot.data![i]["a"].toString()),
                                                   style: GoogleFonts.workSans(fontSize: 12, color: Colors.white)),
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(5),
@@ -585,12 +585,22 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                             ),
                                             subtitle:Column(
                                               children: [
+                                                snapshot.data![i]["r"].toString() == "Bertugas" || snapshot.data![i]["r"].toString() == "Off" ?
+                                                Padding(
+                                                    padding: EdgeInsets.only(top: 5,left: 2),
+                                                    child:
+                                                    Align(alignment: Alignment.centerLeft,
+                                                      child: Text(snapshot.data![i]["s"].toString().substring(8),
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: GoogleFonts.montserrat(
+                                                              fontWeight: FontWeight.bold,fontSize: 13.5,color: Colors.black)
+                                                      ),)
+                                                ) :
                                                 Padding(
                                                     padding: EdgeInsets.only(top: 5,left: 2),
                                                     child:
                                                     Align(alignment: Alignment.centerLeft,
                                                       child: Text(
-
                                                           snapshot.data![i]["b"].toString() == '00:00' && snapshot.data![i]["c"].toString() == '00:00' ? "ABSEN" :
                                                           snapshot.data![i]["b"].toString() != '00:00' && snapshot.data![i]["c"].toString() == '00:00'  ?
                                                           "Clock In : "+snapshot.data![i]["b"].toString()+" | Clock Out : -" :
@@ -601,7 +611,17 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                           overflow: TextOverflow.ellipsis,
                                                           style: GoogleFonts.montserrat(
                                                               fontWeight: FontWeight.bold,fontSize: 13.5,color: Colors.black)
-                                                      ),)),
+                                                      ),)
+                                                ),
+
+                                                snapshot.data![i]["r"].toString() == "Bertugas" || snapshot.data![i]["r"].toString() == "Off" ?
+                                                Padding(
+                                                    padding: EdgeInsets.only(top: 3,left: 3),
+                                                    child: Align(alignment: Alignment.centerLeft,
+                                                      child: Text("Tidak perlu melakukan absensi",
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: GoogleFonts.workSans(fontSize: 12.5,color: Colors.black)),)
+                                                ) :
                                                 Padding(
                                                     padding: EdgeInsets.only(top: 3,left: 3),
                                                     child: Align(alignment: Alignment.centerLeft,
@@ -618,8 +638,6 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                             )
                                         ),
                                         onTap: () {
-
-
                                           showModalBottomSheet(
                                               isScrollControlled: true,
                                               shape: RoundedRectangleBorder(

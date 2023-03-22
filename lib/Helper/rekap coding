@@ -2,6 +2,233 @@
 flutter build appbundle --no-sound-null-safety
 flutter build apk --release --no-sound-null-safety
 
+
+
+ late bool _serviceEnabled;
+  //Location location = new Location();
+ // late PermissionStatus _permissionGranted;
+ /* _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        AppHelper().showFlushBarerror(context, "Layanan GPS tidak diaktifkan, aktifkan lokasi GPS");
+        EasyLoading.dismiss();
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        AppHelper().showFlushBarerror(context, 'Location permissions are denied');
+        EasyLoading.dismiss();
+        return;
+      } else if (_permissionGranted == PermissionStatus.deniedForever) {
+        AppHelper().showFlushBarerror(context, "'Location permissions are permanently denied");
+        EasyLoading.dismiss();
+        return;
+      }
+    }*/
+
+/*cekPermissionGeolocator(String Type2, String TimeMe2) async {
+    cek_datetimesetting(Type2, TimeMe2);
+   LocationPermission permission = await Geolocator.checkPermission();
+    servicestatus = await Geolocator.isLocationServiceEnabled();
+    PermissionStatus _permissionGranted;
+    bool _serviceEnabled;
+    Location location = new Location();
+    if (servicestatus) {
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          AppHelper()
+              .showFlushBarerror(context, 'Location permissions are denied');
+          EasyLoading.dismiss();
+          return;
+        } else if (permission == LocationPermission.deniedForever) {
+          AppHelper().showFlushBarerror(
+              context, "'Location permissions are permanently denied");
+          EasyLoading.dismiss();
+          return;
+        } else {
+
+          //AppHelper().showFlushBarerror(context, "ALLOWED");
+          if (Platform.isIOS) {
+
+            if (Type2 == 'Daily' && TimeMe2 == 'Clock In') {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                  builder: (context) => PageClockIn(
+                      widget.getKaryawanNo,
+                      getJam,
+                      getWorkLocationId,
+                      AppHelper().getNamaHari().toString(),
+                      getWorkLat.toString(),
+                      getWorkLong.toString(),
+                      "Clock In",
+                      widget.getKaryawanNama.toString(),
+                      widget.getKaryawanJabatan.toString(),
+                      widget.getStartTime.toString(),
+                      widget.getEndTime.toString(),
+                      widget.getScheduleName,
+                      getWorkLocation.toString())))
+                  .then(onGoBack);
+            } else if (Type2 == 'Daily' && TimeMe2 == 'Clock Out') {
+              Navigator.push(
+                  context,
+                  ExitPage(
+                      page: PageClockIn(
+                          widget.getKaryawanNo,
+                          getJam,
+                          getWorkLocationId,
+                          AppHelper().getNamaHari().toString(),
+                          getWorkLat.toString(),
+                          getWorkLong.toString(),
+                          "Clock Out",
+                          widget.getKaryawanNama.toString(),
+                          widget.getKaryawanJabatan.toString(),
+                          widget.getStartTime.toString(),
+                          widget.getEndTime.toString(),
+                          widget.getScheduleName,
+                          getWorkLocation.toString())))
+                  .then(onGoBack);
+            } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock In') {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                  builder: (context) => PageClockInLembur(
+                      widget.getKaryawanNo,
+                      getJam,
+                      getWorkLocationId,
+                      AppHelper().getNamaHari().toString(),
+                      getWorkLat.toString(),
+                      getWorkLong.toString(),
+                      "CLOCK IN",
+                      widget.getKaryawanNama.toString(),
+                      widget.getKaryawanJabatan.toString(),
+                      widget.getStartTime.toString(),
+                      widget.getEndTime.toString(),
+                      widget.getScheduleName,
+                      getWorkLocation.toString())))
+                  .then(onGoBack);
+            } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock Out') {
+              Navigator.push(
+                  context,
+                  ExitPage(
+                      page: PageClockInLembur(
+                          widget.getKaryawanNo,
+                          getJam,
+                          getWorkLocationId,
+                          AppHelper().getNamaHari().toString(),
+                          getWorkLat.toString(),
+                          getWorkLong.toString(),
+                          "CLOCK OUT",
+                          widget.getKaryawanNama.toString(),
+                          widget.getKaryawanJabatan.toString(),
+                          widget.getStartTime.toString(),
+                          widget.getEndTime.toString(),
+                          widget.getScheduleName,
+                          getWorkLocation.toString())))
+                  .then(onGoBack);
+            }
+          } else {
+            //cek_datetimesetting(Type2, TimeMe2);
+            //AppHelper().showFlushBarerror(context, "ALLOWED");
+            DatetimeSetting.openSetting();
+          }
+
+        }
+      } else {
+          if (Platform.isIOS) {
+            if (Type2 == 'Daily' && TimeMe2 == 'Clock In') {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                  builder: (context) => PageClockIn(
+                      widget.getKaryawanNo,
+                      getJam,
+                      getWorkLocationId,
+                      AppHelper().getNamaHari().toString(),
+                      getWorkLat.toString(),
+                      getWorkLong.toString(),
+                      "Clock In",
+                      widget.getKaryawanNama.toString(),
+                      widget.getKaryawanJabatan.toString(),
+                      widget.getStartTime.toString(),
+                      widget.getEndTime.toString(),
+                      widget.getScheduleName,
+                      getWorkLocation.toString())))
+                  .then(onGoBack);
+            } else if (Type2 == 'Daily' && TimeMe2 == 'Clock Out') {
+              Navigator.push(
+                  context,
+                  ExitPage(
+                      page: PageClockIn(
+                          widget.getKaryawanNo,
+                          getJam,
+                          getWorkLocationId,
+                          AppHelper().getNamaHari().toString(),
+                          getWorkLat.toString(),
+                          getWorkLong.toString(),
+                          "Clock Out",
+                          widget.getKaryawanNama.toString(),
+                          widget.getKaryawanJabatan.toString(),
+                          widget.getStartTime.toString(),
+                          widget.getEndTime.toString(),
+                          widget.getScheduleName,
+                          getWorkLocation.toString())))
+                  .then(onGoBack);
+            } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock In') {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                  builder: (context) => PageClockInLembur(
+                      widget.getKaryawanNo,
+                      getJam,
+                      getWorkLocationId,
+                      AppHelper().getNamaHari().toString(),
+                      getWorkLat.toString(),
+                      getWorkLong.toString(),
+                      "CLOCK IN",
+                      widget.getKaryawanNama.toString(),
+                      widget.getKaryawanJabatan.toString(),
+                      widget.getStartTime.toString(),
+                      widget.getEndTime.toString(),
+                      widget.getScheduleName,
+                      getWorkLocation.toString())))
+                  .then(onGoBack);
+            } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock Out') {
+              Navigator.push(
+                  context,
+                  ExitPage(
+                      page: PageClockInLembur(
+                          widget.getKaryawanNo,
+                          getJam,
+                          getWorkLocationId,
+                          AppHelper().getNamaHari().toString(),
+                          getWorkLat.toString(),
+                          getWorkLong.toString(),
+                          "CLOCK OUT",
+                          widget.getKaryawanNama.toString(),
+                          widget.getKaryawanJabatan.toString(),
+                          widget.getStartTime.toString(),
+                          widget.getEndTime.toString(),
+                          widget.getScheduleName,
+                          getWorkLocation.toString())))
+                  .then(onGoBack);
+            }
+          } else {
+            cek_datetimesetting(Type2, TimeMe2);
+            //AppHelper().showFlushBarerror(context, "ALLOWED");
+            //DatetimeSetting.openSetting();
+          }
+      }
+    } else {
+      AppHelper().showFlushBarerror(
+          context, "Layanan GPS tidak diaktifkan, aktifkan lokasi GPS");
+      EasyLoading.dismiss();
+      return;
+    }
+  }*/
+
  /*position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     if (defaultTargetPlatform == TargetPlatform.android) {
       locationSettings = AndroidSettings(

@@ -1,72 +1,53 @@
 
-
 import 'dart:convert';
 import 'package:abzeno/Helper/app_helper.dart';
 import 'package:abzeno/Helper/app_link.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
+class m_bertugas {
 
 
-
-class m_helper{
-
-
-
-  change_cabang(getLocationID, getKaryawanNo) async {
+  bertugas_create(startDate, endDate, getKaryawanNo, _description, durationme, Baseme, fcm_message, getModul) async {
     int errorCode = 0;
-    await AppHelper().getConnect().then((value){
-      if(value == 'ConnInterupted'){
-        EasyLoading.dismiss();
-        Fluttertoast.showToast(msg: "No Connection", toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.black, textColor: Colors.white, fontSize: 14); return false;
-      }});
+    await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
+      errorCode = 2; return false;}});
     final response = await http.post(
-        Uri.parse(applink+"mobile/api_mobile.php?act=change_cabang"),
+        Uri.parse(applink + "mobile/api_mobile.php?act=bertugas_create"),
         body: {
-          "location_id": getLocationID,
-          "karyawan_no": getKaryawanNo
+          "bertugas_datefrom": startDate.toString(),
+          "bertugas_dateend": endDate.toString(),
+          "bertugas_reqby": getKaryawanNo,
+          "bertugas_description": _description,
+          "bertugas_lamahari" : durationme.toString(),
+          "bertugas_uploadme" : Baseme,
+          "fcm_message" : fcm_message,
+          "getModul" : getModul
         }).timeout(Duration(seconds: 10), onTimeout: () {
       http.Client().close(); errorCode = 1; return http.Response('Error', 500);}
     );
     Map data = jsonDecode(response.body);
-    if(errorCode == 1) {
+    if(errorCode == 1 || errorCode == 2) {
       EasyLoading.dismiss();
-      Fluttertoast.showToast(msg: "Connection Timeout", toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.black, textColor: Colors.white, fontSize: 14);
       return ["ConnInterupted",http.Response('Error', 500)];
     } else {
       EasyLoading.dismiss();
       return[
         data["message"].toString()
+
       ];
     }
   }
 
 
-
-
-  add_attendance(getKaryawanNo, getNamaHari, getJam, getNote, getStartTime, getEndTime, getScheduleName, getType,
-      getWorkLocation, getLocationLat, getLocationLong) async {
+  bertugas_delete(getIdRequest) async {
     int errorCode = 0;
     await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
       errorCode = 2; return false;}});
     final response = await http.post(
-        Uri.parse(applink+"mobile/api_mobile.php?act=add_attendance"),
+        Uri.parse(applink+"mobile/api_mobile.php?act=bertugas_delete"),
         body: {
-          "att_karyawanno": getKaryawanNo,
-          "att_namaHari": getNamaHari,
-          "att_jam": getJam,
-          "att_note": getNote,
-          "att_getStartTime": getStartTime,
-          "att_getEndTime": getEndTime,
-          "att_getScheduleName": getScheduleName,
-          "att_type" : getType,
-          "att_locationname" : getWorkLocation,
-          "att_locationlat" : getLocationLat,
-          "att_locationlong" : getLocationLong
+          "bertugas_iddelete": getIdRequest
         }).timeout(Duration(seconds: 10), onTimeout: () {
       http.Client().close(); errorCode = 1; return http.Response('Error', 500);}
     );
@@ -84,26 +65,17 @@ class m_helper{
 
 
 
-
-  add_attendancelembur(getKaryawanNo, getNamaHari, getJam, getNote, getStartTime, getEndTime, getScheduleName, getType,
-      getWorkLocation, getLocationLat, getLocationLong) async {
+  bertugas_cancel(getKaryawanNo, bertugas_number, fcm_message, bertugas_type ) async {
     int errorCode = 0;
     await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
       errorCode = 2; return false;}});
     final response = await http.post(
-        Uri.parse(applink+"mobile/api_mobile.php?act=add_attendancelembur"),
+        Uri.parse(applink+"mobile/api_mobile.php?act=bertugas_cancel"),
         body: {
-          "att_karyawanno": getKaryawanNo,
-          "att_namaHari": getNamaHari,
-          "att_jam": getJam,
-          "att_note": getNote,
-          "att_getStartTime": getStartTime,
-          "att_getEndTime": getEndTime,
-          "att_getScheduleName": getScheduleName,
-          "att_type" : getType,
-          "att_locationname" : getWorkLocation,
-          "att_locationlat" : getLocationLat,
-          "att_locationlong" : getLocationLong
+          "cancel_karyawan": getKaryawanNo,
+          "cancel_bertugasnumber": bertugas_number,
+          "fcm_message" : fcm_message,
+          "cancel_bertugastype" : bertugas_type
         }).timeout(Duration(seconds: 10), onTimeout: () {
       http.Client().close(); errorCode = 1; return http.Response('Error', 500);}
     );
@@ -121,16 +93,17 @@ class m_helper{
 
 
 
-  change_bahasa(getBahasaID, getEmail) async {
+  bertugas_approved(bertugas_number, getKaryawanNo, valApp, fcm_message, fcm_message2 ) async {
     int errorCode = 0;
     await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
       errorCode = 2; return false;}});
-    final response = await http.post(
-        Uri.parse(applink+"mobile/api_mobile.php?act=change_Bahasa"),
-        body: {
-          "bahasa_id": getBahasaID,
-          "karyawan_email": getEmail
-        }).timeout(Duration(seconds: 10), onTimeout: () {
+    final response = await http.post(Uri.parse(applink+"mobile/api_mobile.php?act=bertugas_approved"), body: {
+      "appr_bertugasno": bertugas_number,
+      "appr_bertugaskaryawanno": getKaryawanNo,
+      "appr_bertugasapp": valApp,
+      "fcm_message" : fcm_message,
+      "fcm_message2" : fcm_message2
+    }).timeout(Duration(seconds: 10), onTimeout: () {
       http.Client().close(); errorCode = 1; return http.Response('Error', 500);}
     );
     Map data = jsonDecode(response.body);
@@ -147,17 +120,17 @@ class m_helper{
 
 
 
-  review_create(reviewText, getKaryawanNo, getKaryawanNama) async {
+  bertugas_rejected(bertugas_number, getKaryawanNo, valApp, fcm_message, fcm_message2 ) async {
     int errorCode = 0;
     await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
       errorCode = 2; return false;}});
-    final response = await http.post(
-        Uri.parse(applink+"mobile/api_mobile.php?act=review_create"),
-        body: {
-          "review_karyawancontent": reviewText,
-          "review_karyawanNo": getKaryawanNo,
-          "review_karyawanNama": getKaryawanNama
-        }).timeout(Duration(seconds: 10), onTimeout: () {
+    final response = await http.post(Uri.parse(applink+"mobile/api_mobile.php?act=lembur_approved"), body: {
+      "reject_bertugasno": bertugas_number,
+      "reject_bertugaskaryawanno": getKaryawanNo,
+      "reject_bertugasapp": valApp,
+      "fcm_message" : fcm_message,
+      "fcm_message2" : fcm_message2
+    }).timeout(Duration(seconds: 10), onTimeout: () {
       http.Client().close(); errorCode = 1; return http.Response('Error', 500);}
     );
     Map data = jsonDecode(response.body);

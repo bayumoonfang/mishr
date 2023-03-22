@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'dart:ui';
+import 'package:abzeno/Bertugas/page_bertugashome.dart';
 import 'package:abzeno/Helper/g_helper.dart';
 import 'package:abzeno/Time%20Off/S_HELPER/g_timeoff.dart';
 import 'package:geolocator/geolocator.dart';
@@ -230,6 +231,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
       setState(() {
         getJamMasuk = value[0];
         getJamKeluar = value[1];
+        EasyLoading.dismiss();
       });
     });
   }
@@ -257,6 +259,18 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
         getScheduleClockOutLembur = value[2];
         getClockInLembur = value[3];
         getClockOutLembur = value[4];
+
+      });
+    });
+  }
+
+  String getSpecialday_name = '0';
+  String getSpecialday_tagline = '...';
+  getSpecialDay() async {
+    await AppHelper().getSpecialDay().then((value) {
+      setState(() {
+        getSpecialday_name = value[0];
+        getSpecialday_tagline = value[1];
       });
     });
   }
@@ -264,12 +278,14 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
   Timer? timer;
 
   loadData() async {
-    getSettings();
-    CekVersion();
-    refreshworklocation();
-    refreshAttendance();
-    getDefaultPass();
-    getLemburCount();
+    await getSpecialDay();
+    await refreshworklocation();
+    await refreshAttendance();
+     getLemburCount();
+     getSettings();
+     CekVersion();
+     getDefaultPass();
+
     setState(() {
       widget.runLoopMe();
       _isVisibleBtn = true;
@@ -380,7 +396,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
   bool scroll_visibility = true;
   @override
   void initState() {
-    scrollcontroller.addListener(() {
+    /*scrollcontroller.addListener(() {
       if (scrollcontroller.position.pixels > 0) {
         setState(() {
           scroll_visibility = false;
@@ -390,14 +406,15 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
           scroll_visibility = true;
         });
       }
-    });
+    });*/
     super.initState();
     loadData();
-    EasyLoading.dismiss();
+
   }
 
   Future refreshData() async {
     setState(() {
+      EasyLoading.show(status: AppHelper().loading_text);
       loadData();
     });
   }
@@ -524,34 +541,8 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
   }
 
   bool servicestatus = false;
-  late bool _serviceEnabled;
-  //Location location = new Location();
- // late PermissionStatus _permissionGranted;
+
   cekPermissionGeolocator(String Type2, String TimeMe2) async {
-   /* _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        AppHelper().showFlushBarerror(context, "Layanan GPS tidak diaktifkan, aktifkan lokasi GPS");
-        EasyLoading.dismiss();
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        AppHelper().showFlushBarerror(context, 'Location permissions are denied');
-        EasyLoading.dismiss();
-        return;
-      } else if (_permissionGranted == PermissionStatus.deniedForever) {
-        AppHelper().showFlushBarerror(context, "'Location permissions are permanently denied");
-        EasyLoading.dismiss();
-        return;
-      }
-    }*/
-
     if (Platform.isIOS) {
       if (Type2 == 'Daily' && TimeMe2 == 'Clock In') {
         Navigator.of(context)
@@ -634,203 +625,6 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
   }
 
 
-/*cekPermissionGeolocator(String Type2, String TimeMe2) async {
-    cek_datetimesetting(Type2, TimeMe2);
-   LocationPermission permission = await Geolocator.checkPermission();
-    servicestatus = await Geolocator.isLocationServiceEnabled();
-    PermissionStatus _permissionGranted;
-    bool _serviceEnabled;
-    Location location = new Location();
-    if (servicestatus) {
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          AppHelper()
-              .showFlushBarerror(context, 'Location permissions are denied');
-          EasyLoading.dismiss();
-          return;
-        } else if (permission == LocationPermission.deniedForever) {
-          AppHelper().showFlushBarerror(
-              context, "'Location permissions are permanently denied");
-          EasyLoading.dismiss();
-          return;
-        } else {
-
-          //AppHelper().showFlushBarerror(context, "ALLOWED");
-          if (Platform.isIOS) {
-
-            if (Type2 == 'Daily' && TimeMe2 == 'Clock In') {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(
-                  builder: (context) => PageClockIn(
-                      widget.getKaryawanNo,
-                      getJam,
-                      getWorkLocationId,
-                      AppHelper().getNamaHari().toString(),
-                      getWorkLat.toString(),
-                      getWorkLong.toString(),
-                      "Clock In",
-                      widget.getKaryawanNama.toString(),
-                      widget.getKaryawanJabatan.toString(),
-                      widget.getStartTime.toString(),
-                      widget.getEndTime.toString(),
-                      widget.getScheduleName,
-                      getWorkLocation.toString())))
-                  .then(onGoBack);
-            } else if (Type2 == 'Daily' && TimeMe2 == 'Clock Out') {
-              Navigator.push(
-                  context,
-                  ExitPage(
-                      page: PageClockIn(
-                          widget.getKaryawanNo,
-                          getJam,
-                          getWorkLocationId,
-                          AppHelper().getNamaHari().toString(),
-                          getWorkLat.toString(),
-                          getWorkLong.toString(),
-                          "Clock Out",
-                          widget.getKaryawanNama.toString(),
-                          widget.getKaryawanJabatan.toString(),
-                          widget.getStartTime.toString(),
-                          widget.getEndTime.toString(),
-                          widget.getScheduleName,
-                          getWorkLocation.toString())))
-                  .then(onGoBack);
-            } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock In') {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(
-                  builder: (context) => PageClockInLembur(
-                      widget.getKaryawanNo,
-                      getJam,
-                      getWorkLocationId,
-                      AppHelper().getNamaHari().toString(),
-                      getWorkLat.toString(),
-                      getWorkLong.toString(),
-                      "CLOCK IN",
-                      widget.getKaryawanNama.toString(),
-                      widget.getKaryawanJabatan.toString(),
-                      widget.getStartTime.toString(),
-                      widget.getEndTime.toString(),
-                      widget.getScheduleName,
-                      getWorkLocation.toString())))
-                  .then(onGoBack);
-            } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock Out') {
-              Navigator.push(
-                  context,
-                  ExitPage(
-                      page: PageClockInLembur(
-                          widget.getKaryawanNo,
-                          getJam,
-                          getWorkLocationId,
-                          AppHelper().getNamaHari().toString(),
-                          getWorkLat.toString(),
-                          getWorkLong.toString(),
-                          "CLOCK OUT",
-                          widget.getKaryawanNama.toString(),
-                          widget.getKaryawanJabatan.toString(),
-                          widget.getStartTime.toString(),
-                          widget.getEndTime.toString(),
-                          widget.getScheduleName,
-                          getWorkLocation.toString())))
-                  .then(onGoBack);
-            }
-          } else {
-            //cek_datetimesetting(Type2, TimeMe2);
-            //AppHelper().showFlushBarerror(context, "ALLOWED");
-            DatetimeSetting.openSetting();
-          }
-
-        }
-      } else {
-          if (Platform.isIOS) {
-            if (Type2 == 'Daily' && TimeMe2 == 'Clock In') {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(
-                  builder: (context) => PageClockIn(
-                      widget.getKaryawanNo,
-                      getJam,
-                      getWorkLocationId,
-                      AppHelper().getNamaHari().toString(),
-                      getWorkLat.toString(),
-                      getWorkLong.toString(),
-                      "Clock In",
-                      widget.getKaryawanNama.toString(),
-                      widget.getKaryawanJabatan.toString(),
-                      widget.getStartTime.toString(),
-                      widget.getEndTime.toString(),
-                      widget.getScheduleName,
-                      getWorkLocation.toString())))
-                  .then(onGoBack);
-            } else if (Type2 == 'Daily' && TimeMe2 == 'Clock Out') {
-              Navigator.push(
-                  context,
-                  ExitPage(
-                      page: PageClockIn(
-                          widget.getKaryawanNo,
-                          getJam,
-                          getWorkLocationId,
-                          AppHelper().getNamaHari().toString(),
-                          getWorkLat.toString(),
-                          getWorkLong.toString(),
-                          "Clock Out",
-                          widget.getKaryawanNama.toString(),
-                          widget.getKaryawanJabatan.toString(),
-                          widget.getStartTime.toString(),
-                          widget.getEndTime.toString(),
-                          widget.getScheduleName,
-                          getWorkLocation.toString())))
-                  .then(onGoBack);
-            } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock In') {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(
-                  builder: (context) => PageClockInLembur(
-                      widget.getKaryawanNo,
-                      getJam,
-                      getWorkLocationId,
-                      AppHelper().getNamaHari().toString(),
-                      getWorkLat.toString(),
-                      getWorkLong.toString(),
-                      "CLOCK IN",
-                      widget.getKaryawanNama.toString(),
-                      widget.getKaryawanJabatan.toString(),
-                      widget.getStartTime.toString(),
-                      widget.getEndTime.toString(),
-                      widget.getScheduleName,
-                      getWorkLocation.toString())))
-                  .then(onGoBack);
-            } else if (Type2 == 'Lembur' && TimeMe2 == 'Clock Out') {
-              Navigator.push(
-                  context,
-                  ExitPage(
-                      page: PageClockInLembur(
-                          widget.getKaryawanNo,
-                          getJam,
-                          getWorkLocationId,
-                          AppHelper().getNamaHari().toString(),
-                          getWorkLat.toString(),
-                          getWorkLong.toString(),
-                          "CLOCK OUT",
-                          widget.getKaryawanNama.toString(),
-                          widget.getKaryawanJabatan.toString(),
-                          widget.getStartTime.toString(),
-                          widget.getEndTime.toString(),
-                          widget.getScheduleName,
-                          getWorkLocation.toString())))
-                  .then(onGoBack);
-            }
-          } else {
-            cek_datetimesetting(Type2, TimeMe2);
-            //AppHelper().showFlushBarerror(context, "ALLOWED");
-            //DatetimeSetting.openSetting();
-          }
-      }
-    } else {
-      AppHelper().showFlushBarerror(
-          context, "Layanan GPS tidak diaktifkan, aktifkan lokasi GPS");
-      EasyLoading.dismiss();
-      return;
-    }
-  }*/
 
   cek_datetimesetting(String Type, String TimeMe) async {
     bool timeAuto = await DatetimeSetting.timeIsAuto();
@@ -925,8 +719,6 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
   @override
   Widget build(BuildContext context) {
     final textScale = MediaQuery.of(context).textScaleFactor;
-   // AppHelper().showFlushBarsuccess(context, textScale.toString());
-
     return WillPopScope(
         child: Scaffold(
           body: Container(
@@ -953,8 +745,20 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                               ),
                               color: HexColor("#3aa13d"),
                               image: DecorationImage(
-                                image: AssetImage("assets/ddf29.png"),
-                                //image: AssetImage("assets/doodleme30.png"),
+                                image:
+                                getSpecialday_name.toString() == 'Hari Raya Nyepi' ?
+                                AssetImage("assets/nyepi.png") :
+                                getSpecialday_name.toString() == 'Hari Raya Idul Fitri' ?
+                                AssetImage("assets/ied3b.png") :
+                                getSpecialday_name.toString() == 'Hari Ramadhan' ?
+                                AssetImage("assets/ied2d.png") :
+                                getSpecialday_name.toString() == 'Hari Raya Waisak' ?
+                                AssetImage("assets/waisak3.png") :
+                                getSpecialday_name.toString() == 'Hari Raya Idul Adha' ?
+                                AssetImage("assets/iduladha2.png") :
+                                getSpecialday_name.toString() == 'Hari Raya Natal' ?
+                                AssetImage("assets/christmas2.png") :
+                                AssetImage("assets/ddf29.png"),
                                 fit: BoxFit.cover,
                               ),
                               /*  borderRadius: BorderRadius.vertical(
@@ -962,7 +766,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                 MediaQuery.of(context).size.width, 10.0)),*/
                             ),
                             width: double.infinity,
-                            height: 160,
+                            height: 170,
                             child: Stack(
                               clipBehavior: Clip.none,
                               alignment: Alignment.topCenter,
@@ -1424,6 +1228,10 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                         SizedBox(
                           height: 25,
                         ),
+
+
+                        
+
                         Padding(
                             padding: getPINq == AppHelper().default_pass ||
                                     getCountLembur == "1"
@@ -2085,6 +1893,65 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                               ),
                                             ))
                                         : Container(),
+
+
+                                    pressBtnSemua == "1" ||
+                                        pressBtnKehadiran == "1"
+                                        ? Container(
+                                        width: 62,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(context, ExitPage(page: PageBertugasHome(widget.getKaryawanNo)));
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                  height: 45,
+                                                  width: 45,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius
+                                                        .circular(50),
+                                                    color:
+                                                    HexColor("#f5f6ff"),
+                                                    border: Border.all(
+                                                      color: HexColor(
+                                                          "#DDDDDD"),
+                                                      width: 0.5,
+                                                    ),
+                                                  ),
+                                                  child: Center(
+                                                    child: FaIcon(
+                                                      FontAwesomeIcons.planeArrival,
+                                                      color: HexColor(
+                                                          "#121942"),
+                                                      size: 24,
+                                                    ),
+                                                  )),
+                                              Padding(
+                                                padding:
+                                                const EdgeInsets.only(
+                                                    top: 8),
+                                                child: Text(
+                                                  getBahasa.toString() ==
+                                                      '1'
+                                                      ? "Bertugas"
+                                                      : "On Duty",
+                                                  style:
+                                                  textScale.toString() == '1.17' ?
+                                                  GoogleFonts.nunito(fontSize: 11) :
+                                                  GoogleFonts.nunito(fontSize: 13),
+                                                  textAlign:
+                                                  TextAlign.center,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ))
+                                        : Container(),
+
+
+
                                     pressBtnSemua == "1" ||
                                             pressBtnKehadiran == "1"
                                         ? Container(
@@ -2149,6 +2016,10 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                               ),
                                             ))
                                         : Container(),
+
+
+
+
                                     pressBtnSemua == "1" ||
                                             pressBtnInformasi == "1"
                                         ? Container(
@@ -2364,6 +2235,51 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                   ],
                                 ),
 
+                                
+                                SizedBox(
+                                  height: getSpecialday_name.toString() != '0' ? 30 : 0,
+                                ),
+                                getSpecialday_name.toString() != '0' ?
+                                Container(
+                                    padding: EdgeInsets.all(5),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.circular(15),
+                                      border: Border.all(
+                                        color: HexColor(
+                                            "#8870e6"),
+                                        width: 0.5,
+                                      ),
+                                      color: HexColor("#ffffff"),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {},
+                                      child: ListTile(
+                                          visualDensity: VisualDensity(horizontal: -2),
+                                        dense : true,
+                                        leading:
+                                        FaIcon(FontAwesomeIcons.calendarDay,color: HexColor("#141b43"),),
+                                        title: Text(
+                                          "Selamat "+getSpecialday_name.toString(),
+                                          style: GoogleFonts.nunito(
+                                              color: HexColor("#141b43"),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 17,
+                                              height: 1.5),
+                                        ),
+                                          subtitle: Text(
+                                            getSpecialday_tagline.toString(),
+                                            style: GoogleFonts.nunito(
+                                                color: HexColor("#141b43"),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12,
+                                                height: 1.5),
+                                          ),
+
+                                      ),
+                                    )) : Container(),
+
                                 SizedBox(
                                   height: 30,
                                 ),
@@ -2537,6 +2453,9 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                         ),
                                       ),
                                     )),
+
+
+
 
                                 Padding(
                                     padding: const EdgeInsets.only(top: 30),
