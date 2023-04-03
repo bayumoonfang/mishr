@@ -67,7 +67,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   HttpOverrides.global = new PostHttpOverrides();
-  EasyLoading.instance
+  /*EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
     //..indicatorType = EasyLoadingIndicatorType.fadingCircle
     ..indicatorType = EasyLoadingIndicatorType.chasingDots
@@ -75,7 +75,7 @@ void main() async {
     ..indicatorSize = 45.0
     ..radius = 10.0
     ..userInteractions = true
-    ..dismissOnTap = false;
+    ..dismissOnTap = false;*/
 
   _messaging.getToken().then((value) {
     getTokenMe = value;
@@ -122,15 +122,28 @@ void main() async {
   } else {
     print('User declined or has not accepted permission');
   }*/
-
+  EasyLoading.instance
+    ..displayDuration = const Duration(seconds: 3)
+    ..indicatorType = EasyLoadingIndicatorType.chasingDots
+    ..loadingStyle = EasyLoadingStyle.custom
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    //..progressColor = Colors.blue.shade900
+    ..backgroundColor = Colors.black
+    ..indicatorColor = Colors.white
+    ..textColor = Colors.white
+    ..dismissOnTap = false
+    ..textStyle = const TextStyle(fontSize:15,color: Colors.white );
 
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   //const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    EasyLoading.init();
     return OverlaySupport(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -140,7 +153,17 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: PageCheck("", getTokenMe?? ""),
-        builder: EasyLoading.init(),
+        //builder: EasyLoading.init(),
+        builder : (context, child) {
+
+          //ignore system scale factor
+          return FlutterEasyLoading(child: MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaleFactor: 1.0,
+            ),
+            child: child ?? Container(),
+          ));
+        }
       ),
     );
   }

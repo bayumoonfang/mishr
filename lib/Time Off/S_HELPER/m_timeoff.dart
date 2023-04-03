@@ -81,6 +81,31 @@ class m_timeoff {
 
 
 
+  timeoff_reqcancel(getKaryawanNo, timeoff_number, getKaryawanNama, fcm_message ) async {
+    int errorCode = 0;
+    await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
+      errorCode = 2; return false;}});
+    final response = await http.post(
+        Uri.parse(applink+"mobile/api_mobile.php?act=timeoff_reqcancel"),
+        body: {
+          "cancel_karyawan": getKaryawanNo,
+          "cancel_timeoffnumber": timeoff_number,
+          "cancel_getKaryawanNama": getKaryawanNama,
+          "fcm_message" : fcm_message
+        }).timeout(Duration(seconds: 10), onTimeout: () {
+      http.Client().close(); errorCode = 1; return http.Response('Error', 500);}
+    );
+    Map data = jsonDecode(response.body);
+    if(errorCode == 1 || errorCode == 2) {
+      EasyLoading.dismiss();
+      return ["ConnInterupted",http.Response('Error', 500)];
+    } else {
+      EasyLoading.dismiss();
+      return[
+        data["message"].toString()
+      ];
+    }
+  }
 
   timeoff_appr(timeoff_number, getKaryawanNo, valApp, noteApproveVal, fcm_message, fcm_message2) async {
     int errorCode = 0;

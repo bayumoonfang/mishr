@@ -261,7 +261,10 @@ class _PageClockIn extends State<PageClockIn> {
 
   }
 
-
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   showInvalidDateTimeSettingDialog(BuildContext context) {
     Widget cancelButton = TextButton(
@@ -721,7 +724,7 @@ class _PageClockIn extends State<PageClockIn> {
 
   Future<bool> onWillPop() async {
     try {
-      Navigator.pop(context);
+      //Navigator.pop(context);
       return false;
     } catch (e) {
       print(e);

@@ -440,7 +440,7 @@ class _PageApprovalList extends State<PageApprovalList> {
                                               Navigator.push(context, ExitPage(page: ApprReqAttenDetail(snapshot.data![i]["b"].toString(), widget.getKaryawanNo, widget.getKaryawanNama))).then(onGoBack)
                                               : snapshot.data![i]["b"].toString().substring(0,6) == 'OVERTI' ?
                                               Navigator.push(context, ExitPage(page: ApprLemburDetail(snapshot.data![i]["b"].toString(), widget.getKaryawanNo, widget.getKaryawanNama))).then(onGoBack)
-                                              :snapshot.data![i]["b"].toString().substring(0,1) == 'B' ?
+                                              :snapshot.data![i]["b"].toString().substring(0,2) == 'B-' ?
                                               Navigator.push(context, ExitPage(page: ApprBertugasDetail(snapshot.data![i]["b"].toString(), widget.getKaryawanNo))).then(onGoBack)
                                               : Navigator.push(context, ExitPage(page: ApprTimeOffDetail(snapshot.data![i]["b"].toString(), widget.getKaryawanNo, widget.getKaryawanNama))).then(onGoBack);
 

@@ -861,6 +861,7 @@ class AppHelper{
       return [
         data["specialday_name"].toString(), //0
         data["specialday_tagline"].toString(), //1
+        data["specialday_banner"].toString(), //2
       ];
     }
 

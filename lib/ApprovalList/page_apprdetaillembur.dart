@@ -110,7 +110,7 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
     super.initState();
     getSettings();
     EasyLoading.show(status: AppHelper().loading_text);
-   // _get_LemburDetail();
+    _get_LemburDetail();
   }
 
 

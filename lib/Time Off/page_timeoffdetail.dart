@@ -175,6 +175,48 @@ class _TimeOffDetail extends State<TimeOffDetail> {
   }
 
 
+
+  _timeoff_reqcancel() async {
+    Navigator.pop(context);
+    setState(() {
+      _isPressedBtn = false;
+      _isPressedHUD = true;
+      fcm_message =  getBahasa.toString() == "1" ? "Pihak yang membuat CUTI telah mengajukan pembatalan hari ini" :
+      "The party that made LEAVE has canceled his leave today.";
+    });
+    await m_timeoff().timeoff_reqcancel(widget.getKaryawanNo, timeoff_number, widget.getKaryawanNama, fcm_message).then((value){
+      if(value[0] == 'ConnInterupted'){
+        getBahasa.toString() == "1"?
+        AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
+        AppHelper().showFlushBarsuccess(context, "Connection Interupted...");
+        return false;
+      } else {
+        setState(() {
+          if(value[0] != '') {
+            setState(() {
+              _isPressedBtn = true;
+              _isPressedHUD = false;
+            });
+            if(value[0] == '1') {
+              Navigator.pop(context);
+              SchedulerBinding.instance?.addPostFrameCallback((_) {
+                AppHelper().showFlushBarconfirmed(context, "Request Cancel has been sent, waiting for approval");
+              });
+            } else if(value[0] == '2') {
+              //Navigator.pop(context);
+              AppHelper().showFlushBarsuccess(context, "Ada pengajuan anda yang belum ditindaklanjuti, mohon menunggu");
+              return;
+            } else {
+              AppHelper().showFlushBarsuccess(context, value[0]);
+              return;
+            }
+          }
+        });
+      }
+    });
+  }
+
+
   dialog_timeoffCancel(BuildContext context) {
     Widget cancelButton = TextButton(
       child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue),),
@@ -212,6 +254,40 @@ class _TimeOffDetail extends State<TimeOffDetail> {
 
 
 
+  dialog_timeoffReqCancel(BuildContext context) {
+    Widget cancelButton = TextButton(
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue),),
+      onPressed:  () {Navigator.pop(context);},
+    );
+    Widget continueButton = Container(
+      width: 100,
+      child: TextButton(
+        child: Text("AJUKAN",style: GoogleFonts.lexendDeca(color: Colors.blue,),),
+        onPressed:  () {
+          _timeoff_reqcancel();
+        },
+      ),
+    );
+    AlertDialog alert = AlertDialog(
+      actionsAlignment: MainAxisAlignment.end,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      title: Text("Ajukan Pembatalan", style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+      TextAlign.left,),
+      content: Text("Apakah anda yakin untuk mengajukan pembatalan pengajuan ini ?", style: GoogleFonts.nunitoSans(),textAlign:
+      TextAlign.left,),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
 
   @override
@@ -789,7 +865,7 @@ class _TimeOffDetail extends State<TimeOffDetail> {
               onPressed: () {
                 dialog_timeoffCancel(context);
               },
-            ) :
+            )  :
             Container()
         ),
       )

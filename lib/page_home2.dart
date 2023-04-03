@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:abzeno/Bertugas/page_bertugashome.dart';
 import 'package:abzeno/Helper/g_helper.dart';
 import 'package:abzeno/Time%20Off/S_HELPER/g_timeoff.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:abzeno/Profile/page_changepin.dart';
@@ -23,6 +24,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:safe_device/safe_device.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'Attendance/page_attendancelembur.dart';
+import 'Berita/page_berita.dart';
 import 'Helper/m_helper.dart';
 import 'Lembur/page_lemburhome.dart';
 import 'My Team/page_myteam.dart';
@@ -275,11 +277,13 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
 
   String getSpecialday_name = '0';
   String getSpecialday_tagline = '...';
+  String getSpecialday_banner = '0';
   getSpecialDay() async {
     await AppHelper().getSpecialDay().then((value) {
       setState(() {
         getSpecialday_name = value[0];
         getSpecialday_tagline = value[1];
+        getSpecialday_banner = value[2];
       });
     });
   }
@@ -290,9 +294,9 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
     await getSpecialDay();
     await refreshworklocation();
     await refreshAttendance();
+    await CekVersion();
      getLemburCount();
      getSettings();
-     CekVersion();
      getDefaultPass();
 
     setState(() {
@@ -418,7 +422,6 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
     });*/
     super.initState();
     loadData();
-
   }
 
   Future refreshData() async {
@@ -754,20 +757,11 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                               ),
                               color: HexColor("#3aa13d"),
                               image: DecorationImage(
-                                image:
-                                getSpecialday_name.toString() == 'Hari Raya Nyepi' ?
-                                AssetImage("assets/nyepi.png") :
-                                getSpecialday_name.toString() == 'Hari Raya Idul Fitri' ?
-                                AssetImage("assets/ied3b.png") :
-                                getSpecialday_name.toString() == 'Hari Ramadhan' ?
-                                AssetImage("assets/ied2d.png") :
-                                getSpecialday_name.toString() == 'Hari Raya Waisak' ?
-                                AssetImage("assets/waisak3.png") :
-                                getSpecialday_name.toString() == 'Hari Raya Idul Adha' ?
-                                AssetImage("assets/iduladha2.png") :
-                                getSpecialday_name.toString() == 'Hari Raya Natal' ?
-                                AssetImage("assets/christmas2.png") :
-                                AssetImage("assets/ddf29.png"),
+                                image :
+                                getSpecialday_name.toString() != '0' ?
+                                CachedNetworkImageProvider(applink+"mobile/banner/"+getSpecialday_banner.toString()):
+                                CachedNetworkImageProvider(applink+"mobile/banner/ddf29.png")
+                                ,
                                 fit: BoxFit.cover,
                               ),
                               /*  borderRadius: BorderRadius.vertical(
@@ -2028,7 +2022,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
 
 
 
-
+/*
                                     pressBtnSemua == "1" ||
                                             pressBtnInformasi == "1"
                                         ? Container(
@@ -2088,7 +2082,69 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                 ],
                                               ),
                                             ))
+                                        : Container(),*/
+
+                                    pressBtnSemua == "1" ||
+                                        pressBtnInformasi == "1"
+                                        ? Container(
+                                        width: 62,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                ExitPage(
+                                                    page: PageBerita(
+                                                        widget
+                                                            .getKaryawanNo)))
+                                                .then(onGoBack2);
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                  height: 45,
+                                                  width: 45,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius
+                                                        .circular(50),
+                                                    color:
+                                                    HexColor("#ffe4ed"),
+                                                    border: Border.all(
+                                                      color: HexColor(
+                                                          "#DDDDDD"),
+                                                      width: 0.5,
+                                                    ),
+                                                  ),
+                                                  child: Center(
+                                                    child: FaIcon(
+                                                      FontAwesomeIcons.fileContract,
+                                                      color: HexColor(
+                                                          "#e9417e"),
+                                                      size: 24,
+                                                    ),
+                                                  )),
+                                              Padding(
+                                                padding:
+                                                const EdgeInsets.only(
+                                                    top: 8),
+                                                child: Text(
+                                                  getBahasa.toString() ==
+                                                      '1'
+                                                      ? "Berita"
+                                                      : "Resume",
+                                                  style:
+                                                  textScale.toString() == '1.17' ?
+                                                  GoogleFonts.nunito(fontSize: 11) :
+                                                  GoogleFonts.nunito(fontSize: 13),
+                                                  textAlign:
+                                                  TextAlign.center,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ))
                                         : Container(),
+
                                     pressBtnSemua == "1" ||
                                             pressBtnInformasi == "1"
                                         ? Container(
