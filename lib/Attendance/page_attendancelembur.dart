@@ -134,7 +134,7 @@ class _PageClockInLembur extends State<PageClockInLembur> {
 
   String rangemaxstr = "0";
   getRangeMax() async {
-    await AppHelper().getRangeMax().then((value){
+    await AppHelper().getRangeMax(widget.getLocationId).then((value){
       setState(() {
         rangemaxstr = value[0];
       });});

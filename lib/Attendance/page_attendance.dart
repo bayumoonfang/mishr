@@ -133,20 +133,22 @@ class _PageClockIn extends State<PageClockIn> {
 
   String rangemaxstr = "0";
   getRangeMax() async {
-    await AppHelper().getRangeMax().then((value){
+    await AppHelper().getRangeMax(widget.getLocationId).then((value){
       setState(() {
         rangemaxstr = value[0];
       });});
   }
 
-
+  String cabang_range = '...';
   getNewWorkLocation2(getLokasi) async {
     await AppHelper().getNewWorkLocation(getLokasi).then((value){
       setState(() {
         locationLat = value[0];
         locationLong = value[1];
+        cabang_range = value[2];
         _locationCabang = LatLng(double.parse(value[0]), double.parse(value[1]));
-        _loaddata();
+        _loaddata2();
+        rangemaxstr = cabang_range;
       });});
   }
 
@@ -207,6 +209,38 @@ class _PageClockIn extends State<PageClockIn> {
     await _startingVariable();
 
   }
+
+  _loaddata2() async {
+    await getAllCabang();
+    EasyLoading.show(status: AppHelper().loading_text);
+    _noteclockin.clear();
+    await getSettings();
+    await AppHelper().getConnect().then((value){
+      if(value == 'ConnInterupted'){
+        getBahasa.toString() == "1"?
+        AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
+        AppHelper().showFlushBarsuccess(context, "Connection Interupted...");
+        setState(() {
+          isPressed = false;
+        });
+        return false;
+      } else {
+        setState(() {
+          isPressed = true;
+        });
+      }
+    });
+    await AppHelper().getSession().then((value){
+      setState(() {
+        if(value[0] == "" || value[0] == null) {
+          Navigator.pushReplacement(context, ExitPage(page: PageLogin(getBahasa, getToken)));
+          EasyLoading.dismiss();
+        }
+      });});
+    EasyLoading.dismiss();
+
+  }
+
 
 
   Set<Marker> getmarkers() { //markers to place on map
@@ -514,7 +548,7 @@ class _PageClockIn extends State<PageClockIn> {
                     rotateGesturesEnabled : false,
                     circles: Set.from([Circle( circleId: CircleId('currentCircle'),
                       center: _locationCabang,
-                      radius: 60,
+                      radius: double.parse(rangemaxstr.toString()),
                       fillColor: Colors.blue.shade100.withOpacity(0.5),
                       strokeColor:  Colors.blue.shade100.withOpacity(0.1),
                     ),],),

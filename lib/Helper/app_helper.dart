@@ -1194,10 +1194,10 @@ class AppHelper{
 
 
 
-  Future<dynamic> getRangeMax() async {
+  Future<dynamic> getRangeMax(String value) async {
 
     http.Response response = await http.Client().get(
-        Uri.parse(applink+"mobile/api_mobile.php?act=getRangeMax"),
+        Uri.parse(applink+"mobile/api_mobile.php?act=getRangeMax&cabangid="+value),
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"}).timeout(
@@ -1247,7 +1247,8 @@ class AppHelper{
     var data = jsonDecode(response.body);
     return [
       data["cabang_lat"].toString(),
-      data["cabang_long"].toString()
+      data["cabang_long"].toString(),
+      data["cabang_range"].toString()
     ];
   }
 
