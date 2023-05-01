@@ -5,6 +5,7 @@ import 'package:abzeno/Helper/app_link.dart';
 import 'package:abzeno/page_home.dart';
 import 'package:abzeno/page_intoduction.dart';
 import 'package:abzeno/page_login.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:datetime_setting/datetime_setting.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -22,6 +24,7 @@ class PageCheck extends StatefulWidget{
   final String getBahasa;
   final String getTokenMe;
   const PageCheck(this.getBahasa, this.getTokenMe);
+  //const PageCheck(this.getTokenMe);
   @override
   _PageCheck createState() => _PageCheck();
 }
@@ -39,9 +42,9 @@ class _PageCheck extends State<PageCheck> {
 
 
   _startingVariable() async {
-    if(widget.getBahasa.isNotEmpty) {
+    /*if(widget.getBahasa.isNotEmpty) {
       await AppHelper().setFirstTimeLanguage(widget.getBahasa);
-    }
+    }*/
     await getSettings();
     await AppHelper().getConnect().then((value){
           if(value == 'ConnInterupted'){
@@ -75,7 +78,6 @@ class _PageCheck extends State<PageCheck> {
       servicestatus = await Geolocator.isLocationServiceEnabled();
       if(servicestatus){
         permission = await Geolocator.checkPermission();
-
         if (permission == LocationPermission.denied) {
           permission = await Geolocator.requestPermission();
           if (permission == LocationPermission.denied) {
@@ -88,13 +90,10 @@ class _PageCheck extends State<PageCheck> {
         }else{
           haspermission = true;
         }
-
         if(haspermission){
           setState(() {
             //refresh the UI
           });
-
-          //getLocation();
         }
       }else{
         print("GPS Service is not enabled, turn on GPS location");
@@ -107,7 +106,10 @@ class _PageCheck extends State<PageCheck> {
 
 
     await AppHelper().reloadSession();
-    await AppHelper().generateTokenFCM(widget.getTokenMe);
+    if(widget.getTokenMe.toString() != '' || widget.getTokenMe.toString() != null) {
+      await AppHelper().generateTokenFCM(widget.getTokenMe);
+    }
+
     //await cek_datetimesetting();
     await cekPermissionGeolocator();
     Navigator.pushReplacement(context, ExitPage(page: Home()));
@@ -119,16 +121,16 @@ class _PageCheck extends State<PageCheck> {
   @override
   void initState() {
     super.initState();
-    _startingVariable();
+     _startingVariable();
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(child: Scaffold(
       body: Container(
-          color: Colors.white,
           height: double.infinity,
           width: double.infinity,
+          color: Colors.white,
           child : Visibility(
             child :
             getConnection == '1' ?
@@ -167,9 +169,7 @@ class _PageCheck extends State<PageCheck> {
            Center(
                child:
                getConnection == '1' ?
-               Text(
-                   getBahasa.toString() == "1"?
-                   "Menyiapkan data anda..." : "Preparing your data",  style: GoogleFonts.nunitoSans(
+               Text("Menyiapkan data anda...",  style: GoogleFonts.nunitoSans(
                    fontSize: 13)) : Container()
            ),
           Padding(

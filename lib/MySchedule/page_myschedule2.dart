@@ -122,7 +122,7 @@ class _MySchedule2 extends State<MySchedule2> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(getBahasa.toString() == "1"? "Jadwal Saya":"My Schedule", style: GoogleFonts.montserrat(
-            fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+            fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) =>

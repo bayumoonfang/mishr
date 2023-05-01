@@ -10,6 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:unicons/unicons.dart';
 import 'S_HELPER/g_reqattend.dart';
 import 'page_reqattend_correction.dart';
 
@@ -113,7 +114,8 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
       return WillPopScope(child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text(getBahasa.toString() == "1"?  "Tambah Pengajuan":"Add Request", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+          title: Text(getBahasa.toString() == "1"?  "Tambah Pengajuan":"Add Request",
+            style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
           elevation: 0,
           leading: Builder(
             builder: (context) =>
@@ -175,8 +177,7 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
                                       decoration: InputDecoration(
                                         prefixIcon: Padding(
                                           padding: const EdgeInsets.only(right: 10),
-                                          child: FaIcon(
-                                            FontAwesomeIcons.list,
+                                          child: Icon(UniconsLine.list_ul,
                                             //color: clockColor,
                                           ),
                                         ),
@@ -192,7 +193,7 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
                                             .always,
                                         hintStyle: GoogleFonts.nunito(
                                             color: HexColor("#c4c4c4"),
-                                            fontSize: 15),
+                                            fontSize: 14),
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
                                               color: HexColor("#DDDDDD")),
@@ -223,8 +224,7 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
                                        decoration: InputDecoration(
                                          prefixIcon: Padding(
                                            padding: const EdgeInsets.only(right: 10),
-                                           child: FaIcon(
-                                             FontAwesomeIcons.calendar,
+                                           child: Icon(UniconsLine.calendar_alt,
                                              //color: clockColor,
                                            ),
                                          ),
@@ -238,7 +238,7 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
                                          floatingLabelBehavior: FloatingLabelBehavior
                                              .always,
                                          hintStyle: GoogleFonts.nunito(
-                                             color: HexColor("#c4c4c4"), fontSize: 15),
+                                             color: HexColor("#c4c4c4"), fontSize: 14),
                                          enabledBorder: UnderlineInputBorder(
                                            borderSide: BorderSide(
                                                color: HexColor("#DDDDDD")),
@@ -288,8 +288,7 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
                                     decoration: InputDecoration(
                                       prefixIcon: Padding(
                                         padding: const EdgeInsets.only(right: 10),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.audioDescription,
+                                        child: Icon(UniconsLine.text_fields,
                                           //color: clockColor,
                                         ),
                                       ),
@@ -305,7 +304,7 @@ class _RequestAttendAddHome2 extends State<RequestAttendAddHome2> {
                                           .always,
                                       hintStyle: GoogleFonts.nunito(
                                           color: HexColor("#c4c4c4"),
-                                          fontSize: 15),
+                                          fontSize: 14),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: HexColor("#DDDDDD")),

@@ -65,7 +65,7 @@ class _PageBertugasHome extends State<PageBertugasHome> {
                     }),
           ),
           title: Text(
-            getBahasa.toString() == "1" ? "Bertugas" : "Duty", style: GoogleFonts.montserrat(fontSize: 17,
+            getBahasa.toString() == "1" ? "Bertugas" : "Duty", style: GoogleFonts.montserrat(fontSize: 15,
             fontWeight: FontWeight.bold,color: Colors.black,),),
           elevation: 1,
         ),

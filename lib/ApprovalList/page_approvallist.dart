@@ -380,7 +380,8 @@ class _PageApprovalList extends State<PageApprovalList> {
                                                   Padding(
                                                       padding: EdgeInsets.only(top: 3),
                                                       child: Align(alignment: Alignment.centerLeft,
-                                                          child:Text("#"+snapshot.data![i]["b"].toString(),
+                                                          child:Text("Requested By : "+snapshot.data![i]["f"].toString(),
+                                                              overflow: TextOverflow.ellipsis,
                                                               style: GoogleFonts.workSans(fontSize: 13)))),
                                                   Padding(
                                                       padding: EdgeInsets.only(top: 3,bottom: 1),

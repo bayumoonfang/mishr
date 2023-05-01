@@ -156,7 +156,7 @@ class _PageTimeOffHome2a extends State<PageTimeOffHome2a> with SingleTickerProvi
         titleSpacing: 0,
         //shape: Border(bottom: BorderSide(color: Colors.red)),
         backgroundColor: Colors.white,
-        title: Text("Time Off", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text("Time Off", style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) => IconButton(
@@ -171,8 +171,8 @@ class _PageTimeOffHome2a extends State<PageTimeOffHome2a> with SingleTickerProvi
           indicatorColor: Colors.black,
           controller: controller,
           labelColor: Colors.black,
-          labelStyle: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.black),
-          unselectedLabelStyle: GoogleFonts.varelaRound(fontSize: 13,color: Colors.black),
+          labelStyle: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold,fontSize: 14,color: Colors.black),
+          unselectedLabelStyle: GoogleFonts.varelaRound(fontSize: 12,color: Colors.black),
           unselectedLabelColor: Colors.black,
           tabs: <Widget>[
             new Tab(text: getBahasa.toString() == "1"? "My Request":"Created By Me"),

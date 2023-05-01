@@ -16,6 +16,7 @@ import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart' as geolocator; // you can change this to what you want
 import 'package:intl/intl.dart';
 import 'package:location/location.dart' as locator;
+import 'package:unicons/unicons.dart';
 import '../helper/app_helper.dart';
 import '../helper/app_link.dart';
 import '../helper/page_route.dart';
@@ -571,8 +572,7 @@ class _PageClockIn extends State<PageClockIn> {
                             decoration: InputDecoration(
                               prefixIcon: Padding(
                                 padding: const EdgeInsets.only(right: 10),
-                                child: FaIcon(
-                                  FontAwesomeIcons.audioDescription,
+                                child: Icon(UniconsLine.text_fields,
                                   //color: clockColor,
                                 ),
                               ),

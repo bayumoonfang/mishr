@@ -54,7 +54,7 @@ class _AboutUs extends State<AboutUs> {
       return WillPopScope(child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text(getBahasa.toString() == "1" ? "Tentang Kami":"About Us", style: GoogleFonts.nunito(fontSize: 17,color:Colors.black,),),
+          title: Text(getBahasa.toString() == "1" ? "Tentang Kami":"About Us", style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
           elevation: 0,
           leading: Builder(
             builder: (context) =>

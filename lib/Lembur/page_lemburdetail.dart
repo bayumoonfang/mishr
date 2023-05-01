@@ -192,7 +192,8 @@ class _LemburDetail extends State<LemburDetail> {
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(getBahasa.toString() == "1" ?  "Detail Lembur":"Overtime Detail", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text(getBahasa.toString() == "1" ?  "Detail Lembur":"Overtime Detail",
+          style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) =>
@@ -611,18 +612,18 @@ class _LemburDetail extends State<LemburDetail> {
 
                             TableRow(children :[
                               Padding(padding: EdgeInsets.only(bottom: 5),
-                                child: Text(getBahasa.toString() == "1"? 'Clock In' : 'Clock In', style: GoogleFonts.nunito(fontSize: 14) ),),
+                                child: Text('Jam Selesai', style: GoogleFonts.nunito(fontSize: 14) ),),
                               Padding(padding: EdgeInsets.only(bottom: 5),
                                 child: Text(lembur_scheduleclockin.toString().substring(0,5), style: GoogleFonts.nunito(fontSize: 14) ),),
                             ]),
 
 
-                            TableRow(children :[
-                              Padding(padding: EdgeInsets.only(bottom: 5),
-                                child: Text(getBahasa.toString() == "1"? 'Clock Out' : 'Clock Out', style: GoogleFonts.nunito(fontSize: 14) ),),
-                              Padding(padding: EdgeInsets.only(bottom: 5),
-                                child: Text(lembur_scheduleclockout.toString().substring(0,5), style: GoogleFonts.nunito(fontSize: 14) ),),
-                            ]),
+                            // TableRow(children :[
+                            //   Padding(padding: EdgeInsets.only(bottom: 5),
+                            //     child: Text(getBahasa.toString() == "1"? 'Clock Out' : 'Clock Out', style: GoogleFonts.nunito(fontSize: 14) ),),
+                            //   Padding(padding: EdgeInsets.only(bottom: 5),
+                            //     child: Text(lembur_scheduleclockout.toString().substring(0,5), style: GoogleFonts.nunito(fontSize: 14) ),),
+                            // ]),
                           ]
                       ),
                     )),

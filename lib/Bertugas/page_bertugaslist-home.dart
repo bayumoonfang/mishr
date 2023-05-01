@@ -79,7 +79,7 @@ class _PageBertugasListHome extends State<PageBertugasListHome> with SingleTicke
       appBar : new AppBar(
         titleSpacing: 0,
         backgroundColor: Colors.white,
-        title: Text("Pengajuan Bertugas", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text("Pengajuan Bertugas", style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) => IconButton(
@@ -109,8 +109,8 @@ class _PageBertugasListHome extends State<PageBertugasListHome> with SingleTicke
           indicatorColor: Colors.black,
           controller: controller,
           labelColor: Colors.black,
-          labelStyle: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.black),
-          unselectedLabelStyle: GoogleFonts.varelaRound(fontSize: 13,color: Colors.black),
+          labelStyle: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold,fontSize: 14,color: Colors.black),
+          unselectedLabelStyle: GoogleFonts.varelaRound(fontSize: 12,color: Colors.black),
           unselectedLabelColor: Colors.black,
           tabs: <Widget>[
             new Tab(text: "My Request"),

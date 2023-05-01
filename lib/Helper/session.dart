@@ -39,7 +39,36 @@ class Session {
     return value12;
   }
 
+  static getDecodePIN() async {
+    final SharedPreferences preferences = await _prefs;
+    var value27 = preferences.getString('decode_pin');
+    return value27;
+  }
 
+  static getBiometricActive() async {
+    final SharedPreferences preferences = await _prefs;
+    var value28 = preferences.getString('biometric_setting');
+    return value28;
+  }
+
+  static getFingerscanActive() async {
+    final SharedPreferences preferences = await _prefs;
+    bool? value29 = preferences.getBool('fingerscan_active');
+    return value29;
+  }
+
+
+  static getBiometricPriority() async {
+    final SharedPreferences preferences = await _prefs;
+    var value30 = preferences.getString('biometric_priority');
+    return value30;
+  }
+
+  static getBiometricDialog() async {
+    final SharedPreferences preferences = await _prefs;
+    var value31 = preferences.getString('biometric_dialog');
+    return value31;
+  }
 
 
   //EXTERNAL SESSION======

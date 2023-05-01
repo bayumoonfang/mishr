@@ -278,7 +278,7 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
       title: Text(getBahasa.toString() == "1"? "Setujui Permintaan" :"Approve Request"
         , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
       TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui permintaan ini sebagai persetujuan 1 ?": "Would you like to continue approve this request as Approval 1 ?"
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui sebagai persetujuan 1 ?": "Would you like to continue approve this request as Approval 1 ?"
         , style: GoogleFonts.nunitoSans(),textAlign:
         TextAlign.left,),
       actions: [
@@ -316,7 +316,7 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
       title: Text(getBahasa.toString() == "1"?  "Setujui Permintaan":"Approve Request"
         , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
         TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui permintaan ini sebagai persetujuan 2 ? ":
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui sebagai persetujuan 2 ? ":
       "Would you like to continue approve this request as Approval 2 ?", style: GoogleFonts.nunitoSans(),textAlign:
       TextAlign.left,),
       actions: [
@@ -356,7 +356,7 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
       title: Text(getBahasa.toString() == "1"? "Tolak Permintaan": "Reject Request"
         , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
         TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak permintaan ini sebagai persetujuan 1 ?":
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak sebagai persetujuan 1 ?":
       "Would you like to continue reject this request as Approval 1 ?", style: GoogleFonts.nunitoSans(),textAlign:
       TextAlign.left,),
       actions: [
@@ -396,7 +396,7 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
       title: Text(getBahasa.toString() == "1"?  "Tolak Permintaan":"Reject Request"
         , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
         TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak permintaan ini sebagai persetjuan 2 ? " :
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak sebagai persetjuan 2 ? " :
       "Would you like to continue reject this request as Approval 2 ?", style: GoogleFonts.nunitoSans(),textAlign:
       TextAlign.left,),
       actions: [
@@ -419,8 +419,8 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
     return WillPopScope(child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text("Detail Time Off", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
-          elevation: 1,
+          title: Text("Detail Time Off", style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
+          elevation: 0,
           leading: Builder(
             builder: (context) =>
                 IconButton(
@@ -973,7 +973,7 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
         color: Colors.white,
         padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
         width: double.infinity,
-        height: 50,
+        height: 65,
         child: Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
           alignment: WrapAlignment.spaceEvenly,
@@ -983,6 +983,7 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
             timeoff_appr1.toString() == widget.getKaryawanNo && timeoff_appr1_status.toString() == 'Waiting Approval' ?
             Container(
                 width: 150,
+                height: 45,
                 child:
                     Visibility(
                       visible: _isPressedBtn,
@@ -1095,6 +1096,7 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
             timeoff_appr1.toString() == widget.getKaryawanNo && timeoff_appr1_status.toString() == 'Waiting Approval' ?
             Container(
                 width: 150,
+                height: 45,
                 child:
                 Visibility(
                     visible: _isPressedBtn,
@@ -1205,12 +1207,11 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
 
 
 
-            timeoff_appr2.toString() == widget.getKaryawanNo &&
-                (timeoff_appr1_status.toString() == 'Approved' || timeoff_appr1_status.toString() != 'Rejected'
-                    || timeoff_appr1_status.toString() != 'Waiting Approval') &&
+            timeoff_appr2.toString() == widget.getKaryawanNo && timeoff_appr1_status.toString() == 'Approved' &&
                 (timeoff_appr2_status.toString() == 'Waiting Approval') ?
             Container(
                 width: 150,
+                height: 45,
                 child:
                 Visibility(
                     visible: _isPressedBtn,
@@ -1321,11 +1322,11 @@ class _TimeOffApproveDetail extends State<TimeOffApproveDetail> {
 
 
             timeoff_appr2.toString() == widget.getKaryawanNo &&
-                (timeoff_appr1_status.toString() == 'Approved' || timeoff_appr1_status.toString() != 'Rejected'
-                    || timeoff_appr1_status.toString() != 'Waiting Approval') &&
+                (timeoff_appr1_status.toString() == 'Approved') &&
                 (timeoff_appr2_status.toString() == 'Waiting Approval') ?
             Container(
                 width: 150,
+                height: 45,
                 child:
                 Visibility(
                     visible: _isPressedBtn,

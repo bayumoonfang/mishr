@@ -3,9 +3,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:abzeno/page_auth.dart';
 import 'package:abzeno/page_check.dart';
+import 'package:abzeno/page_splashscreen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -14,6 +17,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'NotificationBadge.dart';
 import 'package:http/http.dart' as http;
+
+import 'PageFirstLoad.dart';
 
 /*Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   //print("Handling a background message: ${message.messageId}");
@@ -77,12 +82,12 @@ void main() async {
     ..userInteractions = true
     ..dismissOnTap = false;*/
 
-  _messaging.getToken().then((value) {
+  await _messaging.getToken().then((value) {
     getTokenMe = value;
   });
 
-  _messaging.setForegroundNotificationPresentationOptions(alert: true,badge: true,sound: true);
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  await _messaging.setForegroundNotificationPresentationOptions(alert: true,badge: true,sound: true);
+  await FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     showSimpleNotification(
       Text('${message.notification?.title}', style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),),
       leading: NotificationBadge(totalNotifications: 1),
@@ -90,7 +95,6 @@ void main() async {
       background: HexColor("#66000000"),
       duration: Duration(seconds: 5),
     );
-
   });
 
 
@@ -134,7 +138,10 @@ void main() async {
     ..textColor = Colors.white
     ..dismissOnTap = false
     ..textStyle = const TextStyle(fontSize:15,color: Colors.white );
-
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp
+  ]);
   runApp(MyApp());
 }
 
@@ -152,7 +159,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: PageCheck("", getTokenMe?? ""),
+          //home: PageCheck("", getTokenMe?? ""),
+          home : PageFirstLoad("", getTokenMe?? ""),
         //builder: EasyLoading.init(),
         builder : (context, child) {
 

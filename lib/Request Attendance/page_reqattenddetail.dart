@@ -205,8 +205,9 @@ class _ReqAttendDetail extends State<ReqAttendDetail> {
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(getBahasa.toString() == "1"? "Detail Pengajuan": "Detail Request", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
-        elevation: 1,
+        title: Text(getBahasa.toString() == "1"? "Detail Pengajuan": "Detail Request",
+          style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
+        elevation: 0,
         leading: Builder(
           builder: (context) =>
               IconButton(

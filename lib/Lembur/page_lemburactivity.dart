@@ -53,7 +53,7 @@ class _PageActivityLembur extends State<PageActivityLembur> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(getBahasa.toString() =="1" ? "Aktifitas Lembur" : "Activity Time Off",overflow: TextOverflow.ellipsis,
-          style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+          style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) =>

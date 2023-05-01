@@ -77,7 +77,7 @@ class _PageLoginPIN extends State<PageLoginPIN> {
       } else {
         savePref(widget.getEmail, data["username"].toString(), data["karyawan_id"].toString(), data["karyawan_nama"].toString(), data["karyawan_no"].toString(),
             data["karyawan_jabatan"].toString());
-        Navigator.pushReplacement(context, ExitPage(page: PageCheck(widget.getBahasa,widget.getTokenMe)));
+        Navigator.pushReplacement(context, ExitPage(page: PageCheck("",widget.getTokenMe)));
       }
     }
   }
@@ -100,6 +100,7 @@ class _PageLoginPIN extends State<PageLoginPIN> {
       preferences.setString("karyawan_nama", val_karyawannama);
       preferences.setString("karyawan_no", val_karyawanno);
       preferences.setString("karyawan_jabatan", val_karyawanjabatan);
+      preferences.setString("decode_pin", _verif1.text+_verif2.text+_verif3.text+_verif4.text+_verif5.text+_verif6.text);
       preferences.commit();
     });
 
@@ -172,7 +173,7 @@ class _PageLoginPIN extends State<PageLoginPIN> {
              children: [
                Align(alignment: Alignment.center,
                    child : Padding(padding: const EdgeInsets.only(top: 50),child: Text(widget.getBahasa =='1' ?
-                       "Masuk Dengan PIN Anda" :
+                       "Login With Your PIN" :
                    "Login With Your PIN",style:
                    GoogleFonts.montserrat(fontWeight: FontWeight.bold,
                        fontSize: 26, color: Colors.black),),)),

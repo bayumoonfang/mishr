@@ -138,7 +138,7 @@ class _PageFullProfile extends State<PageFullProfile> {
       appBar: AppBar(
         //backgroundColor: HexColor("#3a5664"),
         backgroundColor: Colors.white,
-        title: Text("Detail Profile", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text("Detail Profile", style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) =>

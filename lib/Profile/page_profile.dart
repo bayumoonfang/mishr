@@ -27,6 +27,9 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 
 import 'package:steps/steps.dart';
+import 'package:unicons/unicons.dart';
+
+import '../My Team/page_myteam.dart';
 
 
 class Profile extends StatefulWidget{
@@ -105,6 +108,48 @@ class _Profile extends State<Profile>{
       preferences.commit();
       _clearallpref();
     });
+  }
+
+
+
+
+  showDialogLogout(BuildContext context) {
+    Widget cancelButton = TextButton(
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue),),
+      onPressed:  () {Navigator.pop(context);},
+    );
+    Widget continueButton = Container(
+      width: 100,
+      child: TextButton(
+        child: Text(getBahasa.toString() == "1"?  "LOG OUT":"APPROVE"
+          ,style: GoogleFonts.lexendDeca(color: Colors.blue,),),
+        onPressed:  () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+          _logout();
+        },
+      ),
+    );
+    AlertDialog alert = AlertDialog(
+      actionsAlignment: MainAxisAlignment.end,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      title: Text(getBahasa.toString() == "1"? "Konfirmasi Log Out" :"Approve Request"
+        , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+        TextAlign.left,),
+      content: Text("Apakah anda yakin keluar dari akun anda ? "
+        , style: GoogleFonts.nunitoSans(),textAlign:
+        TextAlign.left,),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
 
@@ -394,9 +439,9 @@ class _Profile extends State<Profile>{
                          minLeadingWidth : 25,
                          dense:true,
                          contentPadding: const EdgeInsets.only(left: 0.0, right: 0.0),
-                         leading: FaIcon(FontAwesomeIcons.user,size: 24,color : HexColor("#5ebef0")),
-                         title: Text(getBahasa.toString() == "1" ? "Profil Saya" : "My Profile", style: GoogleFonts.nunito(fontSize: 16),),
-                         subtitle: Text(getBahasa.toString() == "1" ? "Detail penuh profil saya" : "Full Detail of my profile", style: GoogleFonts.nunito(fontSize: 13),),
+                         leading: Icon(UniconsLine.user_square,size: 25),
+                         title: Text(getBahasa.toString() == "1" ? "Profil Saya" : "My Profile", style: GoogleFonts.nunitoSans(fontSize: 16,fontWeight: FontWeight.bold),),
+                         subtitle: Text(getBahasa.toString() == "1" ? "Detail penuh profil saya" : "Full Detail of my profile", style: GoogleFonts.nunito(fontSize: 12),),
                          trailing: const FaIcon(FontAwesomeIcons.angleRight, size: 18,),
                        ),
                      ),
@@ -418,9 +463,9 @@ class _Profile extends State<Profile>{
                          minLeadingWidth : 25,
                          dense:true,
                          contentPadding: const EdgeInsets.only(left: 0.0, right: 0.0),
-                         leading: FaIcon(FontAwesomeIcons.users,color : HexColor("#3ad3e1")),
-                         title: Text(getBahasa.toString() == "1" ? "Approval List":"About Us", style: GoogleFonts.nunitoSans(fontSize: 16),),
-                         subtitle: Text(getBahasa.toString() == "1" ? "Lihat daftar approval untuk ijin kamu": "All About Us", style: GoogleFonts.nunito(fontSize: 13),),
+                         leading:  Icon(UniconsLine.user_check,size: 25),
+                         title: Text(getBahasa.toString() == "1" ? "Approval List":"About Us", style: GoogleFonts.nunitoSans(fontSize: 16,fontWeight: FontWeight.bold),),
+                         subtitle: Text(getBahasa.toString() == "1" ? "Lihat daftar approval untuk ijin kamu": "All About Us", style: GoogleFonts.nunito(fontSize: 12),),
                          trailing: const FaIcon(FontAwesomeIcons.angleRight, size: 18,),
                        ),
                      ),
@@ -461,7 +506,7 @@ class _Profile extends State<Profile>{
                                          ),
                                          Container(
                                              width: double.infinity,
-                                             height: MediaQuery.of(context).size.height * 0.25,
+                                             height: MediaQuery.of(context).size.height * 0.30,
                                              child:
                                              Steps(
                                                direction: Axis.vertical,
@@ -478,10 +523,15 @@ class _Profile extends State<Profile>{
                                                      crossAxisAlignment: CrossAxisAlignment.start,
                                                      children: <Widget>[
                                                        Text(appr1_name.toString(),style: GoogleFonts.montserrat(
-                                                           fontWeight: FontWeight.bold,fontSize: 15)),
+                                                           fontWeight: FontWeight.bold,fontSize: 15),
+                                                         overflow: TextOverflow.ellipsis,),
                                                        Padding(
                                                          padding: EdgeInsets.only(top:5),
-                                                         child: Text("("+appr1_jabatan.toString()+")",style: GoogleFonts.nunitoSans(fontSize: 13)),
+                                                         child: Text("Jabatan : "+appr1_jabatan.toString(),style: GoogleFonts.nunitoSans(fontSize: 13)),
+                                                       ),
+                                                       Padding(
+                                                         padding: EdgeInsets.only(top:2),
+                                                         child: Text("as Approval 1",style: GoogleFonts.nunitoSans(fontSize: 13)),
                                                        ),
                                                      ],
                                                    ),
@@ -495,15 +545,22 @@ class _Profile extends State<Profile>{
                                                      crossAxisAlignment: CrossAxisAlignment.start,
                                                      children: <Widget>[
                                                        Text(appr3_name.toString(),style: GoogleFonts.montserrat(
-                                                           fontWeight: FontWeight.bold,fontSize: 15)),
+                                                           fontWeight: FontWeight.bold,fontSize: 15),
+                                                         overflow: TextOverflow.ellipsis,),
                                                        Padding(
                                                          padding: EdgeInsets.only(top:5),
-                                                         child: Text("("+appr3_jabatan.toString()+")",style: GoogleFonts.nunitoSans(fontSize: 13)),
+                                                         child: Text("Jabatan : "+appr3_jabatan.toString(),style: GoogleFonts.nunitoSans(fontSize: 13)),
+                                                       ),
+                                                       Padding(
+                                                         padding: EdgeInsets.only(top:2),
+                                                         child: Text("as Approval 2",style: GoogleFonts.nunitoSans(fontSize: 13)),
                                                        ),
 
                                                      ],
                                                    ),
                                                  },
+
+
 
                                                ],
 
@@ -523,7 +580,6 @@ class _Profile extends State<Profile>{
                      child: Divider(height: 2,),
                    ),
 
-
                    InkWell(
                      child : Padding(
                        padding: const EdgeInsets.only(bottom: 5),
@@ -531,9 +587,31 @@ class _Profile extends State<Profile>{
                          minLeadingWidth : 25,
                          dense:true,
                          contentPadding: const EdgeInsets.only(left: 0.0, right: 0.0),
-                         leading: FaIcon(FontAwesomeIcons.lock,color : HexColor("#e28743")),
-                         title: Text(getBahasa.toString() == "1" ?  "Ubah PIN" : "Change PIN", style: GoogleFonts.nunitoSans(fontSize: 16),),
-                         subtitle: Text(getBahasa.toString() == "1" ? "Ubah PIN untuk keamanan lebih":"Change my PIN for better security", style: GoogleFonts.nunito(fontSize: 13),),
+                         leading: Icon(UniconsLine.users_alt,size: 25,),
+                         title: Text(getBahasa.toString() == "1" ?  "My Team" : "Change PIN", style: GoogleFonts.nunitoSans(fontSize: 16,fontWeight: FontWeight.bold),),
+                         subtitle: Text(getBahasa.toString() == "1" ? "Kenal lebih lanjut dengan tim kamu":"Change my PIN for better security", style: GoogleFonts.nunito(fontSize: 12),),
+                         trailing: const FaIcon(FontAwesomeIcons.angleRight, size: 18,),
+                       ),
+                     ),
+                     onTap: (){
+                       Navigator.push(context, ExitPage(page: PageMyTeam(widget.getKaryawanNo)));
+                     },
+                   ),
+
+                   const Padding(
+                     padding: EdgeInsets.only(bottom: 5),
+                     child: Divider(height: 2,),
+                   ),
+                   InkWell(
+                     child : Padding(
+                       padding: const EdgeInsets.only(bottom: 5),
+                       child: ListTile(
+                         minLeadingWidth : 25,
+                         dense:true,
+                         contentPadding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                         leading: Icon(UniconsLine.lock_access,size: 25),
+                         title: Text(getBahasa.toString() == "1" ?  "Ubah PIN" : "Change PIN", style: GoogleFonts.nunitoSans(fontSize: 16,fontWeight: FontWeight.bold),),
+                         subtitle: Text(getBahasa.toString() == "1" ? "Ubah PIN untuk keamanan lebih":"Change my PIN for better security", style: GoogleFonts.nunito(fontSize: 12),),
                          trailing: const FaIcon(FontAwesomeIcons.angleRight, size: 18,),
                        ),
                      ),
@@ -553,9 +631,9 @@ class _Profile extends State<Profile>{
                          minLeadingWidth : 25,
                          dense:true,
                          contentPadding: const EdgeInsets.only(left: 0.0, right: 0.0),
-                         leading: FaIcon(FontAwesomeIcons.envelope,color : HexColor("#6338b6")),
-                         title: Text("Kritik dan Saran", style: GoogleFonts.nunitoSans(fontSize: 16),),
-                         subtitle: Text("Kirim kritik dan saran kamu", style: GoogleFonts.nunito(fontSize: 13),),
+                         leading: Icon(UniconsLine.comment_add,size: 25),
+                         title: Text("Kritik dan Saran", style: GoogleFonts.nunitoSans(fontSize: 16,fontWeight: FontWeight.bold),),
+                         subtitle: Text("Kirim kritik dan saran kamu", style: GoogleFonts.nunito(fontSize: 12),),
                          trailing: const FaIcon(FontAwesomeIcons.angleRight, size: 18,),
                        ),
                      ),
@@ -589,10 +667,7 @@ class _Profile extends State<Profile>{
                                              decoration: InputDecoration(
                                                prefixIcon: Padding(
                                                  padding: const EdgeInsets.only(right: 10),
-                                                 child: FaIcon(
-                                                   FontAwesomeIcons.audioDescription,
-                                                   //color: clockColor,
-                                                 ),
+                                                 child: Icon(UniconsLine.text_fields,size: 30,),
                                                ),
                                                contentPadding: const EdgeInsets.only(
                                                    top: 2),
@@ -634,7 +709,6 @@ class _Profile extends State<Profile>{
                                                      fontSize: 14)),
                                                  onPressed: (){
                                                    showDialogme(context);
-
                                                  },
                                                ),
                                              )
@@ -697,7 +771,7 @@ class _Profile extends State<Profile>{
                    const Padding(
                      padding: EdgeInsets.only(bottom: 5),
                      child: Divider(height: 2,),
-                   ),*/
+                   ),
                    Opacity(
                      opacity: 0.4,
                      child: InkWell(
@@ -719,7 +793,7 @@ class _Profile extends State<Profile>{
                    const Padding(
                      padding: EdgeInsets.only(bottom: 5),
                      child: Divider(height: 2,),
-                   ),
+                   ),*/
 
                    /* InkWell(
                      child : Padding(
@@ -770,9 +844,9 @@ class _Profile extends State<Profile>{
                          minLeadingWidth : 25,
                          dense:true,
                          contentPadding: const EdgeInsets.only(left: 0.0, right: 0.0),
-                         leading: FaIcon(FontAwesomeIcons.infoCircle,color : HexColor("#3ad3e1")),
-                         title: Text(getBahasa.toString() == "1" ? "Tentang Kami":"About Us", style: GoogleFonts.nunitoSans(fontSize: 16),),
-                         subtitle: Text(getBahasa.toString() == "1" ? "Semua Tentang Kami": "All About Us", style: GoogleFonts.nunito(fontSize: 13),),
+                         leading: Icon(UniconsLine.info_circle,size: 25),
+                         title: Text(getBahasa.toString() == "1" ? "Tentang Kami":"About Us", style: GoogleFonts.nunitoSans(fontSize: 16,fontWeight: FontWeight.bold),),
+                         subtitle: Text(getBahasa.toString() == "1" ? "Semua Tentang Kami": "All About Us", style: GoogleFonts.nunito(fontSize: 12),),
                          trailing: const FaIcon(FontAwesomeIcons.angleRight, size: 18,),
                        ),
                      ),
@@ -803,8 +877,8 @@ class _Profile extends State<Profile>{
                             )),
                         child: Text("Logout"),
                         onPressed: () {
-                          FocusScope.of(context).requestFocus(new FocusNode());
-                          _logout();
+                          showDialogLogout(context);
+
                         },
                       )
                   ),),

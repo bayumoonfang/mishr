@@ -16,6 +16,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
+import 'package:unicons/unicons.dart';
 
 
 class ChangeBahasa extends StatefulWidget{
@@ -100,16 +101,20 @@ class _ChangeBahasa extends State<ChangeBahasa> {
   Widget build(BuildContext context) {
     return WillPopScope(child: Scaffold(
       appBar: new AppBar(
-        backgroundColor: HexColor("#3a5664"),
+        // backgroundColor: HexColor("#3a5664"),
         title: Text(
-          getBahasa.toString() == "1"? "Ubah Bahasa" : "Change Language", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold),),
+          getBahasa.toString() == "1"? "Ubah Bahasa" : "Change Language",
+          style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black,),),
+        backgroundColor: Colors.white,
+        elevation: 1,
         leading: Builder(
-          builder: (context) => IconButton(
-              icon: new Icon(Icons.arrow_back),
-              color: Colors.white,
-              onPressed: () => {
-                Navigator.pop(context)
-              }),
+          builder: (context) =>
+              IconButton(
+                  icon: new FaIcon(FontAwesomeIcons.arrowLeft, size: 17,),
+                  color: Colors.black,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
         ),
       ),
       body: RefreshIndicator(
@@ -161,7 +166,7 @@ class _ChangeBahasa extends State<ChangeBahasa> {
                                 children: [
                                   InkWell(
                                     child : ListTile(
-                                      leading: FaIcon(FontAwesomeIcons.mobileScreen,size: 23,),
+                                      leading: Icon(UniconsLine.mobile_android,),
                                       title: Row(
                                         children: [
                                           Padding(padding: const EdgeInsets.only(right: 5),child:

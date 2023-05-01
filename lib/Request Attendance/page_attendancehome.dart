@@ -67,7 +67,7 @@ class _PageAttendanceHome extends State<PageAttendanceHome> {
                     }),
           ),
           title: Text(
-            getBahasa.toString() == "1" ? "Kehadiran" : "Attendance", style: GoogleFonts.montserrat(fontSize: 17,
+            getBahasa.toString() == "1" ? "Kehadiran" : "Attendance", style: GoogleFonts.montserrat(fontSize: 15,
               fontWeight: FontWeight.bold,color: Colors.black,),),
           elevation: 1,
         ),
@@ -86,7 +86,7 @@ class _PageAttendanceHome extends State<PageAttendanceHome> {
                         fontWeight: FontWeight.bold)),
                     subtitle: Padding(padding: EdgeInsets.only(top: 5),child: Text(getBahasa.toString() == "1" ? "Telusuri riwayat kehadiran kamu setiap harinya" :
                     "Track your attendance history every day",style: TextStyle(
-                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 12))),
+                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 11.5))),
                     trailing: FaIcon(FontAwesomeIcons.angleRight,color: HexColor("#594d75"),size: 15,),
                   ),
                 ),
@@ -103,7 +103,7 @@ class _PageAttendanceHome extends State<PageAttendanceHome> {
                         fontWeight: FontWeight.bold)),
                     subtitle: Padding(padding: EdgeInsets.only(top: 5),child: Text(getBahasa.toString() == "1" ? "Ajukan koreksi kehadiran kamu jika terjadi kesalahan" :
                     "Submit your attendance correction if something goes wrong",style: TextStyle(
-                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 12,height: 1.2)),),
+                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 11.5,height: 1.2)),),
                     trailing: FaIcon(FontAwesomeIcons.angleRight,color: HexColor("#594d75"),size: 15,),
                   ),
                 ),
@@ -120,7 +120,7 @@ class _PageAttendanceHome extends State<PageAttendanceHome> {
                         fontWeight: FontWeight.bold)),
                     subtitle: Padding(padding: EdgeInsets.only(top: 5),child: Text(getBahasa.toString() == "1" ? "Ajukan pergantian shift dengan mudah hanya disini" :
                     "Apply for a change of shift easily only here",style: TextStyle(
-                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 12,height: 1.2))),
+                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 11.5,height: 1.2))),
                     trailing: FaIcon(FontAwesomeIcons.angleRight,color: HexColor("#594d75"),size: 15,),
                   ),
                 ),

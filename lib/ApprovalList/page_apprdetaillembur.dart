@@ -187,6 +187,8 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
 
       Navigator.pop(context);
     });
+
+
     await m_lembur().lembur_approved(lembur_no, widget.getKaryawanNo, getAppr, fcm_message, fcm_message2).then((value){
       if(value[0] == 'ConnInterupted'){
         getBahasa.toString() == "1"?
@@ -203,11 +205,17 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
             if(value[0] == '1') {
                 Navigator.pop(context);
                 SchedulerBinding.instance?.addPostFrameCallback((_) {
-                  getBahasa.toString() == "1"?
-                  AppHelper().showFlushBarconfirmed(context, "Pengajuan lembur berhasil disetujui")
-                      :
-                  AppHelper().showFlushBarconfirmed(context, "Time Off Request has been Approved");
+                  AppHelper().showFlushBarconfirmed(context, "Pengajuan lembur berhasil disetujui");
                 });
+            } else if(value[0] == '2') {
+                Navigator.pop(context);
+                AppHelper().showFlushBarconfirmed(context, "Pengajuan lembur gagal diapprove karena di hari pengajuan tidak ada schedule atau jadwal OFF, silahkan"
+                    " menghubungi pihak yang mengajukan, atau anda bisa menolak pengajuan ini");
+                return ;
+            } else if(value[0] == '3') {
+              Navigator.pop(context);
+              AppHelper().showFlushBarconfirmed(context, "Pengajuan lembur gagal diapprove karena di hari pengajuan tidak ada kehadiran yang berhasil direkam, silahkan"
+                  " menghubungi pihak yang mengajukan, atau anda bisa menolak pengajuan ini");return ;
             } else {
               AppHelper().showFlushBarsuccess(context, value[0]);
               return;
@@ -241,7 +249,7 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
       title: Text(getBahasa.toString() == "1"? "Tolak Permintaan": "Reject Request"
         , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
         TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak pengajuan ini sebagai persetujuan "+getModulDial+" ?":
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak sebagai persetujuan "+getModulDial+" ?":
       "Would you like to continue reject this request as Approval 1 ?", style: GoogleFonts.nunitoSans(),textAlign:
       TextAlign.left,),
       actions: [
@@ -280,7 +288,7 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
       title: Text(getBahasa.toString() == "1"? "Setujui Pengajuan" :"Approve Request"
         , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
         TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui pengajuan ini sebagai persetujuan "+getModulDial+" ?"
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui sebagai persetujuan "+getModulDial+" ?"
           : "Would you like to continue approve this request as Approval 1 ?"
         , style: GoogleFonts.nunitoSans(),textAlign:
         TextAlign.left,),
@@ -305,7 +313,8 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(getBahasa.toString() == "1" ?  "Detail Lembur":"Overtime Detail", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text(getBahasa.toString() == "1" ?  "Detail Lembur":"Overtime Detail",
+          style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) =>
@@ -342,17 +351,17 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
                                 color:
                                 lembur_status.toString() == 'Approved 1' ? HexColor("#0074D9") :
                                 lembur_status.toString() == 'Fully Approved' ? HexColor("#3D9970") :
-                                lembur_status.toString() == 'Fully Approved' ? HexColor("#FF4136") :
+                                lembur_status.toString() == 'Rejected' ? HexColor("#FF4136") :
                                 Colors.black54,
                                 style: BorderStyle.solid,
                               ),
                             ),
                             child: Text(lembur_status.toString(),style: GoogleFonts.nunito(fontSize: 12,
-                                color:
-                                lembur_status.toString() == 'Approved 1' ? HexColor("#0074D9") :
-                                lembur_status.toString() == 'Fully Approved' ? HexColor("#3D9970") :
-                                lembur_status.toString() == 'Fully Approved' ? HexColor("#FF4136") :
-                                Colors.black54,),),
+                              color:
+                              lembur_status.toString() == 'Approved 1' ? HexColor("#0074D9") :
+                              lembur_status.toString() == 'Fully Approved' ? HexColor("#3D9970") :
+                              lembur_status.toString() == 'Rejected' ? HexColor("#FF4136") :
+                              Colors.black54,),),
                             onPressed: (){},
                           ),
                           height: 25,
@@ -681,7 +690,6 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
                 ) : Container(),
 
 
-
                 Padding(
                     padding: EdgeInsets.only(top:20),
                     child: Align(alignment: Alignment.centerLeft,
@@ -725,18 +733,16 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
 
                             TableRow(children :[
                               Padding(padding: EdgeInsets.only(bottom: 5),
-                                child: Text(getBahasa.toString() == "1"? 'Jam Masuk' : 'Clock In', style: GoogleFonts.nunito(fontSize: 14) ),),
+                                child: Text('Jam Selesai', style: GoogleFonts.nunito(fontSize: 14) ),),
                               Padding(padding: EdgeInsets.only(bottom: 5),
                                 child: Text(lembur_scheduleclockin.toString().substring(0,5), style: GoogleFonts.nunito(fontSize: 14) ),),
                             ]),
-
-
-                            TableRow(children :[
-                              Padding(padding: EdgeInsets.only(bottom: 5),
-                                child: Text(getBahasa.toString() == "1"? 'Jam Keluar' : 'Clock Out', style: GoogleFonts.nunito(fontSize: 14) ),),
-                              Padding(padding: EdgeInsets.only(bottom: 5),
-                                child: Text(lembur_scheduleclockout.toString().substring(0,5), style: GoogleFonts.nunito(fontSize: 14) ),),
-                            ]),
+                            // TableRow(children :[
+                            //   Padding(padding: EdgeInsets.only(bottom: 5),
+                            //     child: Text(getBahasa.toString() == "1"? 'Clock Out' : 'Clock Out', style: GoogleFonts.nunito(fontSize: 14) ),),
+                            //   Padding(padding: EdgeInsets.only(bottom: 5),
+                            //     child: Text(lembur_scheduleclockout.toString().substring(0,5), style: GoogleFonts.nunito(fontSize: 14) ),),
+                            // ]),
                           ]
                       ),
                     )),
@@ -754,7 +760,7 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
           child: Container(color: Colors.white,
               padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
               width: double.infinity,
-              height: 50,
+              height: 65,
               child: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
                 alignment: WrapAlignment.spaceEvenly,
@@ -764,6 +770,7 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
                   lembur_approval1.toString() == widget.getKaryawanNo && lembur_approval1status.toString() == 'Waiting Approval' ?
                   Container(
                       width: 150,
+                      height: 45,
                       child:
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -789,6 +796,7 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
                   lembur_approval1.toString() == widget.getKaryawanNo && lembur_approval1status.toString() == 'Waiting Approval' ?
                   Container(
                       width: 150,
+                      height: 45,
                       child:
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -815,6 +823,7 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
                       lembur_approval1status.toString() == 'Approved' ?
                   Container(
                       width: 150,
+                      height: 45,
                       child:
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -841,6 +850,7 @@ class _ApprLemburDetail extends State<ApprLemburDetail> {
                       lembur_approval1status.toString() == 'Approved'  ?
                   Container(
                       width: 150,
+                      height: 45,
                       child:
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(

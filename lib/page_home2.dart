@@ -6,6 +6,7 @@ import 'package:abzeno/Helper/g_helper.dart';
 import 'package:abzeno/Time%20Off/S_HELPER/g_timeoff.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trust_location/trust_location.dart';
 import 'package:abzeno/Profile/page_changepin.dart';
 import 'package:abzeno/page_changecabang.dart';
@@ -22,6 +23,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:safe_device/safe_device.dart';
+import 'package:unicons/unicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'Attendance/page_attendancelembur.dart';
 import 'Berita/page_berita.dart';
@@ -32,6 +34,7 @@ import 'MySchedule/page_myschedule2.dart';
 import 'Report/page_report.dart';
 import 'Reprimand/page_reprimand.dart';
 import 'Request Attendance/page_attendancehome.dart';
+import 'Setting/page_biometricsetting.dart';
 import 'Setting/page_setting.dart';
 import 'Time Off/page_timeoffhome2a.dart';
 import 'helper/app_helper.dart';
@@ -189,6 +192,85 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
     );
   }
 
+
+  showBiometricDialog(BuildContext context) {
+    final textScale = MediaQuery.of(context).textScaleFactor;
+    Widget cancelButton = TextButton(
+      child: Text(
+        getBahasa.toString() == "1" ? "LEWATI" : "CLOSE",
+        style: GoogleFonts.lexendDeca(color: Colors.blue,fontSize: textScale.toString() == '1.17' ? 13 : 15),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = Container(
+      width: 150,
+      child: TextButton(
+        child: Text(
+          getBahasa.toString() == "1" ? "COBA SEKARANG" : "UPDATE NOW",
+          style: GoogleFonts.lexendDeca(
+              color: Colors.blue,
+              fontSize: textScale.toString() == '1.17' ? 13 : 15
+          ),
+        ),
+        onPressed: () async {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          preferences.setString("biometric_dialog", "0");
+          Navigator.pop(context);
+          Navigator.push(context, ExitPage(page: PageBiometricSetting()));
+        },
+      ),
+    );
+    AlertDialog alert = AlertDialog(
+      actionsAlignment: MainAxisAlignment.end,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      title: Text(
+        getBahasa.toString() == "1"
+            ? "Fitur Baru"
+            : "New Version Available",
+        style:
+        GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 16 : 18, fontWeight: FontWeight.bold),
+        textAlign: TextAlign.left,
+      ),
+      content: Container(
+          height: textScale.toString() == '1.17' ? 140 : 150,
+          child: Column(
+            children: [
+              Text(
+                "Cobain fitur terbaru misHR, Fingerscan dan Passcode. Tingkatkan keamaan akun kamu dengan mengaktifkan fitur ini. Ayo cobain sekarang",
+                style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 13 : 15),
+                textAlign: TextAlign.left,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Apakah anda ingin mencoba fitur ini ?",
+                  style: GoogleFonts.nunitoSans(fontSize: textScale.toString() == '1.17' ? 13 : 15),
+                  textAlign: TextAlign.left,
+                ),
+              )
+            ],
+          )),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
+
   String getFullVersionNew = "";
   String getVersionNew = "";
   String getFullVersionExisting = "";
@@ -288,6 +370,15 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
     });
   }
 
+  String getbiometric_dialog = '0';
+  cekBiometricDialog() async {
+    await AppHelper().getSession().then((value){
+      setState(() {
+        getbiometric_dialog = value[28];
+      });});
+  }
+
+
   Timer? timer;
 
   loadData() async {
@@ -295,13 +386,17 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
     await refreshworklocation();
     await refreshAttendance();
     await CekVersion();
-     getLemburCount();
+    await cekBiometricDialog();
+     //getLemburCount();
      getSettings();
      getDefaultPass();
 
     setState(() {
       widget.runLoopMe();
       _isVisibleBtn = true;
+      if(getbiometric_dialog == "1" || getbiometric_dialog == null) {
+        showBiometricDialog(context);
+      }
     });
   }
 
@@ -769,7 +864,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                 MediaQuery.of(context).size.width, 10.0)),*/
                             ),
                             width: double.infinity,
-                            height: 170,
+                            height: 180,
                             child: Stack(
                               clipBehavior: Clip.none,
                               alignment: Alignment.topCenter,
@@ -1734,12 +1829,11 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                         ),
                                                       ),
                                                       child: Center(
-                                                        child: FaIcon(
-                                                          FontAwesomeIcons
-                                                              .calendarAlt,
+                                                        child: Icon(
+                                                          UniconsLine.calendar_alt,
                                                           color: HexColor(
                                                               "#36bbf6"),
-                                                          size: 21,
+                                                          size: 24,
                                                         ),
                                                       )),
                                                   Padding(
@@ -1754,7 +1848,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                         style:
                                                             textScale.toString() == '1.17' ?
                                                             GoogleFonts.nunito(fontSize: 11) :
-                                                            GoogleFonts.nunito(fontSize: 13)
+                                                            GoogleFonts.nunito(fontSize: 12.5)
                                                     ),
                                                   )
                                                 ],
@@ -1799,12 +1893,11 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                         ),
                                                       ),
                                                       child: Center(
-                                                        child: FaIcon(
-                                                          FontAwesomeIcons
-                                                              .userClock,
+                                                        child: Icon(
+                                                          UniconsLine.file_copy_alt,
                                                           color: HexColor(
                                                               "#1c6bea"),
-                                                          size: 21,
+                                                          size: 28,
                                                         ),
                                                       )),
                                                   Padding(
@@ -1820,7 +1913,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
 
                                                       textScale.toString() == '1.17' ?
                                                       GoogleFonts.nunito(fontSize: 11) :
-                                                      GoogleFonts.nunito(fontSize: 13),
+                                                      GoogleFonts.nunito(fontSize: 12.5),
                                                       textAlign:
                                                           TextAlign.center,
                                                     ),
@@ -1867,12 +1960,11 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                         ),
                                                       ),
                                                       child: Center(
-                                                        child: FaIcon(
-                                                          FontAwesomeIcons
-                                                              .clockFour,
+                                                        child: Icon(
+                                                          UniconsLine.clock,
                                                           color: HexColor(
                                                               "#05be61"),
-                                                          size: 21,
+                                                          size: 28,
                                                         ),
                                                       )),
                                                   Padding(
@@ -1887,7 +1979,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                       style:
                                                       textScale.toString() == '1.17' ?
                                                       GoogleFonts.nunito(fontSize: 11) :
-                                                      GoogleFonts.nunito(fontSize: 13),
+                                                      GoogleFonts.nunito(fontSize: 12.5),
                                                       textAlign:
                                                           TextAlign.center,
                                                     ),
@@ -1924,11 +2016,11 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                     ),
                                                   ),
                                                   child: Center(
-                                                    child: FaIcon(
-                                                      FontAwesomeIcons.planeArrival,
+                                                    child: Icon(
+                                                      UniconsLine.suitcase,
                                                       color: HexColor(
                                                           "#121942"),
-                                                      size: 24,
+                                                      size: 29,
                                                     ),
                                                   )),
                                               Padding(
@@ -1943,7 +2035,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                   style:
                                                   textScale.toString() == '1.17' ?
                                                   GoogleFonts.nunito(fontSize: 11) :
-                                                  GoogleFonts.nunito(fontSize: 13),
+                                                  GoogleFonts.nunito(fontSize: 12.5),
                                                   textAlign:
                                                   TextAlign.center,
                                                 ),
@@ -2010,7 +2102,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                       style:
                                                       textScale.toString() == '1.17' ?
                                                       GoogleFonts.nunito(fontSize: 11) :
-                                                      GoogleFonts.nunito(fontSize: 13),
+                                                      GoogleFonts.nunito(fontSize: 12.5),
                                                       textAlign:
                                                           TextAlign.center,
                                                     ),
@@ -2116,11 +2208,11 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                     ),
                                                   ),
                                                   child: Center(
-                                                    child: FaIcon(
-                                                      FontAwesomeIcons.fileContract,
+                                                    child: Icon(
+                                                      UniconsLine.newspaper,
                                                       color: HexColor(
                                                           "#e9417e"),
-                                                      size: 24,
+                                                      size: 28,
                                                     ),
                                                   )),
                                               Padding(
@@ -2135,7 +2227,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                   style:
                                                   textScale.toString() == '1.17' ?
                                                   GoogleFonts.nunito(fontSize: 11) :
-                                                  GoogleFonts.nunito(fontSize: 13),
+                                                  GoogleFonts.nunito(fontSize: 12.5),
                                                   textAlign:
                                                   TextAlign.center,
                                                 ),
@@ -2196,8 +2288,8 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                                           : "Reprimand",
                                                       style:
                                                       textScale.toString() == '1.17' ?
-                                                      GoogleFonts.nunito(fontSize: 11) :
-                                                      GoogleFonts.nunito(fontSize: 13),
+                                                      GoogleFonts.nunito(fontSize: 10) :
+                                                      GoogleFonts.nunito(fontSize: 12.5),
                                                       textAlign:
                                                           TextAlign.center,
                                                     ),
@@ -2237,65 +2329,7 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
                                 ),
                               )) : Container(),*/
 
-                                    pressBtnSemua == "1" ||
-                                            pressBtnInformasi == "1"
-                                        ? Container(
-                                            width: 62,
-                                            child: InkWell(
-                                              onTap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    ExitPage(
-                                                        page: PageMyTeam(widget
-                                                            .getKaryawanNo)));
-                                              },
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                      height: 45,
-                                                      width: 45,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(50),
-                                                        color:
-                                                            HexColor("#fff3db"),
-                                                        border: Border.all(
-                                                          color: HexColor(
-                                                              "#DDDDDD"),
-                                                          width: 0.5,
-                                                        ),
-                                                      ),
-                                                      child: Center(
-                                                        child: FaIcon(
-                                                          FontAwesomeIcons
-                                                              .users,
-                                                          color: HexColor(
-                                                              "#feb81a"),
-                                                          size: 24,
-                                                        ),
-                                                      )),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 8),
-                                                    child: Text(
-                                                      getBahasa.toString() ==
-                                                              '1'
-                                                          ? "My Team"
-                                                          : "Information",
-                                                      style:
-                                                      textScale.toString() == '1.17' ?
-                                                      GoogleFonts.nunito(fontSize: 11) :
-                                                      GoogleFonts.nunito(fontSize: 13),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ))
-                                        : Container(),
+
 
                                   ],
                                 ),

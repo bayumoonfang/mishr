@@ -14,8 +14,18 @@ class m_lembur {
 
 
 
-  lembur_create(_createdby, _createbyNo, delegatedNo, delegatedName,
-      startDate, endDate, _TimeStart, _TimeEnd, _description, durationme) async {
+  lembur_create(
+      _createdby,
+      _createbyNo,
+      // delegatedNo,
+      // delegatedName,
+      startDate,
+      // endDate,
+      // _TimeStart,
+      _TimeEnd,
+      _description,
+      // durationme
+      ) async {
     int errorCode = 0;
     await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
       errorCode = 2; return false;}});
@@ -24,14 +34,14 @@ class m_lembur {
         body: {
           "lembur_createdNo": _createbyNo,
           "lembur_createdname": _createdby,
-          "lembur_delegatedNo": delegatedNo,
-          "lembur_delegatedName": delegatedName,
+          // "lembur_delegatedNo": delegatedNo,
+          // "lembur_delegatedName": delegatedName,
           "lembur_datestart": startDate.toString(),
-          "lembur_dateend": endDate.toString(),
-          "lembur_timefrom": _TimeStart,
+          // "lembur_dateend": endDate.toString(),
+          // "lembur_timefrom": _TimeStart,
           "lembur_timeto": _TimeEnd,
           "lembur_description": _description,
-          "lembur_lamahari" : durationme.toString()
+          // "lembur_lamahari" : durationme.toString()
         }).timeout(Duration(seconds: 10), onTimeout: () {
       http.Client().close(); errorCode = 1; return http.Response('Error', 500);}
     );

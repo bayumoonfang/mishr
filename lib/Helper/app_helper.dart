@@ -4,6 +4,7 @@
 
 
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 
 
@@ -16,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -553,7 +555,7 @@ class AppHelper{
 
   showFlushBarsuccess(BuildContext context, String stringme){
     Flushbar(
-      message:  stringme,
+      messageText:  Text(stringme, style: GoogleFonts.nunitoSans(color: Colors.white),),
       shouldIconPulse: false,
       duration:  Duration(seconds: 5),
       backgroundColor: Colors.black,
@@ -565,7 +567,7 @@ class AppHelper{
 
   showFlushBarsuccessBottom(BuildContext context, String stringme){
     Flushbar(
-      message:  stringme,
+      messageText:  Text(stringme, style: GoogleFonts.nunitoSans(color: Colors.white),),
       shouldIconPulse: false,
       duration:  Duration(seconds: 5),
       backgroundColor: Colors.black,
@@ -578,7 +580,7 @@ class AppHelper{
 
   showFlushBarerror(BuildContext context, String stringme) {
     Flushbar(
-      message:  stringme,
+      messageText:  Text(stringme, style: GoogleFonts.nunitoSans(color: Colors.white),),
       shouldIconPulse: false,
       duration:  Duration(seconds: 5),
       backgroundColor: Colors.red,
@@ -862,6 +864,7 @@ class AppHelper{
         data["specialday_name"].toString(), //0
         data["specialday_tagline"].toString(), //1
         data["specialday_banner"].toString(), //2
+        data["specialday_splashimage"].toString(), //3
       ];
     }
 
@@ -1125,7 +1128,11 @@ class AppHelper{
     String getNotif1 = await Session.getNotif1();
     String getNotif2 = await Session.getNotif2();
     String getTokenSession = await Session.getTokenSession();
-
+    String getDecodePIN = await Session.getDecodePIN();
+    String getBiometricActive = await Session.getBiometricActive();
+    bool getFingerscanActive = await Session.getFingerscanActive();
+    String getBiometricPriority = await Session.getBiometricPriority();
+    String getBiometricDialog = await Session.getBiometricDialog();
 
     return [
       getEmail, //0,
@@ -1151,7 +1158,12 @@ class AppHelper{
       getBahasa, //20
       getNotif1, //21
       getNotif2, //22
-      getTokenSession //23
+      getTokenSession, //23
+      getDecodePIN, //24
+      getBiometricActive, //25
+      getFingerscanActive, //26
+      getBiometricPriority, //27
+      getBiometricDialog //28
     ];
 
   }

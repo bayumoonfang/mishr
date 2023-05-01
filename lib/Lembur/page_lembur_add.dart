@@ -14,6 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:unicons/unicons.dart';
 import '../Time Off/S_HELPER/g_timeoff.dart';
 
 
@@ -86,9 +87,18 @@ class _LemburAdd extends State<LemburAdd> {
     });
 
 
-    await m_lembur().lembur_create(_createdby.text, _createbyNo, delegatedNo.toString(), delegatedName.toString(),
-        startDate.toString(), endDate.toString(), _TimeStart.text, _TimeEnd.text,
-        _description.text, durationme.toString()).then((value){
+    await m_lembur().lembur_create(
+        _createdby.text,
+        _createbyNo,
+        // delegatedNo.toString(),
+        // delegatedName.toString(),
+        startDate.toString(),
+        // endDate.toString(),
+        // _TimeStart.text,
+         _TimeEnd.text,
+        _description.text
+        // durationme.toString()
+    ).then((value){
       if(value[0] == 'ConnInterupted'){
         getBahasa.toString() == "1"?
         AppHelper().showFlushBarsuccess(context, "Koneksi terputus...") :
@@ -106,17 +116,17 @@ class _LemburAdd extends State<LemburAdd> {
             });
             if (value[0] == '1') {
               getBahasa.toString() == "1"?
-              AppHelper().showFlushBarsuccess(context,"Maaf ada pengajuan lain di hari atau salah satu hari pengajuan anda")
+              AppHelper().showFlushBarsuccess(context,"Maaf ada pengajuan lain di hari pengajuan anda")
                   :
               AppHelper().showFlushBarsuccess(context,"Sorry, there was another submission on the day or one of the days of your submission");
               return;
-            } else if (value[0] == '2') {
-              getBahasa.toString() == "1"?
+            } else if (value[0] == '4') {
               AppHelper().showFlushBarsuccess(context,
-                  "Data gagal diinput")
-                  :
+                  "Gagal membuat pengajuan lembur, karena tidak ada jadwal atau jadwal anda OFF di hari pengajuan anda");
+              return;
+            } else if (value[0] == '5') {
               AppHelper().showFlushBarsuccess(context,
-                  "Failed to insert");
+                  "Gagal membuat pengajuan lembur, karena tidak ada kehadiran yang terbentuk di hari pengajuan anda");
               return;
             } else if (value[0] == '3') {
               Navigator.pop(context);
@@ -140,7 +150,7 @@ class _LemburAdd extends State<LemburAdd> {
 
   showDialogme(BuildContext context) {
 
-    if(_dateto.text == '' || _datefrom.text == '') {
+    if(_datefrom.text == '') {
       getBahasa.toString() == "1"?
       AppHelper().showFlushBarsuccess(context, "Tanggal tidak boleh kosong"):
       AppHelper().showFlushBarsuccess(context, "Please filled date");
@@ -150,13 +160,13 @@ class _LemburAdd extends State<LemburAdd> {
       AppHelper().showFlushBarsuccess(context, "Description tidak boleh kosong"):
       AppHelper().showFlushBarsuccess(context, "Please filled description");
       return false;
-    } else if(_TimeStart.text == '' || _TimeEnd.text == '') {
+    } else if(_TimeEnd.text == '') {
       getBahasa.toString() == "1"?
       AppHelper().showFlushBarsuccess(context, "Jam tidak boleh kosong"):
       AppHelper().showFlushBarsuccess(context, "Please filled Clock");
       return false;
     } else {
-      DateTime aa = DateTime.parse(startDate.toString());
+     /* DateTime aa = DateTime.parse(startDate.toString());
       DateTime bb = DateTime.parse(endDate.toString());
       int time = DateTime(bb.year, bb.month, bb.day).difference(DateTime(aa.year, aa.month, aa.day)).inDays;
       if(time < 0) {
@@ -173,7 +183,7 @@ class _LemburAdd extends State<LemburAdd> {
           int durationint = time + 1;
           durationme = durationint.toString();
         });
-      }
+      }*/
     }
 
     Widget cancelButton = TextButton(
@@ -368,7 +378,8 @@ class _LemburAdd extends State<LemburAdd> {
     return WillPopScope(child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text(getBahasa.toString() == "1"? "Tambah Pengajuan":"Add Overtime", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+          title: Text(getBahasa.toString() == "1"? "Tambah Pengajuan":"Add Overtime",
+            style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
           elevation: 1,
           leading: Builder(
             builder: (context) =>
@@ -399,15 +410,14 @@ class _LemburAdd extends State<LemburAdd> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 0),
                                   child: TextFormField(
-                                    style: GoogleFonts.nunitoSans(fontSize: 16),
+                                    style: GoogleFonts.nunitoSans(fontSize: 15),
                                     textCapitalization: TextCapitalization
                                         .sentences,
                                     controller: _createdby,
                                     decoration: InputDecoration(
                                       prefixIcon: Padding(
                                         padding: const EdgeInsets.only(right: 10),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.userCircle,
+                                        child: Icon(UniconsLine.user_square,
                                           //color: clockColor,
                                         ),
                                       ),
@@ -422,7 +432,7 @@ class _LemburAdd extends State<LemburAdd> {
                                           .always,
                                       hintStyle: GoogleFonts.nunito(
                                           color: HexColor("#c4c4c4"),
-                                          fontSize: 15),
+                                          fontSize: 14),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: HexColor("#DDDDDD")),
@@ -494,7 +504,7 @@ class _LemburAdd extends State<LemburAdd> {
                                          .always,
                                      hintStyle: GoogleFonts.nunito(
                                          color: HexColor("#c4c4c4"),
-                                         fontSize: 15),
+                                         fontSize: 14),
                                      enabledBorder: UnderlineInputBorder(
                                        borderSide: BorderSide(
                                            color: HexColor("#DDDDDD")),
@@ -537,14 +547,13 @@ class _LemburAdd extends State<LemburAdd> {
                                   decoration: InputDecoration(
                                     prefixIcon: Padding(
                                       padding: const EdgeInsets.only(right: 10),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.calendar,
+                                      child: Icon(UniconsLine.calendar_alt,
                                         //color: clockColor,
                                       ),
                                     ),
                                     contentPadding: const EdgeInsets.only(top: 2),
-                                    hintText: getBahasa.toString() == "1"? 'Pilih Tanggal Mulai' : 'Pick Start Date',
-                                    labelText: getBahasa.toString() == "1"? 'Tanggal Mulai': 'Start Date',
+                                    hintText: getBahasa.toString() == "1"? 'Pilih Tanggal' : 'Pick Start Date',
+                                    labelText: getBahasa.toString() == "1"? 'Tanggal': 'Start Date',
                                     labelStyle: TextStyle(
                                       fontFamily: "VarelaRound",
                                       fontSize: 15, color: Colors.black87,
@@ -552,7 +561,7 @@ class _LemburAdd extends State<LemburAdd> {
                                     floatingLabelBehavior: FloatingLabelBehavior
                                         .always,
                                     hintStyle: GoogleFonts.nunito(
-                                        color: HexColor("#c4c4c4"), fontSize: 15),
+                                        color: HexColor("#c4c4c4"), fontSize: 14),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: HexColor("#DDDDDD")),
@@ -575,7 +584,7 @@ class _LemburAdd extends State<LemburAdd> {
                                         initialDate: DateTime.now(),
                                         firstDate: DateTime(2022),
                                         confirmText: 'CHOOSE',
-                                        helpText: 'Select start date',
+                                        helpText: 'Select date',
                                         lastDate: DateTime(2100));
                                     if (pickedDate != null) {
                                       String formattedDate =
@@ -592,7 +601,7 @@ class _LemburAdd extends State<LemburAdd> {
                               ),
                             ),
 
-                            new Flexible(
+                          /*  new Flexible(
                               child: Padding(
                                   padding: const EdgeInsets.only(right: 15),
                                   child:
@@ -660,7 +669,7 @@ class _LemburAdd extends State<LemburAdd> {
                                   )
 
                               ),
-                            ),
+                            ),*/
                           ],
                         ),),
 
@@ -672,7 +681,7 @@ class _LemburAdd extends State<LemburAdd> {
                           children: [
 
 
-                            new Flexible(
+                          /*  new Flexible(
                                 child: Padding(
                                     padding: const EdgeInsets.only(right: 15),
                                     child:
@@ -735,7 +744,7 @@ class _LemburAdd extends State<LemburAdd> {
                                       },
                                     )
                                 )
-                            ),
+                            ),*/
 
 
                             new Flexible(
@@ -743,15 +752,14 @@ class _LemburAdd extends State<LemburAdd> {
                                   padding: const EdgeInsets.only(right: 15),
                                   child:
                                   TextFormField(
-                                    style: GoogleFonts.nunitoSans(fontSize: 16),
+                                    style: GoogleFonts.nunitoSans(fontSize: 15),
                                     textCapitalization: TextCapitalization
                                         .sentences,
                                     controller: _TimeEnd,
                                     decoration: InputDecoration(
                                       prefixIcon: Padding(
                                         padding: const EdgeInsets.only(right: 10),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.clock,
+                                        child: Icon(UniconsLine.clock,
                                           //color: clockColor,
                                         ),
                                       ),
@@ -767,7 +775,7 @@ class _LemburAdd extends State<LemburAdd> {
                                           .always,
                                       hintStyle: GoogleFonts.nunito(
                                           color: HexColor("#c4c4c4"),
-                                          fontSize: 15),
+                                          fontSize: 14),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: HexColor("#DDDDDD")),
@@ -797,7 +805,8 @@ class _LemburAdd extends State<LemburAdd> {
                                               DateFormat("HH:mm").format(date);
                                           _TimeEnd.text = selectedTimeEnd;
                                         },
-                                        currentTime: DateTime.now(),);
+                                        currentTime: DateTime.now(),
+                                      );
                                     },
                                   )
                               ),
@@ -818,7 +827,7 @@ class _LemburAdd extends State<LemburAdd> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 0),
                                   child: TextFormField(
-                                    style: GoogleFonts.nunitoSans(fontSize: 16),
+                                    style: GoogleFonts.nunitoSans(fontSize: 15),
                                     textCapitalization: TextCapitalization
                                         .sentences,
                                     maxLines: 3,
@@ -826,14 +835,13 @@ class _LemburAdd extends State<LemburAdd> {
                                     decoration: InputDecoration(
                                       prefixIcon: Padding(
                                         padding: const EdgeInsets.only(right: 10),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.audioDescription,
+                                        child: Icon(UniconsLine.text_fields,
                                           //color: clockColor,
                                         ),
                                       ),
                                       contentPadding: const EdgeInsets.only(
                                           top: 2),
-                                      hintText: getBahasa.toString() == "1"? 'Deskripsi Perintah Lembur':'Description of the Overtime Order',
+                                      hintText: getBahasa.toString() == "1"? 'Deskripsi Lembur':'Description of the Overtime Order',
                                       labelText: getBahasa.toString() == "1"? 'Deskripsi': 'Description',
                                       labelStyle: TextStyle(
                                           fontFamily: "VarelaRound",
@@ -843,7 +851,7 @@ class _LemburAdd extends State<LemburAdd> {
                                           .always,
                                       hintStyle: GoogleFonts.nunito(
                                           color: HexColor("#c4c4c4"),
-                                          fontSize: 15),
+                                          fontSize: 14),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: HexColor("#DDDDDD")),

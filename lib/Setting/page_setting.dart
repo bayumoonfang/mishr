@@ -4,6 +4,8 @@ import 'package:abzeno/Helper/app_helper.dart';
 import 'package:abzeno/Helper/page_route.dart';
 
 import 'package:abzeno/Setting/page_bahasa.dart';
+import 'package:abzeno/Setting/page_biometricsetting.dart';
+import 'package:abzeno/Setting/page_biometricsetting2.dart';
 import 'package:abzeno/Setting/page_notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,19 +55,20 @@ class SettingHomeState extends State<SettingHome> {
       onWillPop: onWillPop,
       child: Scaffold(
         appBar: new AppBar(
-          backgroundColor: HexColor("#3a5664"),
+          backgroundColor: Colors.white,
+          elevation: 1,
           leading: Builder(
             builder: (context) =>
                 IconButton(
                     icon: new FaIcon(FontAwesomeIcons.arrowLeft, size: 17,),
-                    color: Colors.white,
+                    color: Colors.black,
                     onPressed: () {
                       Navigator.pop(context);
                     }),
           ),
           title: Text(
-            getBahasa.toString() == "1" ? "Pengaturan" : "Settings", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold),),
-          elevation: 0,
+            getBahasa.toString() == "1" ? "Pengaturan" : "Settings",
+            style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black,),),
         ),
         body: Container(
           child: Padding(
@@ -88,6 +91,40 @@ class SettingHomeState extends State<SettingHome> {
                 ),
                 Padding(padding: const EdgeInsets.only(top: 5,left: 15),
                   child: Divider(height: 3,),),
+
+                InkWell(
+                  child: ListTile(
+                    onTap: (){
+                      Navigator.push(context, ExitPage(page: PageBiometricSetting()));
+                    },
+                    title: Text(getBahasa.toString() == "1" ? "Fingerprint and Passcode" : "Security",style: TextStyle(
+                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 15,
+                        fontWeight: FontWeight.bold)),
+                    subtitle: Text(getBahasa.toString() == "1" ? "Tambah proteksi untuk keamanan akun anda " :
+                    "Change language for your application",style: TextStyle(
+                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 12)),
+                    trailing: FaIcon(FontAwesomeIcons.angleRight,color: HexColor("#594d75"),size: 15,),
+                  ),
+                ),
+                Padding(padding: const EdgeInsets.only(top: 5,left: 15),
+                  child: Divider(height: 3,),),
+
+                // InkWell(
+                //   child: ListTile(
+                //     onTap: (){
+                //       Navigator.push(context, ExitPage(page: PageBiometricSetting2()));
+                //     },
+                //     title: Text(getBahasa.toString() == "1" ? "Fingerprint and Passcode Setting" : "Security",style: TextStyle(
+                //         color: Colors.black, fontFamily: 'VarelaRound',fontSize: 15,
+                //         fontWeight: FontWeight.bold)),
+                //     subtitle: Text(getBahasa.toString() == "1" ? "Atur prioritas keamanan anda" :
+                //     "Change language for your application",style: TextStyle(
+                //         color: Colors.black, fontFamily: 'VarelaRound',fontSize: 12)),
+                //     trailing: FaIcon(FontAwesomeIcons.angleRight,color: HexColor("#594d75"),size: 15,),
+                //   ),
+                // ),
+                // Padding(padding: const EdgeInsets.only(top: 5,left: 15),
+                //   child: Divider(height: 3,),),
 
 
 

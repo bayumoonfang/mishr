@@ -29,8 +29,11 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:syncfusion_flutter_barcodes/barcodes.dart';
+import 'package:unicons/unicons.dart';
+import 'Berita/page_berita.dart';
 import 'Inbox/page_pesanpribadi.dart';
+import 'MySchedule/page_myschedule2.dart';
 import 'Time Off/ARCHIVED/page_timeoffhome.dart';
 import 'helper/app_helper.dart';
 import 'helper/app_link.dart';
@@ -67,6 +70,7 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
   String getEmail = "...";
   String getScheduleID = "...";
   String getScheduleBtn = "...";
+  String getKaryawanEmail = "...";
 
 
   String getJamMasukSebelum = "...";
@@ -122,21 +126,20 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
         getJamKeluarSebelum = value[17];
         getPIN = value[18];
         getScheduleBtn = value[19];
+        getScheduleBtn = value[0];
       });});
 
     await getNotif();
     await getApprovalListCount();
     await getPesanListCount();
     await getSettings();
-  }
-
-  loadData2() async {
-    await _startingVariable();
     EasyLoading.dismiss();
   }
 
-  getMe() {
 
+
+  getMe() {
+print("Asasas");
   }
 
   Timer? timer;
@@ -146,7 +149,7 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
     _tabController = TabController(vsync: this, length: 5);
     _tabController.animateTo(_currentIndex);
    // timer = Timer.periodic(Duration(seconds: 5), (Timer t) => runLoopMe());
-    loadData2();
+    _startingVariable();
   }
 
 
@@ -174,8 +177,48 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   late TabController _tabController;
-  int _currentIndex = 2;
+  int _currentIndex = 0;
 
+
+
+
+  showDialogQR(BuildContext context) {
+    Widget cancelButton = TextButton(
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue),),
+      onPressed:  () {Navigator.pop(context);},
+    );
+    Widget continueButton = Container(
+      width: 100,
+      child: TextButton(
+        child: Text(getBahasa.toString() == "1"?  "SETUJUI":"APPROVE"
+          ,style: GoogleFonts.lexendDeca(color: Colors.blue,),),
+        onPressed:  () {
+         // _lembur_apprv(getModulDial);
+        },
+      ),
+    );
+    AlertDialog alert = AlertDialog(
+      actionsAlignment: MainAxisAlignment.end,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      title: Text(getBahasa.toString() == "1"? "Setujui Pengajuan" :"Approve Request"
+        , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+        TextAlign.left,),
+      content: Text("Apakah anda yakin menyetujui pengajuan ini sebagai persetujuan "
+        , style: GoogleFonts.nunitoSans(),textAlign:
+        TextAlign.left,),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -184,8 +227,6 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
             controller: _tabController,
             physics: NeverScrollableScrollPhysics(),
             children: <Widget>[
-              PageApprovalList(getKaryawanNo, getKaryawanNama, runLoopMe),
-              PageNotification(getEmail,"All", runLoopMe),
               Home2(getKaryawanNama, getKaryawanJabatan, getKaryawanNo,
                   getScheduleName,
                   getStartTime,
@@ -193,7 +234,11 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
                   getScheduleID,
                   getJamMasukSebelum,
                   getJamKeluarSebelum,getPIN,getScheduleBtn,getEmail, runLoopMe),
-              PagePesanPribadi(getKaryawanNo, runLoopMe),
+              PageApprovalList(getKaryawanNo, getKaryawanNama, runLoopMe),
+              PageNotification(getEmail,"All", runLoopMe),
+              PageNotification(getEmail,"All", runLoopMe),
+              //PagePesanPribadi(getKaryawanNo, runLoopMe),
+              // PageBerita(getKaryawanNo),
               Profile(getKaryawanNama, getKaryawanJabatan, getKaryawanNo)
               //PageMyApproval(widget.getKaryawanNo, widget.getKaryawanNama),
             ],
@@ -204,6 +249,10 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
             selectedLabelStyle: GoogleFonts.varelaRound(color:  HexColor(AppHelper().main_color),fontSize: 12),
             unselectedLabelStyle: GoogleFonts.varelaRound(fontSize: 11),
             items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(UniconsLine.estate,size: 25,),
+                label: getBahasa.toString() == "1" ? 'Beranda':'Home',
+              ),
               BottomNavigationBarItem(
                 icon:
                 getCountApprovalList != "0" ?
@@ -220,10 +269,14 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
                     elevation: 0,
                   ),
                   position: badges.BadgePosition.topEnd(top: -2,end: -1),
-                  child: const FaIcon(FontAwesomeIcons.fileSignature,size: 22,),
+                  child: const Icon(UniconsLine.file_edit_alt,size: 25,),
                 ) :
-                FaIcon(FontAwesomeIcons.fileSignature,size: 22,),
+                Icon(UniconsLine.file_edit_alt,size: 25,),
                 label: 'Approval',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(UniconsLine.qrcode_scan,size: 40,),
+                label: getBahasa.toString() == "1" ? 'My Code':'Home',
               ),
               BottomNavigationBarItem(
                 icon:
@@ -241,16 +294,13 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
                     elevation: 0,
                   ),
                   position: badges.BadgePosition.topEnd(top: -2,end: -3),
-                  child: const FaIcon(FontAwesomeIcons.bell,size: 22,),
+                  child: const Icon(UniconsLine.bell,size: 25,),
                 ) :
-                FaIcon(FontAwesomeIcons.bell,size: 22,),
+                Icon(UniconsLine.bell,size: 25,),
                 label: getBahasa.toString() == "1" ? 'Notifikasi':'Notification',
               ),
-              BottomNavigationBarItem(
-                icon: FaIcon(FontAwesomeIcons.homeAlt,size: 32,),
-                label: getBahasa.toString() == "1" ? 'Beranda':'Home',
-              ),
-              BottomNavigationBarItem(
+
+            /*  BottomNavigationBarItem(
                 icon:
                 getCountPesanList != "0" ?
                 badges.Badge(
@@ -270,18 +320,80 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
                 ) :
                 FaIcon(FontAwesomeIcons.message,size: 22,),
                 label: 'Inbox',
-              ),
+              ),*/
+              // BottomNavigationBarItem(
+              //   icon: Icon(UniconsLine.newspaper,size: 25,),
+              //   label: getBahasa.toString() == "1" ? 'Berita':'News',
+              // ),
               BottomNavigationBarItem(
-                icon: FaIcon(FontAwesomeIcons.user,size: 22,),
+                icon: Icon(UniconsLine.user,size: 25,),
                 label: getBahasa.toString() == "1" ? 'Profil':'Profile',
               ),
             ],
             currentIndex: _currentIndex,
             onTap: (currentIndex){
               setState(() {
-                _currentIndex = currentIndex;
+
+                if(currentIndex == 2) {
+                  showModalBottomSheet(
+                      isScrollControlled: true,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                        ),
+                      ),
+                      context: context,
+                      builder: (context) {
+                        return SingleChildScrollView(
+                          child: Container(
+                              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                              child : Padding(
+                                padding: EdgeInsets.only(left: 25,right: 25,top: 25),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(getBahasa.toString() == "1"? "My Barcode" :"Approval List",
+                                          style: GoogleFonts.montserrat(fontWeight: FontWeight.bold,fontSize: 17),),
+                                        InkWell(
+                                          onTap: (){
+                                            Navigator.pop(context);
+                                          },
+                                          child: FaIcon(FontAwesomeIcons.times,size: 20,),
+                                        )
+                                      ],
+                                    ),
+
+                                    Padding(padding: const EdgeInsets.only(top: 40,bottom: 35),
+                                        child : Container(
+                                          height:240,
+                                            width: double.infinity,
+                                            padding: EdgeInsets.only(top: 2,bottom: 2),
+                                            child: SfBarcodeGenerator(
+                                              value: getKaryawanNo,
+                                              showValue: true,
+                                              symbology: QRCode(),
+                                              textSpacing: 25,)
+                                        )
+                                    ),
+
+
+
+                                  ],
+                                ),
+                              )
+                          ),
+                        );
+                      }
+                  );
+                } else{
+                  _currentIndex = currentIndex;
+                  _tabController.animateTo(_currentIndex);
+                }
               });
-              _tabController.animateTo(_currentIndex);
+
 
             },)
       ), onWillPop: onWillPop);

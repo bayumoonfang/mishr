@@ -167,7 +167,7 @@ class _PageLembur extends State<PageLembur> {
                           filter = text;
                         });
                       },
-                      style: GoogleFonts.nunito(fontSize: 15),
+                      style: GoogleFonts.nunito(fontSize: 14),
                       decoration: new InputDecoration(
                         contentPadding: const EdgeInsets.all(10),
                         fillColor: HexColor("#f4f4f4"),
@@ -446,7 +446,7 @@ class _PageLembur extends State<PageLembur> {
                                 children: [
                                   Expanded(
                                     child: ListView.builder(
-                                      itemExtent: textScale.toString() == '1.17' ? 95 : 85,
+                                      itemExtent: 80,
                                       itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                       padding: const EdgeInsets.only(bottom: 85,top: 5),
                                       itemBuilder: (context, i) {
@@ -476,20 +476,10 @@ class _PageLembur extends State<PageLembur> {
                                                           Text(
                                                                   AppHelper().getTanggalCustom(snapshot.data![i]["f"].toString()) + " "+
                                                                   AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["f"].toString()) + " "+
-                                                                  AppHelper().getTahunCustom(snapshot.data![i]["f"].toString())+ " - "+
-                                                                  AppHelper().getTanggalCustom(snapshot.data![i]["g"].toString()) + " "+
-                                                                  AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["g"].toString()) + " "+
-                                                                  AppHelper().getTahunCustom(snapshot.data![i]["g"].toString()),
+                                                                  AppHelper().getTahunCustom(snapshot.data![i]["f"].toString()),
                                                               overflow: TextOverflow.ellipsis,
-                                                              style: GoogleFonts.workSans(fontSize: 13,color: Colors.black)),),
+                                                              style: GoogleFonts.nunitoSans(fontSize: 12.5,color: Colors.black)),),
                                                         ),
-
-                                                        Padding(
-                                                            padding: EdgeInsets.only(top: 2),
-                                                            child: Align(alignment: Alignment.centerLeft,
-                                                                child:Text("#"+snapshot.data![i]["a"].toString(),
-                                                                    overflow: TextOverflow.ellipsis,
-                                                                    style: GoogleFonts.workSans(fontSize: 13)))),
                                                       ],
                                                     ),
                                                     trailing:
@@ -535,20 +525,11 @@ class _PageLembur extends State<PageLembur> {
                                                         Text(
                                                             AppHelper().getTanggalCustom(snapshot.data![i]["f"].toString()) + " "+
                                                                 AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["f"].toString()) + " "+
-                                                                AppHelper().getTahunCustom(snapshot.data![i]["f"].toString())+ " - "+
-                                                                AppHelper().getTanggalCustom(snapshot.data![i]["g"].toString()) + " "+
-                                                                AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["g"].toString()) + " "+
-                                                                AppHelper().getTahunCustom(snapshot.data![i]["g"].toString()),
+                                                                AppHelper().getTahunCustom(snapshot.data![i]["f"].toString()),
                                                             overflow: TextOverflow.ellipsis,
-                                                            style: GoogleFonts.workSans(fontSize: 13,color: Colors.black)),),
+                                                            style: GoogleFonts.nunitoSans(fontSize: 12.5,color: Colors.black)),),
                                                       ),
 
-                                                      Padding(
-                                                          padding: EdgeInsets.only(top: 2),
-                                                          child: Align(alignment: Alignment.centerLeft,
-                                                              child:Text("#"+snapshot.data![i]["a"].toString(),
-                                                                  overflow: TextOverflow.ellipsis,
-                                                                  style: GoogleFonts.workSans(fontSize: 13)))),
                                                     ],
                                                   ),
                                                   trailing:

@@ -260,7 +260,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
       title: Text(getBahasa.toString() == "1"? "Setujui Permintaan" :"Approve Request", style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
       TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui permintaan ini sebagai persetujuan 1 ?":
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui sebagai persetujuan 1 ?":
       "Would you like to continue approve this request as Approval 1 ?", style: GoogleFonts.nunitoSans(),textAlign: TextAlign.left,),
       actions: [
         cancelButton,
@@ -295,7 +295,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
       title: Text(getBahasa.toString() == "1"?  "Setujui Permintaan":"Approve Request",style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui permintaan ini sebagai persetujuan 2 ? ":
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui sebagai persetujuan 2 ? ":
       "Would you like to continue approve this request as Approval 2 ?", style: GoogleFonts.nunitoSans(),textAlign: TextAlign.left,),
       actions: [
         cancelButton,
@@ -331,7 +331,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
       title: Text(getBahasa.toString() == "1"? "Tolak Permintaan": "Reject Request",
         style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak permintaan ini sebagai persetujuan 1 ?":
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak sebagai persetujuan 1 ?":
       "Would you like to continue reject this request as Approval 1 ?", style: GoogleFonts.nunitoSans(),textAlign: TextAlign.left,),
       actions: [
         cancelButton,
@@ -369,7 +369,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
       title: Text(getBahasa.toString() == "1"?  "Tolak Permintaan":"Reject Request",
         style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign: TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak permintaan ini sebagai persetjuan 2 ? " :
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak sebagai persetjuan 2 ? " :
       "Would you like to continue reject this request as Approval 2 ?", style: GoogleFonts.nunitoSans(),textAlign: TextAlign.left,),
       actions: [
         cancelButton,
@@ -392,8 +392,8 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Detail Pengajuan", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
-        elevation: 1,
+        title: Text("Detail Pengajuan", style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
+        elevation: 0,
         leading: Builder(
           builder: (context) =>
               IconButton(
@@ -1131,7 +1131,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
         child: Container(color: Colors.white,
         padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
         width: double.infinity,
-        height: 50,
+        height: 55,
         child: Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
           alignment: WrapAlignment.spaceEvenly,
@@ -1139,6 +1139,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
             reqattend_approv1.toString() == widget.getKaryawanNo && reqattend_approve1_status.toString() == 'Waiting Approval' ?
             Container(
                 width: 150,
+                height: 45,
                 child:
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -1164,6 +1165,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
             reqattend_approv1.toString() == widget.getKaryawanNo && reqattend_approve1_status.toString() == 'Waiting Approval' ?
             Container(
                 width: 150,
+                height: 45,
                 child:
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -1190,6 +1192,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
                 (reqattend_approve2_status.toString() == 'Waiting Approval' && reqattend_status.toString() == 'Approved 1') ?
             Container(
                 width: 150,
+                height: 45,
                 child:
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -1215,6 +1218,7 @@ class _ReqAttendApproveDetail extends State<ReqAttendApproveDetail> {
                 (reqattend_approve2_status.toString() == 'Waiting Approval' && reqattend_status.toString() == 'Approved 1') ?
             Container(
                 width: 150,
+                height: 45,
                 child:
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

@@ -162,7 +162,7 @@ class _RequestAttendance extends State<RequestAttendance> {
                         filter = text;
                       });
                     },
-                    style: GoogleFonts.nunito(fontSize: 15),
+                    style: GoogleFonts.nunito(fontSize: 14),
                     decoration: new InputDecoration(
                       contentPadding: const EdgeInsets.all(10),
                       fillColor: HexColor("#f4f4f4"),

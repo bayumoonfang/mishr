@@ -110,7 +110,7 @@ class _PageTimeOffSaldo extends State<PageTimeOffSaldo> {
                                 children: [
                                   Expanded(
                                     child: ListView.builder(
-                                      itemExtent: textScale.toString() == '1.17' ? 95 : 85,
+                                      itemExtent: 105,
                                       itemCount: snapshot.data == null ? 0 : snapshot.data?.length,
                                       padding: const EdgeInsets.only(bottom: 85,top: 5),
                                       itemBuilder: (context, i) {
@@ -125,7 +125,7 @@ class _PageTimeOffSaldo extends State<PageTimeOffSaldo> {
                                                       Padding(padding: EdgeInsets.only(top: 2),child:
                                                       Text("Code : ("+snapshot.data![i]["b"].toString()+")"+" |  Type : "+snapshot.data![i]["c"].toString(),
                                                         overflow: TextOverflow.ellipsis,  style: GoogleFonts.montserrat(
-                                                            fontSize: 12),),)
+                                                            fontSize: 11.5),),)
                                                   ),
                                                   subtitle: Column(
                                                     children: [
@@ -137,14 +137,25 @@ class _PageTimeOffSaldo extends State<PageTimeOffSaldo> {
                                                           fontWeight: FontWeight.bold,fontSize: 14.5,color: Colors.black),),),
                                                   ),
                                                       Padding(
-                                                        padding: EdgeInsets.only(top: 5),
+                                                        padding: EdgeInsets.only(top: 8),
                                                         child:   Align(alignment: Alignment.centerLeft,child:
                                                         Text(snapshot.data![i]["e"].toString() == 'null' || snapshot.data![i]["e"].toString() == '0000-00-00' ? "Effective Date : -" :
                                                         "Effective Date : "+AppHelper().getTanggalCustom(snapshot.data![i]["e"].toString()) + " "+
                                                             AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["e"].toString()) + " "+
                                                             AppHelper().getTahunCustom(snapshot.data![i]["e"].toString()),
                                                             overflow: TextOverflow.ellipsis,
-                                                            style: GoogleFonts.nunitoSans(fontSize: 13,color: Colors.black)),),
+                                                            style: GoogleFonts.nunitoSans(fontSize: 12,color: Colors.black)),),
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsets.only(top: 2),
+                                                        child:   Align(alignment: Alignment.centerLeft,child:
+                                                        Text(snapshot.data![i]["f"].toString() == 'null' || snapshot.data![i]["f"].toString() == '0000-00-00' ?
+                                                        "Expired Date : -" :
+                                                        "Expired Date : "+AppHelper().getTanggalCustom(snapshot.data![i]["f"].toString()) + " "+
+                                                            AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["f"].toString()) + " "+
+                                                            AppHelper().getTahunCustom(snapshot.data![i]["f"].toString()),
+                                                            overflow: TextOverflow.ellipsis,
+                                                            style: GoogleFonts.nunitoSans(fontSize: 12,color: Colors.black)),),
                                                       )
                                                     ],
                                                   ),

@@ -15,6 +15,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:map_launcher/map_launcher.dart';
+import 'package:unicons/unicons.dart';
 
 import '../Profile/S_HELPER/g_profile.dart';
 
@@ -81,8 +82,8 @@ class _AttendanceHistory extends State<AttendanceHistory> {
         //backgroundColor: HexColor("#3a5664"),
         backgroundColor: Colors.white,
         title: Text(getBahasa.toString() == "1"?  "Riwayat Kehadiran":"Attendance History",
-          style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
-        elevation: 1,
+          style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
+        elevation: 0,
         leading: Builder(
           builder: (context) =>
               IconButton(
@@ -152,8 +153,7 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                   decoration: InputDecoration(
                                                     prefixIcon: Padding(
                                                       padding: const EdgeInsets.only(right: 10),
-                                                      child: FaIcon(
-                                                        FontAwesomeIcons.calendar,
+                                                      child: Icon(UniconsLine.calendar_alt,
                                                         //color: clockColor,
                                                       ),
                                                     ),
@@ -219,8 +219,7 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                     decoration: InputDecoration(
                                                       prefixIcon: Padding(
                                                         padding: const EdgeInsets.only(right: 10),
-                                                        child: FaIcon(
-                                                          FontAwesomeIcons.calendar,
+                                                        child: Icon(UniconsLine.calendar_alt,
                                                           //color: clockColor,
                                                         ),
                                                       ),
@@ -670,10 +669,10 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                       children: [
                                                                         Text(getBahasa.toString() =="1" ? "Kode Jadwal":"Schedule Code",
-                                                                          textAlign: TextAlign.left, style: GoogleFonts.workSans(fontSize: 14),),
+                                                                          textAlign: TextAlign.left, style: GoogleFonts.nunitoSans(fontSize: 15),),
                                                                         Text(snapshot.data![i]["q"].toString() != '' ? snapshot.data![i]["q"].toString() :
                                                                         snapshot.data![i]["j"].toString(),
-                                                                            style: GoogleFonts.workSans(fontSize: 15)),],
+                                                                            style: GoogleFonts.nunitoSans(fontSize: 15)),],
                                                                     ),
                                                                   ),
                                                                   Padding(
@@ -682,9 +681,9 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                       children: [
                                                                         Text(getBahasa.toString() =="1" ? "Jadwal Jam Masuk":"Schedule Check In",
-                                                                          textAlign: TextAlign.left, style: GoogleFonts.workSans(fontSize: 14),),
+                                                                          textAlign: TextAlign.left, style: GoogleFonts.nunitoSans(fontSize: 15),),
                                                                         Text(snapshot.data![i]["f"].toString(),
-                                                                            style: GoogleFonts.workSans(fontSize: 15)),],
+                                                                            style: GoogleFonts.nunitoSans(fontSize: 15)),],
                                                                     ),
                                                                   ),
                                                                   Padding(
@@ -693,9 +692,9 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                       children: [
                                                                         Text(getBahasa.toString() =="1" ? "Jadwal Jam Keluar": "Schedule Check Out",
-                                                                          textAlign: TextAlign.left, style: GoogleFonts.workSans(fontSize: 14),),
+                                                                          textAlign: TextAlign.left, style: GoogleFonts.nunitoSans(fontSize: 15),),
                                                                         Text(snapshot.data![i]["g"].toString(),
-                                                                            style: GoogleFonts.workSans(fontSize: 15)),],
+                                                                            style: GoogleFonts.nunitoSans(fontSize: 15)),],
                                                                     ),
                                                                   ),
 
@@ -705,9 +704,9 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                       children: [
                                                                         Text("Clock In",
-                                                                          textAlign: TextAlign.left, style: GoogleFonts.workSans(fontSize: 14),),
+                                                                          textAlign: TextAlign.left, style: GoogleFonts.nunitoSans(fontSize: 15),),
                                                                         Text(snapshot.data![i]["b"].toString() != "00:00" ? snapshot.data![i]["b"].toString() : "-",
-                                                                            style: GoogleFonts.workSans(fontSize: 15)),],
+                                                                            style: GoogleFonts.nunitoSans(fontSize: 15)),],
                                                                     ),
                                                                   ),
                                                                   Padding(
@@ -716,9 +715,9 @@ class _AttendanceHistory extends State<AttendanceHistory> {
                                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                       children: [
                                                                         Text("Clock Out",
-                                                                          textAlign: TextAlign.left, style: GoogleFonts.workSans(fontSize: 14),),
+                                                                          textAlign: TextAlign.left, style: GoogleFonts.nunitoSans(fontSize: 15),),
                                                                         Text(snapshot.data![i]["c"].toString() != "00:00" ? snapshot.data![i]["c"].toString() : "-",
-                                                                            style: GoogleFonts.workSans(fontSize: 15)),],
+                                                                            style: GoogleFonts.nunitoSans(fontSize: 15)),],
                                                                     ),
                                                                   ),
                                                                   Padding(

@@ -15,6 +15,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
+import 'package:unicons/unicons.dart';
 import 'Helper/m_helper.dart';
 import 'helper/app_helper.dart';
 import 'helper/app_link.dart';
@@ -99,15 +100,19 @@ class _ChangeCabang extends State<ChangeCabang> {
   Widget build(BuildContext context) {
     return WillPopScope(child: Scaffold(
       appBar: new AppBar(
-        backgroundColor: HexColor("#3a5664"),
+        // backgroundColor: HexColor("#3a5664"),
+        backgroundColor: Colors.white,
+        elevation: 1,
         title: Text(
-          getBahasa.toString() =="1" ? "Ubah Lokasi Absen" : "Change Work Location", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold),),
+          getBahasa.toString() =="1" ? "Ubah Lokasi Absen" : "Change Work Location",
+          style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
         leading: Builder(
-          builder: (context) => IconButton(
-              icon: new Icon(Icons.arrow_back),
-              color: Colors.white,
-              onPressed: () => {
-                Navigator.pop(context)
+          builder: (context) =>
+              IconButton(
+              icon: new FaIcon(FontAwesomeIcons.arrowLeft, size: 17,),
+              color: Colors.black,
+              onPressed: () {
+                Navigator.pop(context);
               }),
         ),
       ),
@@ -196,12 +201,13 @@ class _ChangeCabang extends State<ChangeCabang> {
                                     child : ListTile(
                                        // visualDensity: VisualDensity(vertical: -2),
                                         dense : true,
-                                      leading: FaIcon(FontAwesomeIcons.building,size: 23,),
-                                      title: Text(snapshot.data![i]["b"].toString(), style: GoogleFonts.nunito(fontSize: 15),),
+                                      leading: Icon(UniconsLine.building,),
+                                      title: Text(snapshot.data![i]["b"].toString(),
+                                        style: GoogleFonts.nunito(fontSize: 15,fontWeight: FontWeight.bold),),
                                       subtitle: Row(
                                         children: [
                                           Padding(padding: const EdgeInsets.only(right: 5),child:
-                                          Text(snapshot.data![i]["c"].toString() + " - "+snapshot.data![i]["d"].toString(), style: GoogleFonts.nunito(fontSize: 15),),),
+                                          Text(snapshot.data![i]["c"].toString() + " - "+snapshot.data![i]["d"].toString(), style: GoogleFonts.nunito(fontSize: 13),),),
                                         ],
                                       )
                                     ),

@@ -80,26 +80,19 @@ class _PageNotification extends State<PageNotification> {
 
 
 
+
+
+
   showDialogAllRead(BuildContext context) {
-    //FocusScope.of(context).requestFocus(FocusNode());
     Widget cancelButton = TextButton(
-      child: Text("Cancel",style: GoogleFonts.lexendDeca(color: Colors.black),),
+      child: Text("TUTUP",style: GoogleFonts.lexendDeca(color: Colors.blue),),
       onPressed:  () {Navigator.pop(context);},
     );
     Widget continueButton = Container(
-      width: 100,
+      width: 150,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-            primary: HexColor("#1a76d2"),
-            elevation: 0,
-            shape: RoundedRectangleBorder(side: BorderSide(
-                color: Colors.white,
-                width: 0.1,
-                style: BorderStyle.solid
-            ),
-              borderRadius: BorderRadius.circular(5.0),
-            )),
-        child: Text(getBahasa.toString() == "1"? "Iya": "Yes",style: GoogleFonts.lexendDeca(color: Colors.white,fontWeight: FontWeight.bold),),
+        child: Text(getBahasa.toString() == "1"?  "MARK ALL READ":"APPROVE"
+          ,style: GoogleFonts.lexendDeca(color: Colors.blue,),),
         onPressed:  () {
           Navigator.pop(context);
           _read_allnotif();
@@ -107,13 +100,15 @@ class _PageNotification extends State<PageNotification> {
       ),
     );
     AlertDialog alert = AlertDialog(
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      actionsAlignment: MainAxisAlignment.end,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
-      title: Text(getBahasa.toString() == "1"? "Tandai Semua Dibaca": "Mark All As Read", style: GoogleFonts.montserrat(fontSize: 20,fontWeight: FontWeight.bold),textAlign:
-      TextAlign.center,),
-      content: Text(getBahasa.toString() == "1"? "Apakah anda yakin menandai semua dibaca ?": "Would you like to continue mark all as read ?", style: GoogleFonts.varelaRound(),textAlign:
-      TextAlign.center,),
+      title: Text(getBahasa.toString() == "1"? "Tandai Semua Dibaca" :"Approve Request"
+        , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
+        TextAlign.left,),
+      content: Text("Apakah anda yakin menandai semua telah dibaca ? "
+        , style: GoogleFonts.nunitoSans(),textAlign:
+        TextAlign.left,),
       actions: [
         cancelButton,
         continueButton,
@@ -126,6 +121,7 @@ class _PageNotification extends State<PageNotification> {
       },
     );
   }
+
 
   @override
   void initState() {

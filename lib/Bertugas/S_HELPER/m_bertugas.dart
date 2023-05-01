@@ -124,7 +124,7 @@ class m_bertugas {
     int errorCode = 0;
     await AppHelper().getConnect().then((value){if(value == 'ConnInterupted'){
       errorCode = 2; return false;}});
-    final response = await http.post(Uri.parse(applink+"mobile/api_mobile.php?act=lembur_approved"), body: {
+    final response = await http.post(Uri.parse(applink+"mobile/api_mobile.php?act=bertugas_rejected"), body: {
       "reject_bertugasno": bertugas_number,
       "reject_bertugaskaryawanno": getKaryawanNo,
       "reject_bertugasapp": valApp,

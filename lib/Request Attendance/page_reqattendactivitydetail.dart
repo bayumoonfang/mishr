@@ -59,8 +59,9 @@ class _PageReqAttendActivityDetail extends State<PageReqAttendActivityDetail> {
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(getBahasa.toString() =="1" ? "History Pengajuan": "Activity Request Attendance",overflow: TextOverflow.ellipsis,
-          style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text(getBahasa.toString() =="1" ? "History Pengajuan": "Activity Request Attendance",
+          overflow: TextOverflow.ellipsis,
+          style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) =>

@@ -233,7 +233,7 @@ class _PageTimeOffApprovalList extends State<PageTimeOffApprovalList> {
                                                       Padding(padding: EdgeInsets.only(top: 2),child:
                                                       Text(snapshot.data![i]["m"].toString(),
                                                         overflow: TextOverflow.ellipsis,  style: GoogleFonts.montserrat(
-                                                            fontWeight: FontWeight.bold,fontSize: 14),),)
+                                                            fontWeight: FontWeight.bold,fontSize: 14.5),),)
                                                   ),
                                                   subtitle: Column(
                                                     children: [
@@ -250,15 +250,15 @@ class _PageTimeOffApprovalList extends State<PageTimeOffApprovalList> {
                                                                 AppHelper().getTahunCustom(snapshot.data![i]["d"].toString())+
                                                                 " ("+snapshot.data![i]["k"].toString()+" Hari"+")",
                                                             overflow: TextOverflow.ellipsis,
-                                                            style: GoogleFonts.workSans(fontSize: 13,color: Colors.black)),),
+                                                            style: GoogleFonts.nunitoSans(fontSize: 12.5,color: Colors.black)),),
                                                       ),
 
                                                       Padding(
-                                                          padding: EdgeInsets.only(top: 2),
+                                                          padding: EdgeInsets.only(top: 5),
                                                           child: Align(alignment: Alignment.centerLeft,
                                                               child:Text("#"+snapshot.data![i]["j"].toString(),
                                                                   overflow: TextOverflow.ellipsis,
-                                                                  style: GoogleFonts.nunito(fontSize: 13)))),
+                                                                  style: GoogleFonts.varelaRound(fontSize: 12)))),
                                                     ],
                                                   ),
                                                   trailing:

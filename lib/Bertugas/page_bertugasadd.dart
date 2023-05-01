@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:unicons/unicons.dart';
 
 
 
@@ -237,7 +238,7 @@ class _PageAddBertugas extends State<PageAddBertugas> {
     return WillPopScope(child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text(getBahasa.toString() == "1"? "Buat Pengajuan "+widget.getModul+"" : "Add Time Off", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+          title: Text(getBahasa.toString() == "1"? "Buat Pengajuan "+widget.getModul+"" : "Add Time Off", style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
           elevation: 1,
           leading: Builder(
             builder: (context) =>
@@ -261,7 +262,7 @@ class _PageAddBertugas extends State<PageAddBertugas> {
                   child: Column(
                     children: [
 
-                      Padding(padding: const EdgeInsets.only(top: 25, right: 25),
+                      Padding(padding: const EdgeInsets.only(top: 25, right: 15),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment
                               .spaceBetween,
@@ -278,8 +279,7 @@ class _PageAddBertugas extends State<PageAddBertugas> {
                                   decoration: InputDecoration(
                                     prefixIcon: Padding(
                                       padding: const EdgeInsets.only(right: 10),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.calendar,
+                                      child: Icon(UniconsLine.calendar_alt,
                                         //color: clockColor,
                                       ),
                                     ),
@@ -293,7 +293,7 @@ class _PageAddBertugas extends State<PageAddBertugas> {
                                     floatingLabelBehavior: FloatingLabelBehavior
                                         .always,
                                     hintStyle: GoogleFonts.nunito(
-                                        color: HexColor("#c4c4c4"), fontSize: 15),
+                                        color: HexColor("#c4c4c4"), fontSize: 14),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: HexColor("#DDDDDD")),
@@ -345,8 +345,7 @@ class _PageAddBertugas extends State<PageAddBertugas> {
                                     decoration: InputDecoration(
                                       prefixIcon: Padding(
                                         padding: const EdgeInsets.only(right: 10),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.calendar,
+                                        child: Icon(UniconsLine.calendar_alt,
                                           //color: clockColor,
                                         ),
                                       ),
@@ -362,7 +361,7 @@ class _PageAddBertugas extends State<PageAddBertugas> {
                                           .always,
                                       hintStyle: GoogleFonts.nunito(
                                           color: HexColor("#c4c4c4"),
-                                          fontSize: 15),
+                                          fontSize: 14),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: HexColor("#DDDDDD")),
@@ -425,8 +424,7 @@ class _PageAddBertugas extends State<PageAddBertugas> {
                                     decoration: InputDecoration(
                                       prefixIcon: Padding(
                                         padding: const EdgeInsets.only(right: 10),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.audioDescription,
+                                        child: Icon(UniconsLine.text_fields,
                                           //color: clockColor,
                                         ),
                                       ),
@@ -442,7 +440,7 @@ class _PageAddBertugas extends State<PageAddBertugas> {
                                           .always,
                                       hintStyle: GoogleFonts.nunito(
                                           color: HexColor("#c4c4c4"),
-                                          fontSize: 15),
+                                          fontSize: 14),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: HexColor("#DDDDDD")),
@@ -479,8 +477,7 @@ class _PageAddBertugas extends State<PageAddBertugas> {
                                     decoration: InputDecoration(
                                       prefixIcon: Padding(
                                         padding: const EdgeInsets.only(right: 10),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.folderPlus,
+                                        child: Icon(UniconsLine.file_plus_alt,
                                           //color: clockColor,
                                         ),
                                       ),
@@ -511,7 +508,7 @@ class _PageAddBertugas extends State<PageAddBertugas> {
                                           .always,
                                       hintStyle: GoogleFonts.nunito(
                                           color: HexColor("#c4c4c4"),
-                                          fontSize: 15),
+                                          fontSize: 14),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: HexColor("#DDDDDD")),

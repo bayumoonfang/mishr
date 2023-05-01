@@ -19,8 +19,7 @@ class g_berita{
         "karyawan_no="+getKaryawanNo+"&filter="+filter)).
     timeout(Duration(seconds: 10), onTimeout: () {http.Client().close(); errorCode = 1;
     return http.Response('Error', 500);});
-    print(applink+"mobile/api_mobile.php?act=getData_Berita&"
-        "karyawan_no="+getKaryawanNo+"&filter="+filter);
+
     if(errorCode == 1 || errorCode == 2) {
       EasyLoading.dismiss();
       return ["ConnInterupted",http.Response('Error', 500)];

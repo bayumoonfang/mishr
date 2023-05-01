@@ -216,7 +216,7 @@ class _ApprBertugasDetail extends State<ApprBertugasDetail> {
       title: Text(getBahasa.toString() == "1"? "Tolak Permintaan": "Reject Request"
         , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
         TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak pengajuan ini sebagai persetujuan "+getModulDial+" ?":
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menolak sebagai persetujuan "+getModulDial+" ?":
       "Would you like to continue reject this request as Approval 1 ?", style: GoogleFonts.nunitoSans(),textAlign:
       TextAlign.left,),
       actions: [
@@ -255,7 +255,7 @@ class _ApprBertugasDetail extends State<ApprBertugasDetail> {
       title: Text(getBahasa.toString() == "1"? "Setujui Pengajuan" :"Approve Request"
         , style: GoogleFonts.nunitoSans(fontSize: 18,fontWeight: FontWeight.bold),textAlign:
         TextAlign.left,),
-      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui pengajuan ini sebagai persetujuan "+getModulDial+" ?"
+      content: Text(getBahasa.toString() == "1"?  "Apakah anda yakin menyetujui sebagai persetujuan "+getModulDial+" ?"
           : "Would you like to continue approve this request as Approval 1 ?"
         , style: GoogleFonts.nunitoSans(),textAlign:
         TextAlign.left,),
@@ -379,7 +379,8 @@ class _ApprBertugasDetail extends State<ApprBertugasDetail> {
     return WillPopScope(child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text(getBahasa.toString() == "1" ?  "Detail Bertugas":"Overtime Detail", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+          title: Text(getBahasa.toString() == "1" ?  "Detail Bertugas":"Overtime Detail",
+            style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
           elevation: 1,
           leading: Builder(
             builder: (context) =>
@@ -416,7 +417,7 @@ class _ApprBertugasDetail extends State<ApprBertugasDetail> {
                                   color:
                                   bertugas_status.toString() == 'Approved 1' ? HexColor("#0074D9") :
                                   bertugas_status.toString() == 'Fully Approved' ? HexColor("#3D9970") :
-                                  bertugas_status.toString() == 'Fully Approved' ? HexColor("#FF4136") :
+                                  bertugas_status.toString() == 'Rejected' ? HexColor("#FF4136") :
                                   Colors.black54,
                                   style: BorderStyle.solid,
                                 ),
@@ -425,7 +426,7 @@ class _ApprBertugasDetail extends State<ApprBertugasDetail> {
                                 color:
                                 bertugas_status.toString() == 'Approved 1' ? HexColor("#0074D9") :
                                 bertugas_status.toString() == 'Fully Approved' ? HexColor("#3D9970") :
-                                bertugas_status.toString() == 'Fully Approved' ? HexColor("#FF4136") :
+                                bertugas_status.toString() == 'Rejected' ? HexColor("#FF4136") :
                                 Colors.black54,),),
                               onPressed: (){},
                             ),
@@ -820,7 +821,7 @@ class _ApprBertugasDetail extends State<ApprBertugasDetail> {
                                   child: Text(bertugas_lamahari.toString()+" Hari", style: GoogleFonts.nunito(fontSize: 14) ),),
                               ]),
 
-                              bertugas_file != '0' ?
+                              bertugas_file != '' ?
                               TableRow(children :[
                                 Padding(padding: EdgeInsets.only(bottom: 5),
                                   child: Text(getBahasa.toString() == "1"? 'Attachment' : 'Attachment', style: GoogleFonts.nunito(fontSize: 14) ),),
@@ -857,7 +858,7 @@ class _ApprBertugasDetail extends State<ApprBertugasDetail> {
               color: Colors.white,
               padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
               width: double.infinity,
-              height: 50,
+              height: 65,
               child: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
                 alignment: WrapAlignment.spaceEvenly,
@@ -868,6 +869,7 @@ class _ApprBertugasDetail extends State<ApprBertugasDetail> {
                   bertugas_appr1.toString() == widget.getKaryawanNo && bertugas_appr1_status.toString() == 'Waiting Approval' && bertugas_status.toString() != 'Canceled' ?
                   Container(
                       width: 150,
+                      height: 45,
                       child:
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -892,6 +894,7 @@ class _ApprBertugasDetail extends State<ApprBertugasDetail> {
                   bertugas_appr1.toString() == widget.getKaryawanNo && bertugas_appr1_status.toString() == 'Waiting Approval' && bertugas_status.toString() != 'Canceled' ?
                   Container(
                       width: 150,
+                      height: 45,
                       child:
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -918,6 +921,7 @@ class _ApprBertugasDetail extends State<ApprBertugasDetail> {
                       bertugas_appr1_status.toString() == 'Approved'  ?
                   Container(
                       width: 150,
+                      height: 45,
                       child:
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -943,6 +947,7 @@ class _ApprBertugasDetail extends State<ApprBertugasDetail> {
                       bertugas_appr1_status.toString() == 'Approved'  ?
                   Container(
                       width: 150,
+                      height: 45,
                       child:
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(

@@ -181,7 +181,7 @@ class _PageTimeOffList extends State<PageTimeOffList> {
                               filter = text;
                             });
                           },
-                          style: GoogleFonts.nunito(fontSize: 15),
+                          style: GoogleFonts.nunito(fontSize: 14),
                           decoration: new InputDecoration(
                             contentPadding: const EdgeInsets.all(10),
                             fillColor: HexColor("#f4f4f4"),
@@ -458,15 +458,15 @@ class _PageTimeOffList extends State<PageTimeOffList> {
                                                                   AppHelper().getTahunCustom(snapshot.data![i]["d"].toString())+
                                                                   " ("+snapshot.data![i]["k"].toString()+" Hari"+")",
                                                               overflow: TextOverflow.ellipsis,
-                                                              style: GoogleFonts.workSans(fontSize: 13,color: Colors.black)),),
+                                                              style: GoogleFonts.nunitoSans(fontSize: 12.5,color: Colors.black)),),
                                                         ),
 
                                                         Padding(
-                                                            padding: EdgeInsets.only(top: 2),
+                                                            padding: EdgeInsets.only(top: 5),
                                                             child: Align(alignment: Alignment.centerLeft,
                                                                 child:Text("#"+snapshot.data![i]["j"].toString(),
                                                                     overflow: TextOverflow.ellipsis,
-                                                                    style: GoogleFonts.varelaRound(fontSize: 13)))),
+                                                                    style: GoogleFonts.varelaRound(fontSize: 12)))),
                                                       ],
                                                     ),
                                                     trailing:
@@ -518,15 +518,15 @@ class _PageTimeOffList extends State<PageTimeOffList> {
                                                                 AppHelper().getNamaBulanCustomSingkat(snapshot.data![i]["d"].toString()) + " "+
                                                                 AppHelper().getTahunCustom(snapshot.data![i]["d"].toString()),
                                                             overflow: TextOverflow.ellipsis,
-                                                            style: GoogleFonts.workSans(fontSize: 13,color: Colors.black)),),
+                                                            style: GoogleFonts.nunitoSans(fontSize: 12.5,color: Colors.black)),),
                                                       ),
 
                                                       Padding(
-                                                          padding: EdgeInsets.only(top: 2),
+                                                          padding: EdgeInsets.only(top: 5),
                                                           child: Align(alignment: Alignment.centerLeft,
                                                               child:Text("#"+snapshot.data![i]["j"].toString(),
                                                                   overflow: TextOverflow.ellipsis,
-                                                                  style: GoogleFonts.varelaRound(fontSize: 13)))),
+                                                                  style: GoogleFonts.varelaRound(fontSize: 12)))),
                                                     ],
                                                   ),
                                                   trailing:

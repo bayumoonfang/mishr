@@ -224,8 +224,8 @@ class _ApprTimeOffDetail extends State<ApprTimeOffDetail> {
     return WillPopScope(child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text("Detail Approval", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
-          elevation: 1,
+          title: Text("Detail Approval", style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
+          elevation: 0,
           leading: Builder(
             builder: (context) =>
                 IconButton(

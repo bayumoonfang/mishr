@@ -102,7 +102,7 @@ class _PageRLemburHome extends State<PageRLemburHome> with SingleTickerProviderS
         titleSpacing: 0,
         //shape: Border(bottom: BorderSide(color: Colors.red)),
         backgroundColor: Colors.white,
-        title: Text(getBahasa.toString() == "1"? "Lembur":"Overtime", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text(getBahasa.toString() == "1"? "Lembur":"Overtime", style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) => IconButton(
@@ -117,13 +117,13 @@ class _PageRLemburHome extends State<PageRLemburHome> with SingleTickerProviderS
           indicatorColor: Colors.black,
           controller: controller,
           labelColor: Colors.black,
-          labelStyle: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.black),
-          unselectedLabelStyle: GoogleFonts.varelaRound(fontSize: 13,color: Colors.black),
+          labelStyle: GoogleFonts.nunitoSans(fontWeight: FontWeight.bold,fontSize: 14,color: Colors.black),
+          unselectedLabelStyle: GoogleFonts.varelaRound(fontSize: 12,color: Colors.black),
           unselectedLabelColor: Colors.black,
           tabs: <Widget>[
             new Tab(text: getBahasa.toString() == "1"? "My Request":"Created By Me"),
             new Tab(text: getBahasa.toString() == "1"? "Approval": "Delegated to Me"),
-            new Tab(text: getBahasa.toString() == "1"? "Jadwal Lembur": "Delegated to Me"),
+            // new Tab(text: getBahasa.toString() == "1"? "Jadwal Lembur": "Delegated to Me"),
           ],
         ),
         actions: [
@@ -148,7 +148,7 @@ class _PageRLemburHome extends State<PageRLemburHome> with SingleTickerProviderS
         children: <Widget>[
           PageLembur(widget.getKaryawanNo, "createdbyme", widget.getKaryawanNama, widget.getEmail),
           PageLembur(widget.getKaryawanNo, "delegatedtome", widget.getKaryawanNama, widget.getEmail),
-          JadwalLembur(widget.getKaryawanNo),
+          // JadwalLembur(widget.getKaryawanNo),
         ],
       ),
     ), onWillPop: onWillPop);

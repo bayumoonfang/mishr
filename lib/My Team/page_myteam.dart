@@ -61,7 +61,7 @@ class _PageMyTeam extends State<PageMyTeam> {
       appBar: new AppBar(
         titleSpacing: 0,
         backgroundColor: Colors.white,
-        title: Text("My Team", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text("My Team", style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) => IconButton(
@@ -164,7 +164,7 @@ class _PageMyTeam extends State<PageMyTeam> {
                                                   Padding(
                                                     padding: EdgeInsets.only(top: 5),
                                                     child:  Align(alignment: Alignment.centerLeft,
-                                                        child:  Text(snapshot.data![i]["b"].toString(),
+                                                        child:  Text("Jabatan : "+snapshot.data![i]["b"].toString(),
                                                             overflow: TextOverflow.ellipsis,
                                                             style: GoogleFonts.workSans(fontSize: 13,color: Colors.black))),
                                                   ),

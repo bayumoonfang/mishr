@@ -22,6 +22,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:unicons/unicons.dart';
 import '../Helper/page_route.dart';
 import '../page_home.dart';
 import 'S_HELPER/g_timeoff.dart';
@@ -509,7 +510,8 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
     return WillPopScope(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(getBahasa.toString() == "1"? "Buat Pengajuan Time Off" : "Add Time Off", style: GoogleFonts.montserrat(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.black),),
+        title: Text(getBahasa.toString() == "1"? "Buat Pengajuan Time Off" : "Add Time Off",
+          style: GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),),
         elevation: 1,
         leading: Builder(
           builder: (context) =>
@@ -539,14 +541,13 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 0),
                                 child: TextFormField(
-                                  style: GoogleFonts.nunitoSans(fontSize: 16),
+                                  style: GoogleFonts.nunitoSans(fontSize: 15),
                                   textCapitalization: TextCapitalization.sentences,
                                   controller: _timeofftype,
                                   decoration: InputDecoration(
                                     prefixIcon: Padding(
                                       padding: const EdgeInsets.only(right: 10),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.list,
+                                      child: Icon(UniconsLine.list_ul,
                                         //color: clockColor,
                                       ),
                                     ),
@@ -562,7 +563,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                         .always,
                                     hintStyle: GoogleFonts.nunito(
                                         color: HexColor("#c4c4c4"),
-                                        fontSize: 15),
+                                        fontSize: 14),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: HexColor("#DDDDDD")),
@@ -610,7 +611,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                                         ],
                                                       ),
                                                       Padding(
-                                                        padding: EdgeInsets.only(top:25),
+                                                        padding: EdgeInsets.only(top:15),
                                                       ),
                                                       Container(
                                                         padding: EdgeInsets.only(top:15),
@@ -718,17 +719,12 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
 
                             child:  ListTile(
                                 visualDensity: VisualDensity(horizontal: -2),
-                                dense : true,
-                                leading: FaIcon(FontAwesomeIcons.circleInfo,color:
-                                saldoTimeOff.toString() != '0' ? HexColor("#28b9e0")
-                                    : HexColor("#f9591d"),
-                                ),
                                 title: Text(getBahasa.toString() == "1"? "Sisa Kuota : "+saldoTimeOff.toString()+ " Hari"
                                     : "Balance : "+saldoTimeOff.toString()+ " Day",
                                     style:
                                     textScale.toString() == '1.17' ?
                                     GoogleFonts.montserrat(fontSize: 13,fontWeight: FontWeight.bold) :
-                                    GoogleFonts.montserrat(fontSize: 15,fontWeight: FontWeight.bold)
+                                    GoogleFonts.montserrat(fontSize: 14,fontWeight: FontWeight.bold)
                                 ),
                                 subtitle: Column(
                                   children: [
@@ -741,7 +737,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                       style:
                                       textScale.toString() == '1.17' ?
                                       GoogleFonts.nunitoSans(fontSize: 11,color: Colors.black) :
-                                      GoogleFonts.nunitoSans(fontSize: 13,color: Colors.black)
+                                      GoogleFonts.nunitoSans(fontSize: 11,color: Colors.black)
 
                                   ),
                                 )
@@ -752,7 +748,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                         )
                     ) : Container(),
 
-                    Padding(padding: const EdgeInsets.only(top: 25, right: 25),
+                    Padding(padding: const EdgeInsets.only(top: 25, right: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment
                             .spaceBetween,
@@ -769,8 +765,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                 decoration: InputDecoration(
                                   prefixIcon: Padding(
                                     padding: const EdgeInsets.only(right: 10),
-                                    child: FaIcon(
-                                      FontAwesomeIcons.calendar,
+                                    child: Icon(UniconsLine.calendar_alt,
                                       //color: clockColor,
                                     ),
                                   ),
@@ -784,7 +779,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                   floatingLabelBehavior: FloatingLabelBehavior
                                       .always,
                                   hintStyle: GoogleFonts.nunito(
-                                      color: HexColor("#c4c4c4"), fontSize: 15),
+                                      color: HexColor("#c4c4c4"), fontSize: 14),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         color: HexColor("#DDDDDD")),
@@ -836,8 +831,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                   decoration: InputDecoration(
                                     prefixIcon: Padding(
                                       padding: const EdgeInsets.only(right: 10),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.calendar,
+                                      child: Icon(UniconsLine.calendar_alt,
                                         //color: clockColor,
                                       ),
                                     ),
@@ -853,7 +847,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                         .always,
                                     hintStyle: GoogleFonts.nunito(
                                         color: HexColor("#c4c4c4"),
-                                        fontSize: 15),
+                                        fontSize: 14),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: HexColor("#DDDDDD")),
@@ -897,7 +891,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                       ),),
 
                     needTime == 'Yes' ?
-                    Padding(padding: const EdgeInsets.only(top: 25, right: 25),
+                    Padding(padding: const EdgeInsets.only(top: 25, right: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment
                             .spaceBetween,
@@ -916,8 +910,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                     decoration: InputDecoration(
                                       prefixIcon: Padding(
                                         padding: const EdgeInsets.only(right: 10),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.clock,
+                                        child: Icon(UniconsLine.clock,
                                           //color: clockColor,
                                         ),
                                       ),
@@ -933,7 +926,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                           .always,
                                       hintStyle: GoogleFonts.nunito(
                                           color: HexColor("#c4c4c4"),
-                                          fontSize: 15),
+                                          fontSize: 14),
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: HexColor("#DDDDDD")),
@@ -982,8 +975,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                   decoration: InputDecoration(
                                     prefixIcon: Padding(
                                       padding: const EdgeInsets.only(right: 10),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.clock,
+                                      child: Icon(UniconsLine.clock,
                                         //color: clockColor,
                                       ),
                                     ),
@@ -999,7 +991,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                         .always,
                                     hintStyle: GoogleFonts.nunito(
                                         color: HexColor("#c4c4c4"),
-                                        fontSize: 15),
+                                        fontSize: 14),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: HexColor("#DDDDDD")),
@@ -1058,8 +1050,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                   decoration: InputDecoration(
                                     prefixIcon: Padding(
                                       padding: const EdgeInsets.only(right: 10),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.audioDescription,
+                                      child: Icon(UniconsLine.text_fields,
                                         //color: clockColor,
                                       ),
                                     ),
@@ -1075,7 +1066,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                         .always,
                                     hintStyle: GoogleFonts.nunito(
                                         color: HexColor("#c4c4c4"),
-                                        fontSize: 15),
+                                        fontSize: 14),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: HexColor("#DDDDDD")),
@@ -1115,8 +1106,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                   decoration: InputDecoration(
                                     prefixIcon: Padding(
                                       padding: const EdgeInsets.only(right: 10),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.userCircle,
+                                      child:Icon(UniconsLine.file_plus_alt,
                                         //color: clockColor,
                                       ),
                                     ),
@@ -1147,7 +1137,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                         .always,
                                     hintStyle: GoogleFonts.nunito(
                                         color: HexColor("#c4c4c4"),
-                                        fontSize: 15),
+                                        fontSize: 14),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: HexColor("#DDDDDD")),
@@ -1189,8 +1179,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                   decoration: InputDecoration(
                                     prefixIcon: Padding(
                                       padding: const EdgeInsets.only(right: 10),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.folderPlus,
+                                      child: Icon(UniconsLine.file_plus_alt,
                                         //color: clockColor,
                                       ),
                                     ),
@@ -1221,7 +1210,7 @@ class _PageAddTimeOff extends State<PageAddTimeOff> {
                                         .always,
                                     hintStyle: GoogleFonts.nunito(
                                         color: HexColor("#c4c4c4"),
-                                        fontSize: 15),
+                                        fontSize: 14),
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: HexColor("#DDDDDD")),

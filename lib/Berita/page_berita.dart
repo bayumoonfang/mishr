@@ -111,7 +111,8 @@ class _PageBerita extends State<PageBerita> {
                 hintText: getBahasa.toString() == "1"? 'Cari Berita...' : 'Search Reprimand...',
               ),
             ),
-          ),        leading: Builder(
+          ),
+          leading: Builder(
           builder: (context) => IconButton(
               icon: new FaIcon(FontAwesomeIcons.arrowLeft,size: 17,),
               color: Colors.black,

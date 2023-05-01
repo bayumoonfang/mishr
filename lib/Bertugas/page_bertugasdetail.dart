@@ -639,7 +639,7 @@ class _BertugasDetail extends State<BertugasDetail> {
                                   child: Text(bertugas_lamahari.toString()+" Hari", style: GoogleFonts.nunito(fontSize: 14) ),),
                               ]),
 
-                              bertugas_file != '0' ?
+                              bertugas_file != '' ?
                               TableRow(children :[
                                 Padding(padding: EdgeInsets.only(bottom: 5),
                                   child: Text(getBahasa.toString() == "1"? 'Attachment' : 'Attachment', style: GoogleFonts.nunito(fontSize: 14) ),),
@@ -652,7 +652,8 @@ class _BertugasDetail extends State<BertugasDetail> {
                                     )
 
                                 ),
-                              ]) :   TableRow(children :[
+                              ]) :
+                              TableRow(children :[
                                 Container(),
                                 Container(),
                               ])
