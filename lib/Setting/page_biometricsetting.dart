@@ -6,6 +6,8 @@ import 'package:abzeno/Helper/app_helper.dart';
 import 'package:abzeno/Helper/page_route.dart';
 import 'package:abzeno/PageFirstLoad.dart';
 import 'package:abzeno/page_check.dart';
+import 'package:abzeno/page_intoduction.dart';
+import 'package:abzeno/page_login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -38,6 +40,26 @@ class _PageBiometricSetting extends State<PageBiometricSetting> {
     getSettings();
   }
 
+  _clearallpref() async {
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+    // await preferences.clear();
+    Navigator.pushReplacement(context, ExitPage(page: PageLogin("", "")));
+  }
+
+  _logout() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      preferences.setString("email", '');
+      preferences.setString("username", '');
+      preferences.setString("karyawan_id", '');
+      preferences.setString("karyawan_nama", '');
+      preferences.setString("karyawan_no", '');
+      preferences.setString("karyawan_jabatan", '');
+      preferences.setString("decode_pin", '');
+      preferences.commit();
+      _clearallpref();
+    });
+  }
 
   _action_fitur (String value) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -46,9 +68,10 @@ class _PageBiometricSetting extends State<PageBiometricSetting> {
       preferences.setString("biometric_setting", '1');
       preferences.setString("biometric_priority", 'Passcode');
       preferences.setBool("fingerscan_active", true);
-      Navigator.pushReplacement(context, ExitPage(page: PageFirstLoad("","")));
-      SchedulerBinding.instance?.addPostFrameCallback((_) {
-        AppHelper().showFlushBarsuccess(context, "Fitur berhasil di aktifkan"); });
+      _logout();
+      // Navigator.pushReplacement(context, ExitPage(page: PageFirstLoad("","")));
+      // SchedulerBinding.instance?.addPostFrameCallback((_) {
+      //   AppHelper().showFlushBarsuccess(context, "Fitur berhasil di aktifkan"); });
     } else {
       preferences.setString("biometric_setting", '0');
       Navigator.pushReplacement(context, ExitPage(page: PageFirstLoad("","")));

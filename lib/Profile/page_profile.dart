@@ -105,6 +105,8 @@ class _Profile extends State<Profile>{
       preferences.setString("karyawan_id", '');
       preferences.setString("karyawan_nama", '');
       preferences.setString("karyawan_no", '');
+      preferences.setString("karyawan_jabatan", '');
+      preferences.setString("decode_pin", '');
       preferences.commit();
       _clearallpref();
     });

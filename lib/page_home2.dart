@@ -200,7 +200,9 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
         getBahasa.toString() == "1" ? "LEWATI" : "CLOSE",
         style: GoogleFonts.lexendDeca(color: Colors.blue,fontSize: textScale.toString() == '1.17' ? 13 : 15),
       ),
-      onPressed: () {
+      onPressed: () async {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        preferences.setString("biometric_dialog", "0");
         Navigator.pop(context);
       },
     );

@@ -94,6 +94,14 @@ class _PageLoginPIN extends State<PageLoginPIN> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       //preferences.setInt("value", value);
+      preferences.setString("email", '');
+      preferences.setString("username", '');
+      preferences.setString("karyawan_id", '');
+      preferences.setString("karyawan_nama", '');
+      preferences.setString("karyawan_no", '');
+      preferences.setString("karyawan_jabatan", '');
+      preferences.setString("decode_pin", '');
+
       preferences.setString("email", val_email);
       preferences.setString("username", val_username);
       preferences.setString("karyawan_id", val_karyawanid);

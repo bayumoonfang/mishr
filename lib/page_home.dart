@@ -355,7 +355,7 @@ print("Asasas");
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(getBahasa.toString() == "1"? "My Barcode" :"Approval List",
+                                        Text(getBahasa.toString() == "1"? "My QRCode" :"Approval List",
                                           style: GoogleFonts.montserrat(fontWeight: FontWeight.bold,fontSize: 17),),
                                         InkWell(
                                           onTap: (){
