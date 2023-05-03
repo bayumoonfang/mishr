@@ -18,6 +18,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'Helper/app_helper.dart';
 import 'Helper/app_link.dart';
 import 'Helper/page_route.dart';
+import 'dart:io' show Platform;
 
 class PageFirstLoad extends StatefulWidget {
   final String getBahasa;
@@ -49,11 +50,16 @@ class _PageFirstLoad extends State<PageFirstLoad> {
         if(value[0] == '' || value[0] == null) {
           Navigator.pushReplacement(context, ExitPage(page: Introduction(widget.getTokenMe)));
         } else {
-          if(value[25].toString() == '' || value[25].toString() == null || value[25].toString() == "0" || value[25].toString() == "null") {
+          if(Platform.isAndroid) {
+            if(value[25].toString() == '' || value[25].toString() == null || value[25].toString() == "0" || value[25].toString() == "null") {
+              Navigator.pushReplacement(context, ExitPage(page: PageCheck("",widget.getTokenMe)));
+            } else{
+              Navigator.pushReplacement(context, ExitPage(page: PageAuth(widget.getTokenMe,value[24])));
+            }
+          } else {
             Navigator.pushReplacement(context, ExitPage(page: PageCheck("",widget.getTokenMe)));
-          } else{
-            Navigator.pushReplacement(context, ExitPage(page: PageAuth(widget.getTokenMe,value[24])));
           }
+
         }
       });
     });

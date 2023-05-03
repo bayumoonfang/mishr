@@ -24,10 +24,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<string>Akses Face Id / Touch Id dibutuhkan untuk melakukan autentikasi?</string>
-    <key>LSRequiresIPhoneOS</key>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Use correct Face ID to enter MISHR</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app needs access to location. Turning on location service allow us to know your current location with your work location. This is necessary so that your attendance data can be processed by the application.</string>
 	<key>NSLocationAlwaysUsageDescription</key>

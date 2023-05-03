@@ -396,8 +396,10 @@ class _Home2 extends State<Home2> with AutomaticKeepAliveClientMixin<Home2> {
     setState(() {
       widget.runLoopMe();
       _isVisibleBtn = true;
-      if(getbiometric_dialog == "1" || getbiometric_dialog == null) {
-        showBiometricDialog(context);
+      if(Platform.isAndroid) {
+        if (getbiometric_dialog == "1" || getbiometric_dialog == null) {
+          showBiometricDialog(context);
+        }
       }
     });
   }

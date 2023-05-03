@@ -13,6 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import 'dart:io' show Platform;
 
 class SettingHome extends StatefulWidget{
   final String getEmail;
@@ -92,22 +93,31 @@ class SettingHomeState extends State<SettingHome> {
                 Padding(padding: const EdgeInsets.only(top: 5,left: 15),
                   child: Divider(height: 3,),),
 
-                InkWell(
-                  child: ListTile(
-                    onTap: (){
-                      Navigator.push(context, ExitPage(page: PageBiometricSetting()));
-                    },
-                    title: Text(getBahasa.toString() == "1" ? "Fingerprint and Passcode" : "Security",style: TextStyle(
-                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 15,
-                        fontWeight: FontWeight.bold)),
-                    subtitle: Text(getBahasa.toString() == "1" ? "Tambah proteksi untuk keamanan akun anda " :
-                    "Change language for your application",style: TextStyle(
-                        color: Colors.black, fontFamily: 'VarelaRound',fontSize: 12)),
-                    trailing: FaIcon(FontAwesomeIcons.angleRight,color: HexColor("#594d75"),size: 15,),
-                  ),
-                ),
-                Padding(padding: const EdgeInsets.only(top: 5,left: 15),
-                  child: Divider(height: 3,),),
+    Platform.isAndroid ?
+      InkWell(
+        child: ListTile(
+          onTap: () {
+            Navigator.push(context, ExitPage(page: PageBiometricSetting()));
+          },
+          title: Text(getBahasa.toString() == "1"
+              ? "Fingerprint and Passcode"
+              : "Security", style: TextStyle(
+              color: Colors.black, fontFamily: 'VarelaRound', fontSize: 15,
+              fontWeight: FontWeight.bold)),
+          subtitle: Text(getBahasa.toString() == "1"
+              ? "Tambah proteksi untuk keamanan akun anda "
+              :
+          "Change language for your application", style: TextStyle(
+              color: Colors.black, fontFamily: 'VarelaRound', fontSize: 12)),
+          trailing: FaIcon(
+            FontAwesomeIcons.angleRight, color: HexColor("#594d75"), size: 15,),
+        ),
+      ) : Container(),
+
+                Platform.isAndroid ?
+      Padding(padding: const EdgeInsets.only(top: 5, left: 15),
+        child: Divider(height: 3,),) : Container(),
+
 
                 // InkWell(
                 //   child: ListTile(
